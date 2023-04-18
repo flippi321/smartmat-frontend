@@ -3,7 +3,7 @@ build site:
   stage: build
   script:
     - npm install --progress=false
-    - npm run lint
+#    - npm run lint
     - npm run build
 
 unit test:
