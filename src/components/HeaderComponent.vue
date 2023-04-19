@@ -7,11 +7,11 @@
     <div class="navbar-right">
       <router-link to="/createAd" class="button-primary">
         <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="icons btn-icon--larger">
-        <span class="button-text">New Ad</span>
+        <span class="button button-primary-text">Om oss</span>
       </router-link>
       <router-link to="/login" class="button-secondary">
         <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="icons btn-icon--larger">
-        <span class="button-text">Log In</span>
+        <span class="button button-secondary-text">Logg In</span>
       </router-link>
     </div>
   </nav>
@@ -32,8 +32,9 @@
   z-index: 1;
 }
 
-
-.brand-name {
+.brand-name,
+.button-primary-text,
+.button-secondary-text {
   font-size: 1.5rem;
   font-weight: bold;
   color: #216869;
@@ -41,6 +42,11 @@
 }
 
 .navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
   display: flex;
   align-items: center;
 }
@@ -56,28 +62,64 @@
   height: 48px;
 }
 
+.brand-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
 }
 
-.button-text {
+.button {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.button-primary:hover, .button-secondary:hover {
+  text-decoration: underline;
+}
+
+.button-primary {
   color: #216869;
 }
 
-.button-primary:hover .button-text, .button-secondary:hover .button-text {
-  text-decoration: underline;
+.button-secondary {
+  color: #216869;
+}
+
+.button span {
+  margin-left: 0.5rem;
 }
 
 .icons {
   width: 24px;
   height: 24px;
   margin-right: 10px;
+  vertical-align: middle;
 }
 
+
 @media (max-width: 480px) {
+  .button {
+    display: none;
+  }
+
   .button-primary, .button-secondary {
-    background-color: #ffffff;
+    background-color: transparent;
   }
 }
 </style>
