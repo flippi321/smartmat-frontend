@@ -1,0 +1,22 @@
+image: node:latest
+
+build site:
+  stage: build
+  script:
+    - npm install --progress=false
+#    - npm run lint
+    - npm run build
+
+unit test:
+  stage: test
+  script:
+    - npm install --progress=false
+    - npm run test:unit
+
+
+#e2e test:
+#  image: node:16.14.2
+#  stage: test
+#  script:
+#    - npm install --progress=false
+#    - npm run test:e2e
