@@ -15,11 +15,11 @@ defineProps({
   </div>
 
   <div class="buttons-container">
-    <router-link to="/Fridge" class="button-primary">
+    <router-link :to="{ path: `/fridge`, query: { id: this.id, category: 0 } }" class="button-primary">
       <img src="@/assets/icons/Fridge.png" alt="[Fridge]" class="household-icon">
       <span class="household-button fridge-button">Kjøleskap</span>
     </router-link>
-    <router-link to="/createAd" class="button-primary">
+    <router-link :to="{ path: `/shoppingList`, query: { listId: this.id } }" class="button-primary">
       <img src="@/assets/icons/List.png" alt="[Shopping List]" class="household-icon">
       <span class="household-button shopping-list-button">Handleliste</span>
     </router-link>
