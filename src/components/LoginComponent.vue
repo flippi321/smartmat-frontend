@@ -6,7 +6,7 @@
                 <label for="email">Epost</label>
                 <input
                         class="form-control"
-                        type="email"
+                        type="text"
                         name="email"
                         placeholder="eksempel@email.com"
                 />
@@ -53,15 +53,16 @@ export default {
 
 
             if (!this.email || !this.password) {
-                document.getElementById("alert_1").innerHTML = "Please fill in both email and password fields";
+                document.getElementById("alert_1").innerHTML = "Vennligst fyll inn alle felter";
+                return;
+            }
+
+            if (!/\S+@\S+\.\S+/.test(this.email)) {
+                document.getElementById("alert_1").innerHTML = "Ugyldig epost";
                 return;
             }
 
 
-            else if (!/\S+@\S+\.\S+/.test(this.email)) {
-                document.getElementById("alert_1").innerHTML = "Please enter a valid email address";
-                return;
-            }
 
             /**
             if (this.password.length < 8) {

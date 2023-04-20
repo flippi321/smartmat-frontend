@@ -14,7 +14,7 @@
 
             <div class="input">
                 <label for="email">Epost</label>
-                <input type="email" id="email" name="email" placeholder="example@gmail.com">
+                <input type="text" id="email" name="email" placeholder="example@gmail.com">
             </div>
 
             <div class="input">
@@ -30,7 +30,7 @@
             <div class="alt">
                 Har du allerede en bruker? <span @click="moveToLogin">Logg inn</span>
             </div>
-            <button type="submit" class="btn">Registrer</button>
+            <button type="submit" id="submit" class="btn">Registrer</button>
             <div
                     class="alert"
                     role="alert"
@@ -54,6 +54,63 @@ export default {
     },
 
     methods: {
+        async register(){
+            document.getElementById("alert_1").innerHTML = "";
+
+            this.firstName = document.querySelector("input[name=firstName]").value;
+            this.lastName = document.querySelector("input[name=lastName]").value;
+            this.email = document.querySelector("input[name=email]").value;
+            this.password = document.querySelector("input[name=password]").value;
+            this.confirmPassword = document.querySelector("input[name=confirmPassword]").value;
+
+            if (!this.firstName || !this.lastName || !this.email || !this.password || !this.confirmPassword) {
+                document.getElementById("alert_1").innerHTML = "Fyll inn alle felter!";
+                return;
+            }
+
+            if (!/\S+@\S+\.\S+/.test(this.email)) {
+                document.getElementById("alert_1").innerHTML = "Ugyldig epost";
+                return;
+            }
+
+            if (this.password !== this.confirmPassword) {
+                document.getElementById("alert_1").innerHTML = "Passordene er ikke like!";
+                return;
+            }
+
+            if (this.password.length < 8) {
+                document.getElementById("alert_1").innerHTML = "Passordet må være minst 8 tegn!";
+                return;
+            }
+
+
+            /**
+             const response = await fetch("http://localhost:8080/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password,
+            }),
+        });
+
+
+             if (response.status === 201) {
+            this.$router.push("/login");
+        } else {
+            document.getElementById("alert_1").innerHTML = "Something went wrong";
+        }
+             */
+
+            this.$router.push("/household")
+
+
+        },
+
         moveToLogin() {
             this.$router.push("/login");
         }
