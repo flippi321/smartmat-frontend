@@ -13,6 +13,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/fridge',
+      name: 'fridge',
+      component: () => import('../views/FridgeView.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       component: AboutView
