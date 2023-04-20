@@ -8,12 +8,14 @@ defineProps({
 </script>
 
 <template>
-  <h1>Filter By Category:</h1>
-  <ul>
-    <li v-for="category in categories" :key="category.id" @click="changeCategory(category.id)">
-      {{ category.name }}
-    </li>
-  </ul>
+  <div class="sidebar">
+    <h1>Categories:</h1>
+    <ul>
+      <li v-for="category in categories" :key="category.id" @click="changeCategory(category.id)">
+        {{ category.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -28,3 +30,14 @@ export default {
   },
 }
 </script>
+
+<style>
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: transparent;
+  padding: 20px;
+}
+</style>
