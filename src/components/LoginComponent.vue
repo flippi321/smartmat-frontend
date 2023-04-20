@@ -46,6 +46,55 @@ export default {
     },
 
     methods: {
+        async login(){
+            document.getElementById("alert_1").innerHTML = "";
+            this.email = document.querySelector("input[name=email]").value;
+            this.password = document.querySelector("input[name=password]").value;
+
+
+            if (!this.email || !this.password) {
+                document.getElementById("alert_1").innerHTML = "Please fill in both email and password fields";
+                return;
+            }
+
+
+            else if (!/\S+@\S+\.\S+/.test(this.email)) {
+                document.getElementById("alert_1").innerHTML = "Please enter a valid email address";
+                return;
+            }
+
+            /**
+            if (this.password.length < 8) {
+                document.getElementById("alert_1").innerHTML = "Password should be at least 8 characters long";
+                return;
+            }
+              */
+
+
+
+            /**
+            const response = await fetch("http://localhost:8080/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: this.email,
+                    password: this.password,
+                }),
+            });
+            const data = await response.json();
+            if (data.status === "success") {
+                sessionStorage.setItem("token", data.token);
+                this.$router.push("/household");
+            } else {
+                document.getElementById("alert_1").innerHTML = data.message;
+            }
+              */
+
+            this.$router.push("/household");
+        },
+
         moveToRegister() {
             this.$router.push("/register");
         }
@@ -79,7 +128,7 @@ button{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 75vh;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 .input {

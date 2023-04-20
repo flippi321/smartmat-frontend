@@ -86,7 +86,7 @@ button{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 75vh;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 .input {
