@@ -5,9 +5,9 @@
       <span class="brand-name">SmartMat</span>
     </router-link>
     <div class="navbar-right">
-      <router-link to="/createAd" class="button-primary">
-        <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="header-icon btn-icon--larger">
-        <span class="header-button button-primary-text">Om oss</span>
+      <router-link to="/about" class="button-primary">
+        <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="icons btn-icon--larger">
+        <span class="button button-primary-text">Om oss</span>
       </router-link>
       <router-link to="/login" class="button-primary">
         <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon btn-icon--larger">
