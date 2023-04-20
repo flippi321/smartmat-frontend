@@ -48,6 +48,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .navbar-icon {
@@ -66,18 +67,13 @@
   vertical-align: middle;
 }
 
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
 .header-button {
   display: inline-flex;
   align-items: center;
   margin-left: 0.5rem;
-  margin-right: 1rem;
   padding-right: 1rem;
   border-radius: 0.25rem;
+  margin-right: 1rem;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
