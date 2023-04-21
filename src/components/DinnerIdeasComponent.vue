@@ -18,14 +18,18 @@ defineProps({
 </template>
 
 <script>
+import dinnerService from "@/services/dinnerService";
 export default {
     data() {
         return {
             id: this.id,
-            items: [],
+            dinners: [],
         };
     },
     created() {
+        dinnerService.getDinners().then(response => {
+            this.dinners = response.data.dinners;
+        });
 
     }
 
