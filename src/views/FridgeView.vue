@@ -19,7 +19,7 @@ defineProps({
 <template>
   <div class="fridge-page">
     <div class="sidebar">
-    <Sidebar :categories="categories"></Sidebar>
+    <Sidebar :categories="categories" :fridgeId=this.id></Sidebar>
     </div>
     <div class="groceries-container">
       <Groceries :items="items"></Groceries>
