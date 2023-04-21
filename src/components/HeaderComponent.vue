@@ -6,11 +6,11 @@
     </router-link>
     <div class="navbar-right">
       <router-link to="/about" class="button-primary">
-        <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="icons btn-icon--larger">
-        <span class="button button-primary-text">Om oss</span>
+        <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="header-icon">
+        <span class="header-button button-primary-text">Om oss</span>
       </router-link>
       <router-link to="/login" class="button-primary">
-        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon btn-icon--larger">
+        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
         <span class="header-button button-primary-text">Logg In</span>
       </router-link>
     </div>
@@ -73,7 +73,6 @@
   margin-left: 0.5rem;
   padding-right: 1rem;
   border-radius: 0.25rem;
-  margin-right: 1rem;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
@@ -82,15 +81,16 @@
   background-color: transparent;
   border: none;
   outline: none;
-  width: 10rem;
+  width: 5rem;
 }
 
 .button-primary:hover {
   text-decoration: underline;
 }
 
-.button-primary {
+.button-primary  {
   color: #216869;
+  margin-right: 2rem;
 }
 
 .button span {
