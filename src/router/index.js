@@ -36,7 +36,7 @@ const router = createRouter({
     {
       path: '/shoppingList',
       name: 'shoppingList',
-      props: route => ({ id: parseInt(route.query.id), category: parseInt(route.query.category) }),
+      props: route => ({ id: parseInt(route.query.id), sortBy: parseInt(route.query.sortBy) }),
       component: ShoppigListView
     },
     {
