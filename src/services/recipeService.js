@@ -9,7 +9,7 @@ var mock = new MockAdapter(axios);
 
 import recipes from "@/mockDatabases/recipes.json";
 
-mock.onGet("/getRecipes", { params: { id: 1 } }).reply(200, {
+mock.onGet("/getRecipes").reply(200, {
     recipes,
 });
 

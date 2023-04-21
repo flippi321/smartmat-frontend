@@ -23,7 +23,7 @@ defineProps({
       <img src="@/assets/icons/List.png" alt="[Shopping List]" class="household-icon">
       <span class="household-button shopping-list-button">Handleliste</span>
     </router-link>
-    <router-link to="/createAd" class="button-primary">
+    <router-link to="/dinnerIdeas" class="button-primary">
       <img src="@/assets/icons/Idea.png" alt="[Dinner Ideas]" class="household-icon">
       <span class="household-button dinner-ideas-button">Middagsideer</span>
     </router-link>
