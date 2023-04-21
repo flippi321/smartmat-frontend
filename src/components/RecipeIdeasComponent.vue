@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+    id: {
+        type: Number,
+        required: true
+    }
+})
+</script>
+
 <template>
     <div class="box-container">
         <h1 id="header">Middagsforslag</h1>
@@ -6,17 +15,18 @@
                 <label id="nrOfPeopleLabel" for="nrOfPeople">Antall personer:</label>
                 <input type="number" id="nrOfPeople" v-model="nrOfPeople">
             </div>
-            <div class="grid-container">
-                <div class="grid-item" v-for="recipe in recipes" :key="recipe.id">
+            <div id="recipeList" class="grid-container">
+                <a class="grid-item" v-for="recipe in recipes" :key="recipe.id" :href="'/recipes/' + recipe.id">
                     <h3 id="recipeName">{{ recipe.name }}</h3>
                     <img id="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                          alt="alternatetext" width="200">
                     <p id="recipeDescription">{{ recipe.description }}</p>
-                </div>
+                </a>
             </div>
         </div>
     </div>
 </template>
+
 
 
 <script>
@@ -25,16 +35,25 @@ import recipeService from "@/services/recipeService";
 export default {
     data() {
         return {
+            id: this.id,
             recipes: [],
             nrOfPeople: 0,
         };
     },
     created() {
-        recipeService.getRecipes().then(response => {
-            this.recipes = response.data.recipes.recipes;
+        recipeService.getRecipes(1).then(response => {
+            this.recipes = response.data.recipes.recipes.map(recipe => {
+                return {
+                    id: recipe.id,
+                    name: recipe.name,
+                    imageUrl: recipe.imageUrl,
+                    description: recipe.description
+                };
+            });
         });
     },
 };
+
 </script>
 
 <style>
@@ -56,6 +75,7 @@ body{
 #header {
     font-size: 32px;
     margin-bottom: 40px;
+    color: black;
 }
 
 .input-container {
@@ -110,6 +130,7 @@ body{
 #recipeName {
     font-size: 24px;
     margin-bottom: 10px;
+    color: black;
 }
 
 #recipeImg {
@@ -123,6 +144,7 @@ body{
     color: #666;
 }
 </style>
+
 
 
 
