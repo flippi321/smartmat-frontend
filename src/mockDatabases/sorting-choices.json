@@ -1,0 +1,16 @@
+{
+  "sortingChoices": [
+    {
+      "id": 1,
+      "name": "Navn"
+    },
+    {
+      "id": 2,
+      "name": "Mengde"
+    },
+    {
+      "id": 3,
+      "name": "Utløpsdato"
+    }
+  ]
+}
