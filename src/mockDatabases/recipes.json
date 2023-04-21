@@ -1,0 +1,19 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Taco",
+      "description": "Taco med kjlttdeig, salat, tomat, mais, agurk, løk, ost, salsa og rømme"
+    },
+    {
+      "id": 2,
+      "name": "Pasta bolognese",
+      "description": "Pasta med kjøttsaus"
+    },
+    {
+      "id": 3,
+      "name": "Kylling tikka masala",
+      "description": "Kylling i tikka masala med ris"
+    }
+  ]
+}
