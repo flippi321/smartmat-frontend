@@ -1,0 +1,20 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name":"Frukt og Grønt"
+    },
+    {
+      "id": 2,
+      "name":"Melk og Juice"
+    },
+    {
+      "id": 3,
+      "name":"Kjøtt"
+    },
+    {
+      "id": 4,
+      "name":"Dyreprodukter"
+    }
+  ]
+}

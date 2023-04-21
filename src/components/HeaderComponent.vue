@@ -9,9 +9,9 @@
         <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="icons btn-icon--larger">
         <span class="button button-primary-text">Om oss</span>
       </router-link>
-      <router-link to="/login" class="button-secondary">
-        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="icons btn-icon--larger">
-        <span class="button button-secondary-text">Logg In</span>
+      <router-link to="/login" class="button-primary">
+        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon btn-icon--larger">
+        <span class="header-button button-primary-text">Logg In</span>
       </router-link>
     </div>
   </nav>
@@ -33,8 +33,7 @@
 }
 
 .brand-name,
-.button-primary-text,
-.button-secondary-text {
+.button-primary-text {
   font-size: 1.5rem;
   font-weight: bold;
   color: #216869;
@@ -49,6 +48,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .navbar-icon {
@@ -67,18 +67,13 @@
   vertical-align: middle;
 }
 
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
-.button {
+.header-button {
   display: inline-flex;
   align-items: center;
   margin-left: 0.5rem;
-  margin-right: 1rem;
   padding-right: 1rem;
   border-radius: 0.25rem;
+  margin-right: 1rem;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
@@ -87,9 +82,10 @@
   background-color: transparent;
   border: none;
   outline: none;
+  width: 10rem;
 }
 
-.button-primary:hover, .button-secondary:hover {
+.button-primary:hover {
   text-decoration: underline;
 }
 
@@ -97,15 +93,11 @@
   color: #216869;
 }
 
-.button-secondary {
-  color: #216869;
-}
-
 .button span {
   margin-left: 0.5rem;
 }
 
-.icons {
+.header-icon {
   width: 24px;
   height: 24px;
   margin-right: 10px;
@@ -114,11 +106,11 @@
 
 
 @media (max-width: 480px) {
-  .button {
+  .header-button {
     display: none;
   }
 
-  .button-primary, .button-secondary {
+  .button-primary {
     background-color: transparent;
   }
 }
