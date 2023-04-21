@@ -1,17 +1,17 @@
 <template>
     <div class="box-container">
-        <h1>Middagsforslag</h1>
+        <h1 id="header">Middagsforslag</h1>
         <div id="recipe-container">
             <div class="input-container">
-                <label for="nrOfPeople">Antall personer:</label>
+                <label id="nrOfPeopleLabel" for="nrOfPeople">Antall personer:</label>
                 <input type="number" id="nrOfPeople" v-model="nrOfPeople">
             </div>
             <div class="grid-container">
                 <div class="grid-item" v-for="recipe in recipes" :key="recipe.id">
-                    <h3>{{ recipe.name }}</h3>
-                    <img src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
+                    <h3 id="recipeName">{{ recipe.name }}</h3>
+                    <img id="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                          alt="alternatetext" width="200">
-                    <p>{{ recipe.description }}</p>
+                    <p id="recipeDescription">{{ recipe.description }}</p>
                 </div>
             </div>
         </div>
@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style>
+body{
+    margin-top: 100px;
+}
+
 .box-container {
     max-width: 800px;
     margin: 0 auto;
@@ -49,7 +53,7 @@ export default {
     align-items: center;
 }
 
-h1 {
+#header {
     font-size: 32px;
     margin-bottom: 40px;
 }
@@ -61,12 +65,12 @@ h1 {
     margin-bottom: 30px;
 }
 
-label {
+#nrOfPeopleLabel {
     font-size: 24px;
     margin-right: 10px;
 }
 
-input {
+#nrOfPeople {
     width: 60px;
     height: 40px;
     border-radius: 5px;
@@ -103,18 +107,18 @@ input {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-h3 {
+#recipeName {
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-img {
+#recipeImg {
     border-radius: 5px;
     margin-bottom: 10px;
     width: 100%;
 }
 
-p {
+#recipeDescription {
     font-size: 16px;
     color: #666;
 }
