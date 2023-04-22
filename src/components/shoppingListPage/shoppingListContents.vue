@@ -46,7 +46,16 @@ export default {
     return {
       describeItem: null,
       showSaveSuccess: false,
+      currentlySelected: [],
     };
+  },
+  watch: {
+    items: {
+      handler(newItems) {
+        this.currentlySelected = newItems.filter(item => item.selected).map(item => item.id);
+      },
+      deep: true,
+    },
   },
   methods: {
     saveChanges() {
