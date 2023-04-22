@@ -18,7 +18,7 @@ defineProps({
           <div class="name">{{ item.name }}</div>
         </div>
         <div class="edit-icon" @click="describeItem = describeItem === item ? null : item">
-          <img src="@/assets/icons/Edit.png" alt="Edit icon" class="edit-icon-img">
+          <img src="@/assets/icons/Details.png" alt="Details" class="details-icon-img">
         </div>
       </div>
       <div class="description" v-if="describeItem === item">
@@ -26,6 +26,10 @@ defineProps({
         <p>Expected shelf life: {{ item.expected_shelf_life }} days</p>
         <p>Days since purchase: {{ item.days_since_purchase }}</p>
         <p>Days until spoilage: {{ item.days_until_spoilt }}</p>
+        <div class="button-container">
+          <button class="save-button" @click="saveChanges">Save</button>
+          <button class="cancel-button" @click="describeItem = -1">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
@@ -33,12 +37,17 @@ defineProps({
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      describeItem: -1
-    }
-  }
-}
+      describeItem: null,
+    };
+  },
+  methods: {
+    saveChanges() {
+      console.log('Saved');
+    },
+  },
+};
 </script>
 
 <style>
@@ -85,7 +94,7 @@ export default {
   cursor: pointer;
 }
 
-.edit-icon-img {
+.details-icon-img {
   max-width: 100%;
   max-height: 100%;
 }
