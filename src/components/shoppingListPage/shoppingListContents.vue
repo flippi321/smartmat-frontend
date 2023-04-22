@@ -22,7 +22,7 @@ defineProps({
           <input type="checkbox" class="checkbox" v-model="item.selected">
           <div class="name">{{ item.name }}</div>
         </div>
-        <div class="edit-icon" @click="describeItem = describeItem === item ? null : item">
+        <div class="details-icon" @click="describeItem = describeItem === item ? null : item">
           <img src="@/assets/icons/Details.png" alt="Details" class="details-icon-img">
         </div>
       </div>
@@ -110,9 +110,9 @@ export default {
   width: 100%;
 }
 
-.edit-icon {
-  width: 24px;
-  height: 24px;
+.details-icon {
+  height: 40px;
+  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,8 +120,8 @@ export default {
 }
 
 .details-icon-img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 70%;
+  max-height: 70%;
 }
 
 .checkbox-and-name {
