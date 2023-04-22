@@ -1,9 +1,11 @@
 <script setup>
+import { defineProps } from 'vue'
+
 defineProps({
   items: {
-    type: [],
-    required: true
-  }
+    type: Array,
+    required: true,
+  },
 })
 </script>
 
@@ -11,14 +13,19 @@ defineProps({
   <div class="box-container">
     <div class="box" v-for="item in items" :key="item.id">
       <div class="item-info">
-        <div class="checkbox-and-name">
-          <input type="checkbox" class="checkbox">
+        <div class="checkbox-and-name" @click.stop="item.selected = !item.selected">
+          <input type="checkbox" class="checkbox" v-model="item.selected">
           <div class="name">{{ item.name }}</div>
         </div>
-        <div class="edit-icon" @click.stop="seeItemDescription(item.id)">
+        <div class="edit-icon" @click="describeItem = describeItem === item ? null : item">
           <img src="@/assets/icons/Edit.png" alt="Edit icon" class="edit-icon-img">
         </div>
-        <div class="description">{{ item.description }}</div>
+      </div>
+      <div class="description" v-if="describeItem === item">
+        <p>Amount: {{ item.amount }} {{ item.unit }}</p>
+        <p>Expected shelf life: {{ item.expected_shelf_life }} days</p>
+        <p>Days since purchase: {{ item.days_since_purchase }}</p>
+        <p>Days until spoilage: {{ item.days_until_spoilt }}</p>
       </div>
     </div>
   </div>
@@ -26,30 +33,34 @@ defineProps({
 
 <script>
 export default {
-  methods: {
-    seeItemDescription(id){
-      this.$router.push({ path: `/shoppingListItem`, query: { id } });
+  data(){
+    return {
+      describeItem: -1
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .box-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
 .box {
-  width: calc(50% - 10px);
+  width: 60%;
   margin-bottom: 20px;
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  min-width: 75%;
+  max-width: 800px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -72,7 +83,6 @@ export default {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: auto;
 }
 
 .edit-icon-img {
@@ -100,5 +110,6 @@ export default {
   font-size: 16px;
   font-weight: 400;
   color: #666;
+  margin-top: 10px;
 }
 </style>
