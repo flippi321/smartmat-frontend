@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="buttons-container">
-      <button class="shopping-list-button">Button 1</button>
+      <button class="shopping-list-button" @click="moveItemsToFridge">Move Selected to Fridge</button>
       <button class="shopping-list-button">Button 2</button>
     </div>
   </div>
@@ -35,7 +35,7 @@ export default {
     sortChoices: {
       type: Array,
       required: true,
-    },
+    }
   },
   methods: {
     changeSorting(sortingId) {
@@ -44,6 +44,9 @@ export default {
     toggleExpansion() {
       this.isExpanded = !this.isExpanded;
     },
+    moveItemsToFridge(){
+      this.$emit("moveToFridge")
+    }
   },
 };
 </script>
