@@ -14,10 +14,10 @@ defineProps({
 <template>
   <div class="shopping-list-page">
     <div class="sidebar">
-      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="moveItemsToFridge"/>
+      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems"/>
     </div>
     <div class="groceries-container">
-      <Groceries :items="items" />
+      <Groceries :items="items" ref="groceries"/>
     </div>
   </div>
 </template>
@@ -50,7 +50,18 @@ export default {
       console.log(response.data.sortingChoices)
       this.sortingChoices = response.data.sortingChoices.sortingChoices;
     });
-  }
+  },
+
+  methods: {
+    sendSelectedItems() {
+      /*
+      shoppingListService.sendItemsToFridge(JSON.stringify(this.$refs.groceries.$data.currentlySelected)).then(response => {
+        console.log(response)
+      })
+       */
+      console.log(shoppingListService.sendItemsToFridge(JSON.stringify(this.$refs.groceries.$data.currentlySelected)))
+    }
+  },
 };
 </script>
 
