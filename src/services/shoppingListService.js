@@ -27,5 +27,13 @@ export default {
     },
     getSortingChoices(){
         return(axios.get("/getSortingChoices"));
+    },
+    updateShoppingListItem(itemInformation){
+        //return(axios.post("/updateShoppingListItem"))
+        return itemInformation
+    },
+    sendItemsToFridge(itemInformation){
+        //return(axios.post("/moveItemToFridge", itemInformation))
+        return itemInformation
     }
 }
