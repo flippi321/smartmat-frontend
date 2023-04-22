@@ -1,9 +1,4 @@
 <script setup>
-// Import Components
-import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
-import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
-
-// Define Props
 defineProps({
   id: {
     type: Number,
@@ -19,10 +14,10 @@ defineProps({
 <template>
   <div class="shopping-list-page">
     <div class="sidebar">
-      <FilterBar :sortChoices="sortingChoices" :list-id="id"></FilterBar>
+      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="moveItemsToFridge"/>
     </div>
     <div class="groceries-container">
-      <Groceries :items="items"></Groceries>
+      <Groceries :items="items" />
     </div>
   </div>
 </template>
@@ -30,8 +25,14 @@ defineProps({
 
 <script>
 import shoppingListService from "@/services/shoppingListService";
+import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
+import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
 
 export default {
+  components: {
+    Groceries,
+    FilterBar,
+  },
   data() {
     return {
       id: this.id,
