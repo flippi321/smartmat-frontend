@@ -11,6 +11,11 @@ defineProps({
 
 <template>
   <div class="box-container">
+    <transition name="fade" mode="out-in" :duration="2000">
+      <div class="success-box" v-if="showSaveSuccess">
+        <span>Saved successfully!</span>
+      </div>
+    </transition>
     <div class="box" v-for="item in items" :key="item.id">
       <div class="item-info">
         <div class="checkbox-and-name" @click.stop="item.selected = !item.selected">
@@ -40,17 +45,37 @@ export default {
   data() {
     return {
       describeItem: null,
+      showSaveSuccess: false,
     };
   },
   methods: {
     saveChanges() {
       console.log('Saved');
+      this.showSaveSuccess = true;
+      setTimeout(() => {
+        this.showSaveSuccess = false;
+      }, 3000);
     },
   },
 };
 </script>
 
 <style>
+.success-box {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 15px;
+  z-index: 999;       /* Set to a high number to be in front of everything else */
+}
+
 .box-container {
   display: flex;
   flex-direction: column;
