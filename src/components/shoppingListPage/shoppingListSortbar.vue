@@ -1,13 +1,17 @@
 <template>
+  <router-link :to="{ path: `/addToShoppingList`, query: { id: this.id } }" class="new-item-button">
+    <img src="@/assets/icons/plusSign.png" alt="[Add New]" class="plus-icon">
+    <span class="household-button fridge-button">Legg til Mer</span>
+  </router-link>
   <div class="filter-bar-container">
     <div class="filter-bar-content">
       <div class="sorting-bar" :class="{ expanded: isExpanded }">
         <div class="header" @click="toggleExpansion">
-          <h1>Sort By:</h1>
+          <h1>Sort By: {{ selectedChoice }}</h1>
           <i class="arrow-icon" :class="{ 'arrow-down': !isExpanded, 'arrow-up': isExpanded }"></i>
         </div>
         <ul>
-          <li v-for="choice in sortChoices" :key="choice.id" @click="changeSorting(choice.id)">
+          <li v-for="choice in sortChoices" :key="choice.id" @click="changeSorting(choice)">
             {{ choice.name }}
           </li>
         </ul>
@@ -15,7 +19,7 @@
     </div>
     <div class="buttons-container">
       <button class="shopping-list-button" @click="moveItemsToFridge">Move Selected to Fridge</button>
-      <button class="shopping-list-button">Button 2</button>
+      <button class="shopping-list-button">Remove selected</button>
     </div>
   </div>
 </template>
@@ -25,6 +29,7 @@ export default {
   data() {
     return {
       isExpanded: false,
+      selectedChoice: '', // add new data property for selected choice
     };
   },
   props: {
@@ -38,8 +43,10 @@ export default {
     }
   },
   methods: {
-    changeSorting(sortingId) {
-      this.$emit("changeSortBy", sortingId)
+    changeSorting(choice) {
+      this.selectedChoice = choice.name; // set the selected choice
+      this.isExpanded = false; // collapse the dropdown
+      this.$emit("changeSortBy", choice.id);
     },
     toggleExpansion() {
       this.isExpanded = !this.isExpanded;
@@ -51,8 +58,10 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .filter-bar-container {
+  top: 50px;
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
@@ -106,6 +115,39 @@ ul {
   transition: max-height 0.2s ease-in-out;
 }
 
+.new-item-button {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.new-item-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.household-button {
+  font-size: 16px;
+  color: #007aff;
+}
+
 .buttons-container {
   position: absolute;
   bottom: 10px;
@@ -134,5 +176,5 @@ ul {
 .shopping-list-button:hover {
   background-color: #0051b8;
 }
-
 </style>
+
