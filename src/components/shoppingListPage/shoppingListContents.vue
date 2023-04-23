@@ -27,12 +27,18 @@ defineProps({
         </div>
       </div>
       <div class="description" v-if="describeItem === item">
-        <p>Amount: {{ item.amount }} {{ item.unit }}</p>
-        <p>Expected shelf life: {{ item.expected_shelf_life }} days</p>
-        <p>Actual shelf life: {{ item.actual_shelf_life }}</p>
+        <p>
+          Mengde:
+          <input type="number" v-model.number="item.amount" min="0" step="1">
+          {{ item.unit }}
+        </p>
+        <p>Forventet varighet: {{ item.expected_shelf_life }} dager</p>
+        <p>
+          Faktisk varighet:
+          <input type="number" v-model.number="item.actual_shelf_life" min="0" step="1"> dager
+        </p>
         <div class="button-container">
-          <button class="save-button" @click="saveChanges">Save</button>
-          <button class="cancel-button" @click="describeItem = -1">Cancel</button>
+          <button class="save-button" @click="saveChanges(item)">Save</button>
         </div>
       </div>
     </div>
@@ -57,13 +63,13 @@ export default {
     },
   },
   methods: {
-    saveChanges() {
-      console.log('Saved');
-      this.showSaveSuccess = true;
+    saveChanges(item) {
+      this.showSaveSuccess = true
       setTimeout(() => {
-        this.showSaveSuccess = false;
-      }, 3000);
-    },
+        this.showSaveSuccess = false
+      }, 3000)
+      this.$emit('saved-changes', [item.id, item.amount, item.actual_shelf_life])
+    }
   },
 };
 </script>
