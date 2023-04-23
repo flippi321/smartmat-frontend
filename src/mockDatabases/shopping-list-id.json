@@ -1,0 +1,184 @@
+{
+  "groceries": [
+    {
+      "id": 1,
+      "name": "Bananer",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 7,
+      "amount": 5,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 2,
+      "name": "Epler",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 7,
+      "amount": 5,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 3,
+      "name": "Melk",
+      "category": 2,
+      "unit": "l",
+      "expected_shelf_life": 7,
+      "amount": 1.5,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 4,
+      "name": "Eplejuice",
+      "category": 2,
+      "unit": "l",
+      "expected_shelf_life": 7,
+      "amount": 1,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 5,
+      "name": "Kylling",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 0.8,
+      "actual_shelf_life": 2
+    },
+    {
+      "id": 6,
+      "name": "Kjøttdeig",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 0.5,
+      "actual_shelf_life": 1
+    },
+    {
+      "id": 7,
+      "name": "Agurk",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 5,
+      "amount": 2,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 8,
+      "name": "Brokkoli",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 7,
+      "amount": 1,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 9,
+      "name": "Brød",
+      "category": 5,
+      "unit": "stk",
+      "expected_shelf_life": 4,
+      "amount": 1,
+      "actual_shelf_life": 1
+    },
+    {
+      "id": 10,
+      "name": "Skinke",
+      "category": 4,
+      "unit": "hg",
+      "expected_shelf_life": 5,
+      "amount": 0.2,
+      "actual_shelf_life": 3
+    },
+    {
+      "id": 11,
+      "name": "Tomater",
+      "category": 1,
+      "unit": "kg",
+      "expected_shelf_life": 5,
+      "amount": 3,
+      "actual_shelf_life": 3
+    },
+    {
+      "id": 12,
+      "name": "Salat",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 4,
+      "amount": 2,
+      "actual_shelf_life": 3
+    },
+    {
+      "id": 13,
+      "name": "Mors Flatbrød",
+      "category": 3,
+      "unit": "l",
+      "expected_shelf_life": 7,
+      "amount": 1,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 14,
+      "name": "Yogurt",
+      "category": 2,
+      "unit": "l",
+      "expected_shelf_life": 14,
+      "amount": 0.5,
+      "actual_shelf_life": 7
+    },
+    {
+      "id": 15,
+      "name": "Entrecotê",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 1,
+      "actual_shelf_life": 1
+    },
+    {
+      "id": 16,
+      "name": "Laks",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 0.6,
+      "actual_shelf_life": 2
+    },
+    {
+      "id": 17,
+      "name": "Appelsin",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 7,
+      "amount": 0.5,
+      "actual_shelf_life": 4
+    },
+    {
+      "id": 18,
+      "name": "Ekte smør",
+      "category": 1,
+      "unit": "kg",
+      "expected_shelf_life": 14,
+      "amount": 1,
+      "actual_shelf_life": 9
+    },
+    {
+      "id": 19,
+      "name": "Ytrefilet",
+      "category": 2,
+      "unit": "kg",
+      "expected_shelf_life": 21,
+      "amount": 0.5,
+      "actual_shelf_life": 14
+    },
+    {
+      "id": 20,
+      "name": "Brus",
+      "category": 5,
+      "unit": "l",
+      "expected_shelf_life": 3,
+      "amount": 3,
+      "actual_shelf_life": 1
+    }
+  ]
+}
