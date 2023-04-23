@@ -2,15 +2,15 @@
   "sortingChoices": [
     {
       "id": 1,
-      "name": "Navn"
+      "name": "Id"
     },
     {
       "id": 2,
-      "name": "Mengde"
+      "name": "Navn"
     },
     {
       "id": 3,
-      "name": "Utløpsdato"
+      "name": "Utløpsdato [FUNKER IKKE]"
     }
   ]
 }
