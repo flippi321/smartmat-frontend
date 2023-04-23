@@ -3,10 +3,6 @@ defineProps({
   id: {
     type: Number,
     required: true
-  },
-  sortBy:{
-    type: Number,
-    required: false
   }
 })
 </script>
@@ -14,7 +10,7 @@ defineProps({
 <template>
   <div class="shopping-list-page">
     <div class="sidebar">
-      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems"/>
+      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems" @changeSortBy="(n) => changeSorting(n)"/>
     </div>
     <div class="groceries-container">
       <Groceries :items="items" ref="groceries"/>
@@ -36,18 +32,18 @@ export default {
   data() {
     return {
       id: this.id,
+      sortBy: 1,
       items: [],
       sortingChoices: [],
     };
   },
   created() {
     shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
-      console.log(response.data.groceryItems.groceries)
-      this.items = response.data.groceryItems.groceries;
+      console.log(response.data.groceryItemsById.groceries)
+      this.items = response.data.groceryItemsById.groceries;
     });
 
     shoppingListService.getSortingChoices().then(response => {
-      console.log(response.data.sortingChoices)
       this.sortingChoices = response.data.sortingChoices.sortingChoices;
     });
   },
@@ -60,6 +56,24 @@ export default {
       })
        */
       console.log(shoppingListService.sendItemsToFridge(JSON.stringify(this.$refs.groceries.$data.currentlySelected)))
+    },
+
+    changeSorting(sortingId) {
+      this.sortBy = sortingId;
+      this.updateShoppingList();
+    },
+
+    // TODO Temporary to show mockDB, must be replaced when merging with backend
+    updateShoppingList(){
+      shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
+        if(response.data.groceryItemsByAlphabet){
+          console.log(response.data.groceryItemsByAlphabet.groceries);
+          this.items = response.data.groceryItemsByAlphabet.groceries;
+        } else if (response.data.groceryItemsById){
+          console.log(response.data.groceryItemsById.groceries);
+          this.items = response.data.groceryItemsById.groceries;
+        }
+      });
     }
   },
 };
