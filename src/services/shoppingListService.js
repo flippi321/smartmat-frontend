@@ -35,8 +35,13 @@ export default {
         //return(axios.post("/updateShoppingListItem"))
         return itemInformation
     },
+    //TODO Update methods when Database is ready
     sendItemsToFridge(itemInformation){
         //return(axios.post("/moveItemToFridge", itemInformation))
-        return itemInformation
+        return JSON.stringify(itemInformation)
+    },
+    removeItemsFromList(itemInformation){
+        //return(axios.post("/removeItemsFromShoppingList", itemInformation))
+        return JSON.stringify(itemInformation)
     }
 }
