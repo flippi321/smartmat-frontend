@@ -14,7 +14,7 @@ defineProps({
                  @removeItems="removeSelectedItems" @changeSortBy="(n) => changeSorting(n)"/>
     </div>
     <div class="groceries-container">
-      <Groceries :items="items" ref="groceries"/>
+      <Groceries :items="items" ref="groceries" @saved-changes="updateItem"/>
     </div>
   </div>
 </template>
@@ -49,18 +49,29 @@ export default {
   },
 
   methods: {
+    updateItem(itemData) {
+      /*
+      shoppingListService.updateShoppingListItem(itemData)
+          .then(() => {
+
+            this.updateShoppingList();
+          })
+          .catch(error => {
+            console.error('Error updating item:', error);
+          });
+       */
+      console.log(shoppingListService.updateShoppingListItem(itemData))
+    },
     sendSelectedItems() {
       console.log(shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected));
       //.then
       this.updateShoppingList()
     },
-
     removeSelectedItems(){
       console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
       //.then
       this.updateShoppingList()
     },
-
     changeSorting(sortingId) {
       this.sortBy = sortingId;
       this.updateShoppingList();

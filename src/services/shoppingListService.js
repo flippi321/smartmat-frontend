@@ -24,6 +24,10 @@ mock.onGet("/getSortingChoices").reply(200, {
     sortingChoices,
 })
 
+mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200, {
+    sortingChoices,
+})
+
 export default {
     getShoppingListContents(listId, sortBy){
         return(axios.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
@@ -32,8 +36,10 @@ export default {
         return(axios.get("/getSortingChoices"));
     },
     updateShoppingListItem(itemInformation){
-        //return(axios.post("/updateShoppingListItem"))
-        return itemInformation
+        /*
+        return(axios.post("/updateShoppingListItem", { params: {data: itemInformation}}))
+         */
+        return JSON.stringify(itemInformation)
     },
     //TODO Update methods when Database is ready
     sendItemsToFridge(itemInformation){
