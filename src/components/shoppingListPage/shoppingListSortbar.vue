@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     changeSorting(sortingId) {
-      this.$router.push({ path: `/shoppingList`, query: { id: this.listId, sortBy: sortingId } });
+      this.$emit("changeSortBy", sortingId)
     },
     toggleExpansion() {
       this.isExpanded = !this.isExpanded;
