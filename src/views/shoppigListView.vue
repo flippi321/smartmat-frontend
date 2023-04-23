@@ -70,7 +70,7 @@ export default {
     updateShoppingList(){
       shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
         if(response.data.groceryItemsByAlphabet){
-          console.log(response.data.groceryItemsByAlphabet.groceries);
+          this.items = response.data.groceryItemsByAlphabet.groceries;
         } else if (response.data.groceryItemsById){
           this.items = response.data.groceryItemsById.groceries;
         }
