@@ -38,7 +38,6 @@ import recipeService from "@/services/recipeService";
 export default {
     data() {
         return {
-            id: this.id,
             recipes: [],
             nrOfPeople: 0,
         };
@@ -181,13 +180,13 @@ body {
 
 .recipeDescription {
     font-size: 1vw;
-    color: #666;
+    color: #000000;
     margin-bottom: 5px;
 }
 
 .nrOfIngredients {
     font-size: 0.8vw;
-    color: #999;
+    color: #000000;
 }
 
 .scroll-container {
