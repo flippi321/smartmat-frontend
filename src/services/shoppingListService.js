@@ -6,12 +6,18 @@ Mocking responses, must be removed:
 */
 import MockAdapter from "axios-mock-adapter";
 var mock = new MockAdapter(axios);
-import groceryItems from "@/mockDatabases/grocery-items.json";
+import groceryItemsById from "@/mockDatabases/shopping-list-id.json";
+import groceryItemsByAlphabet from "@/mockDatabases/shopping-list-alphabetically.json";
 import sortingChoices from "@/mockDatabases/sorting-choices.json"
 
 // Mock any GET request to /fridgeFromId
 mock.onGet("/getItemsFromShoppingList", { params: { id: 1, sortBy: 1 } }).reply(200, {
-    groceryItems,
+    groceryItemsById,
+});
+
+// Mock any GET request to /fridgeFromId
+mock.onGet("/getItemsFromShoppingList", { params: { id: 1, sortBy: 2 } }).reply(200, {
+    groceryItemsByAlphabet,
 });
 
 mock.onGet("/getSortingChoices").reply(200, {
@@ -20,9 +26,6 @@ mock.onGet("/getSortingChoices").reply(200, {
 
 export default {
     getShoppingListContents(listId, sortBy){
-        console.log("ID-er:");
-        console.log(listId)
-        console.log(sortBy)
         return(axios.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
     },
     getSortingChoices(){
