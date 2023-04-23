@@ -10,7 +10,8 @@ defineProps({
 <template>
   <div class="shopping-list-page">
     <div class="sidebar">
-      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems" @changeSortBy="(n) => changeSorting(n)"/>
+      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems"
+                 @removeItems="removeSelectedItems" @changeSortBy="(n) => changeSorting(n)"/>
     </div>
     <div class="groceries-container">
       <Groceries :items="items" ref="groceries"/>
@@ -39,7 +40,6 @@ export default {
   },
   created() {
     shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
-      console.log(response.data.groceryItemsById.groceries)
       this.items = response.data.groceryItemsById.groceries;
     });
 
@@ -50,12 +50,11 @@ export default {
 
   methods: {
     sendSelectedItems() {
-      /*
-      shoppingListService.sendItemsToFridge(JSON.stringify(this.$refs.groceries.$data.currentlySelected)).then(response => {
-        console.log(response)
-      })
-       */
-      console.log(shoppingListService.sendItemsToFridge(JSON.stringify(this.$refs.groceries.$data.currentlySelected)))
+      console.log(shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected));
+    },
+
+    removeSelectedItems(){
+      console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
     },
 
     changeSorting(sortingId) {
