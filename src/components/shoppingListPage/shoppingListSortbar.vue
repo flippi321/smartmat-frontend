@@ -7,7 +7,7 @@
     <div class="filter-bar-content">
       <div class="sorting-bar" :class="{ expanded: isExpanded }">
         <div class="header" @click="toggleExpansion">
-          <h1>Sort By: {{ selectedChoice }}</h1>
+          <h2>Sorter etter: {{ selectedChoice }}</h2>
           <i class="arrow-icon" :class="{ 'arrow-down': !isExpanded, 'arrow-up': isExpanded }"></i>
         </div>
         <ul>
@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="buttons-container">
-      <button class="shopping-list-button" @click="moveItemsToFridge">Move Selected to Fridge</button>
-      <button class="shopping-list-button">Remove selected</button>
+      <button class="shopping-list-button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
+      <button class="shopping-list-button">Fjern Valgte</button>
     </div>
   </div>
 </template>
