@@ -19,7 +19,7 @@
     </div>
     <div class="buttons-container">
       <button class="shopping-list-button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
-      <button class="shopping-list-button">Fjern Valgte</button>
+      <button class="shopping-list-button" @click="removeItemsFromList">Fjern Valgte</button>
     </div>
   </div>
 </template>
@@ -52,7 +52,10 @@ export default {
       this.isExpanded = !this.isExpanded;
     },
     moveItemsToFridge(){
-      this.$emit("moveToFridge")
+      this.$emit("moveToFridge");
+    },
+    removeItemsFromList(){
+      this.$emit("removeItems");
     }
   },
 };
