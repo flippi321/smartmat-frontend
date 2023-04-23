@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
 import {describe, it, beforeEach, expect} from "vitest"
 import { createStore } from 'vuex'
-import ShoppingListContents from "@/components/shoppingListPage/shoppingListContents.vue";
+import shoppingListContents from "@/components/shoppingListPage/shoppingListContents.vue";
 
-describe('ShoppingListContents.vue', () => {
+describe('shoppingListContents.vue', () => {
     let store
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe('ShoppingListContents.vue', () => {
     })
 
     it('displays the correct number of items', () => {
-        const wrapper = mount(ShoppingListContents, {
+        const wrapper = mount(shoppingListContents, {
             props: {
                 items: store.state.shoppingList
             },
@@ -56,7 +56,7 @@ describe('ShoppingListContents.vue', () => {
     })
 
     it('displays the item names correctly', () => {
-        const wrapper = mount(ShoppingListContents, {
+        const wrapper = mount(shoppingListContents, {
             props: {
                 items: store.state.shoppingList
             },
@@ -71,7 +71,7 @@ describe('ShoppingListContents.vue', () => {
     })
 
     it('selects an item when clicked', async () => {
-        const wrapper = mount(ShoppingListContents, {
+        const wrapper = mount(shoppingListContents, {
             props: {
                 items: store.state.shoppingList
             },
@@ -83,5 +83,21 @@ describe('ShoppingListContents.vue', () => {
         const checkbox = wrapper.find('.checkbox')
         await checkbox.trigger('click')
         expect(store.state.shoppingList[0].selected).toBe(true)
+    })
+
+    it('toggles item selection', async () => {
+        const wrapper = mount(shoppingListContents, {
+            props: {
+                items: store.state.shoppingList
+            },
+            global: {
+                plugins: [store]
+            }
+        })
+
+        const checkboxes = wrapper.findAll('.checkbox')
+        await checkboxes[0].setValue(true)
+
+        expect(wrapper.vm.items[0].selected).toBe(true)
     })
 })

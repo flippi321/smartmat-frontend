@@ -1,87 +1,68 @@
 import {describe, it, expect} from "vitest"
-import { mount } from '@vue/test-utils';
-import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
-import ShoppingListSortbar from "@/components/shoppingListPage/shoppingListSortbar.vue";
+import { mount } from '@vue/test-utils'
+import sortBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
 
-const router = createRouter({
-    history: createWebHistory(),
-    routes: [
+describe('sortBar.vue', () => {
+    const sortChoices = [
         {
-            path: '/addToShoppingList',
-            name: 'AddToShoppingList',
+            id: 1,
+            name: 'Alphabetical',
         },
-    ],
-});
+        {
+            id: 2,
+            name: 'Date Added',
+        },
+    ]
 
-const store = createStore({
-    state() {
-        return {
-            listId: 123,
-            sortChoices: [
-                {
-                    id: 1,
-                    name: 'Id',
-                },
-                {
-                    id: 2,
-                    name: 'Name',
-                },
-            ],
-        };
-    },
-});
+    it('renders the sort choices correctly', () => {
+        const wrapper = mount(sortBar, {
+            props: { listId: 1, sortChoices },
+        })
 
-describe('ShoppingListSortbar.vue', () => {
-    it('emits a "moveToFridge" event when "Flytt valgte til Kjøleskap" is clicked', () => {
-        const wrapper = mount(ShoppingListSortbar, {
-            global: {
-                plugins: [router, store],
-            },
-        });
+        const choices = wrapper.findAll('li')
+        expect(choices).toHaveLength(sortChoices.length)
+        sortChoices.forEach((choice, index) => {
+            const choiceElement = choices[index]
+            expect(choiceElement.text()).toContain(choice.name)
+        })
+    })
 
-        const button = wrapper.findAll('button').at(0);
+    it('changes sorting and emits event', async () => {
+        const wrapper = mount(sortBar, {
+            props: { listId: 1, sortChoices },
+        })
 
-        button.trigger('click');
+        const choices = wrapper.findAll('li')
+        await choices[0].trigger('click')
 
-        expect(wrapper.emitted().moveToFridge).toBeTruthy();
-    });
+        expect(wrapper.vm.selectedChoice).toBe(sortChoices[0].name)
 
-    it('emits a "removeItems" event when "Fjern Valgte" is clicked', () => {
-        const wrapper = mount(ShoppingListSortbar, {
-            global: {
-                plugins: [router, store],
-            },
-        });
+        const emittedEvent = wrapper.emitted('changeSortBy')
+        expect(emittedEvent).toHaveLength(1)
+        expect(emittedEvent[0]).toEqual([sortChoices[0].id])
+    })
 
-        const button = wrapper.findAll('button').at(1);
+    it('emits moveToFridge event', async () => {
+        const wrapper = mount(sortBar, {
+            props: { listId: 1, sortChoices },
+        })
 
-        button.trigger('click');
+        const moveToFridgeButton = wrapper.find('.shopping-list-button')
+        await moveToFridgeButton.trigger('click')
 
-        expect(wrapper.emitted().removeItems).toBeTruthy();
-    });
+        const emittedEvent = wrapper.emitted('moveToFridge')
+        expect(emittedEvent).toHaveLength(1)
+    })
 
-    it('toggles the expansion of the sort choices when the header is clicked', async () => {
-        const wrapper = mount(ShoppingListSortbar, {
-            global: {
-                plugins: [router, store],
-            },
-        });
+    it('emits removeItems event', async () => {
+        const wrapper = mount(sortBar, {
+            props: { listId: 1, sortChoices },
+        })
 
-        const header = wrapper.find('.header');
+        const removeItemsButton = wrapper.findAll('.shopping-list-button')[1]
+        await removeItemsButton.trigger('click')
 
-        expect(wrapper.vm.isExpanded).toBe(false);
-
-        header.trigger('click');
-
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.vm.isExpanded).toBe(true);
-
-        header.trigger('click');
-
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.vm.isExpanded).toBe(false);
-    });
-});
+        const emittedEvent = wrapper.emitted('removeItems')
+        expect(emittedEvent).toHaveLength(1)
+    })
+})
