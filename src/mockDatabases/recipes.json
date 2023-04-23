@@ -32,6 +32,28 @@
       "id": 6,
       "name": "Hamburger",
       "description": "Hamburger med salat, tomat, agurk, løk og  ost"
+    },
+    {
+      "id": 7,
+      "name": "Fiskegrateng",
+      "description": "Fiskegrateng"
+    },
+
+    {
+      "id": 8,
+      "name": "Laks med ris",
+      "description": "Laks med ris og grønnsaker"
+    },
+    {
+      "id": 9,
+      "name": "Fiskegrateng",
+      "description": "Fiskegrateng"
+    },
+
+    {
+      "id": 10,
+      "name": "Laks med ris",
+      "description": "Laks med ris og grønnsaker"
     }
   ]
 }
