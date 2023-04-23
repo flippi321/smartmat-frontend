@@ -51,10 +51,14 @@ export default {
   methods: {
     sendSelectedItems() {
       console.log(shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected));
+      //.then
+      this.updateShoppingList()
     },
 
     removeSelectedItems(){
       console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
+      //.then
+      this.updateShoppingList()
     },
 
     changeSorting(sortingId) {
@@ -67,9 +71,7 @@ export default {
       shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
         if(response.data.groceryItemsByAlphabet){
           console.log(response.data.groceryItemsByAlphabet.groceries);
-          this.items = response.data.groceryItemsByAlphabet.groceries;
         } else if (response.data.groceryItemsById){
-          console.log(response.data.groceryItemsById.groceries);
           this.items = response.data.groceryItemsById.groceries;
         }
       });
