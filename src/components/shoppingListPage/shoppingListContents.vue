@@ -29,8 +29,7 @@ defineProps({
       <div class="description" v-if="describeItem === item">
         <p>Amount: {{ item.amount }} {{ item.unit }}</p>
         <p>Expected shelf life: {{ item.expected_shelf_life }} days</p>
-        <p>Days since purchase: {{ item.days_since_purchase }}</p>
-        <p>Days until spoilage: {{ item.days_until_spoilt }}</p>
+        <p>Actual shelf life: {{ item.actual_shelf_life }}</p>
         <div class="button-container">
           <button class="save-button" @click="saveChanges">Save</button>
           <button class="cancel-button" @click="describeItem = -1">Cancel</button>
