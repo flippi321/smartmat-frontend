@@ -93,7 +93,7 @@ export default {
 .groceries-container {
   margin-left: 400px;
   padding: 10px;
-  margin-top: -200px; /* Only way to fix an issue where a maxssive gap appears above the v-for */
+  margin-top: -120px; /* Only way to fix an issue where a gap appears above the v-for */
 }
 </style>
 
