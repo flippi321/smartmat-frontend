@@ -18,8 +18,7 @@ describe('ShoppingListContents.vue', () => {
                             amount: 1,
                             unit: 'kg',
                             expected_shelf_life: 7,
-                            days_since_purchase: 0,
-                            days_until_spoilt: 7
+                            actual_shelf_life: 7
                         },
                         {
                             id: 2,
@@ -28,8 +27,7 @@ describe('ShoppingListContents.vue', () => {
                             amount: 2,
                             unit: 'pcs',
                             expected_shelf_life: 5,
-                            days_since_purchase: 1,
-                            days_until_spoilt: 4
+                            actual_shelf_life: 4
                         }
                     ]
                 }
