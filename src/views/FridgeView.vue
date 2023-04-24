@@ -1,6 +1,6 @@
 <script setup>
 // Import Components
-import Groceries from "@/components/fridgePage/fridgeContentsCompoent.vue"
+import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
 
 // Define Props
@@ -8,26 +8,25 @@ defineProps({
   id: {
     type: Number,
     required: true
-  },
-  category:{
-    type: Number,
-    required: false
   }
 })
 </script>
 
 <template>
   <div class="fridge-page">
-    <div class="sidebar">
-    <Sidebar :categories="categories" :fridgeId=this.id></Sidebar>
-    </div>
-    <div class="groceries-container">
-      <Groceries :items="items"></Groceries>
+    <transition name="slide">
+      <div class="sidebar" v-if="showSideBar">
+        <Sidebar :categories="categories" :fridgeId=id @changeCategoryById="changeCategory"></Sidebar>
+      </div>
+    </transition>
+    <div class="groceries-container" :class="{ fullwidth: !showSideBar }">
+      <Groceries :items="items"
+                 @showFilterBar="showSideBar = true"
+                 @hideFilterBar="showSideBar = false"
+      />
     </div>
   </div>
 </template>
-
-
 
 <script>
 import fridgeService from "@/services/fridgeService";
@@ -38,18 +37,28 @@ export default {
       id: this.id,
       items: [],
       categories: [],
+      currentCategory: 1,
+      showSideBar: true
     };
   },
   created() {
-    fridgeService.getFridgeContents(this.id).then(response => {
-      this.items = response.data.groceryItems.groceries;
-    });
-    fridgeService.getCategoriesFromFridgeId(this.id).then(response => {
-      this.categories = response.data.categories.categories;
-    });
+    this.items = fridgeService.getFridgeContents(this.id).groceries;
+    this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+  },
+  methods: {
+    changeCategory(categoryId){
+      this.currentCategory = categoryId;
+      this.updateFridge();
+    },
+
+    updateFridge(){
+      this.items = fridgeService.getFridgeContents(this.id).groceries;
+      this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+    }
   }
 };
 </script>
+
 
 <style>
 .sidebar {
@@ -62,7 +71,13 @@ body {
 }
 .groceries-container {
   margin-left: 150px;
+  transition: margin-left 0.3s;
 }
+
+.groceries-container.fullwidth {
+  margin-left: 0;
+}
+
 .sidebar {
   position: fixed;
   top: 0;

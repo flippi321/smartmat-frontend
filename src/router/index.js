@@ -5,7 +5,7 @@ import RegisterView from '../views/RegisterView.vue'
 import FridgeView from "@/views/FridgeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import HouseholdView from "@/views/HouseholdView.vue";
-import ShoppigListView from "@/views/shoppigListView.vue";
+import ShoppingListView from "@/views/shoppingListView.vue";
 import RecipeIdeasView from "@/views/RecipeIdeasView.vue";
 import WeekPlannerView from "@/views/WeekPlannerView.vue";
 
@@ -39,7 +39,7 @@ const router = createRouter({
       path: '/shoppingList',
       name: 'shoppingList',
       props: route => ({ id: parseInt(route.query.id), sortBy: parseInt(route.query.sortBy) }),
-      component: ShoppigListView
+      component: ShoppingListView
     },
     {
       path: '/about',
