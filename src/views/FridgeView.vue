@@ -61,14 +61,15 @@ export default {
 
 
 <style>
+.fridge-page {
+  margin-top: 80px;
+}
+
 .sidebar {
   margin-top: 50px;
   width: 150px;
 }
 
-body {
-  margin-top: 100px;
-}
 .groceries-container {
   margin-left: 150px;
   transition: margin-left 0.3s;
