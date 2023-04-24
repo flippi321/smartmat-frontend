@@ -9,17 +9,18 @@
                 <button class="btn" @click="generateWeeklyMenu">Generer meny!</button>
             </div>
             <div class="menu-container">
-                <div
+                <a
                         v-for="(dinner, index) in weeklyMenu"
                         :key="index"
                         class="dinner-item"
+                        :href="'/recipes/' + dinner.id"
                 >
                     <h3>{{ daysOfWeek[index] }}</h3>
-                    <h4>{{ dinner.name }}</h4>
+                    <h4 class="recipeName">{{ dinner.name }}</h4>
                     <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                          alt="alternatetext" width="200">
-                    <p>{{ dinner.description }}</p>
-                </div>
+                    <p class="recipeDescription">{{ dinner.description }}</p>
+                </a>
             </div>
         </div>
     </div>
@@ -89,7 +90,6 @@ export default {
     padding: 2rem;
     margin: 1rem;
     border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header {
