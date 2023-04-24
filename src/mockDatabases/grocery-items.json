@@ -99,6 +99,106 @@
       "amount": 0.2,
       "days_since_purchase": 1,
       "days_until_spoilt": 3
+    },
+    {
+      "id": 11,
+      "name": "Tomater",
+      "category": 1,
+      "unit": "kg",
+      "expected_shelf_life": 5,
+      "amount": 3,
+      "days_since_purchase": 2,
+      "days_until_spoilt": 3
+    },
+    {
+      "id": 12,
+      "name": "Salat",
+      "category": 1,
+      "unit": "stk",
+      "expected_shelf_life": 4,
+      "amount": 2,
+      "days_since_purchase": 1,
+      "days_until_spoilt": 3
+    },
+    {
+      "id": 13,
+      "name": "Melk",
+      "category": 3,
+      "unit": "l",
+      "expected_shelf_life": 7,
+      "amount": 1,
+      "days_since_purchase": 3,
+      "days_until_spoilt": 4
+    },
+    {
+      "id": 14,
+      "name": "Yogurt",
+      "category": 2,
+      "unit": "l",
+      "expected_shelf_life": 14,
+      "amount": 0.5,
+      "days_since_purchase": 7,
+      "days_until_spoilt": 7
+    },
+    {
+      "id": 15,
+      "name": "Beef",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 1,
+      "days_since_purchase": 2,
+      "days_until_spoilt": 1
+    },
+    {
+      "id": 16,
+      "name": "Salmon",
+      "category": 3,
+      "unit": "kg",
+      "expected_shelf_life": 3,
+      "amount": 0.6,
+      "days_since_purchase": 1,
+      "days_until_spoilt": 2
+    },
+    {
+      "id": 17,
+      "name": "Oranges",
+      "category": 1,
+      "unit": "kg",
+      "expected_shelf_life": 7,
+      "amount": 0.5,
+      "days_since_purchase": 3,
+      "days_until_spoilt": 4
+    },
+    {
+      "id": 18,
+      "name": "Apples",
+      "category": 1,
+      "unit": "kg",
+      "expected_shelf_life": 14,
+      "amount": 1,
+      "days_since_purchase": 5,
+      "days_until_spoilt": 9
+    },
+    {
+      "id": 19,
+      "name": "Cheese",
+      "category": 4,
+      "unit": "hg",
+      "expected_shelf_life": 10,
+      "amount": 0.3,
+      "days_since_purchase": 2,
+      "days_until_spoilt": 8
+    },
+    {
+      "id": 20,
+      "name": "Bread",
+      "category": 5,
+      "unit": "stk",
+      "expected_shelf_life": 3,
+      "amount": 1,
+      "days_since_purchase": 2,
+      "days_until_spoilt": 1
     }
   ]
 }
