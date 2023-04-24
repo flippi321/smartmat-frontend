@@ -27,7 +27,7 @@ defineProps({
       <img src="@/assets/icons/Idea.png" alt="[Dinner Ideas]" class="household-icon">
       <span class="household-button dinner-ideas-button">Middagsideer</span>
     </router-link>
-    <router-link to="/createAd" class="button-primary">
+    <router-link :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary">
       <img src="@/assets/icons/Dinner.png" alt="[Plan Week]" class="household-icon">
       <span class="household-button planner-button">Planlegg Uke</span>
     </router-link>
