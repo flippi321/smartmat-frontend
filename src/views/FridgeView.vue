@@ -8,10 +8,6 @@ defineProps({
   id: {
     type: Number,
     required: true
-  },
-  category:{
-    type: Number,
-    required: false
   }
 })
 </script>
@@ -19,7 +15,7 @@ defineProps({
 <template>
   <div class="fridge-page">
     <div class="sidebar">
-    <Sidebar :categories="categories" :fridgeId=this.id></Sidebar>
+    <Sidebar :categories="categories" :fridgeId=this.id @changeCategoryById="changeCategory"></Sidebar>
     </div>
     <div class="groceries-container">
       <Groceries :items="items"></Groceries>
@@ -36,11 +32,23 @@ export default {
       id: this.id,
       items: [],
       categories: [],
+      currentCategory: 1,
     };
   },
   created() {
     this.items = fridgeService.getFridgeContents(this.id).groceries;
     this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+  },
+  methods: {
+    changeCategory(categoryId){
+      this.currentCategory = categoryId;
+      this.updateFridge();
+    },
+
+    updateFridge(){
+      this.items = fridgeService.getFridgeContents(this.id).groceries;
+      this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+    }
   }
 };
 </script>
