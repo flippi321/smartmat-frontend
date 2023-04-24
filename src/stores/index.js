@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
+import { createPinia } from 'pinia';
 
-export const useAuthStore = defineStore('store',{
+const pinia = createPinia();
+
+export const useAuthStore = defineStore({
+    id: 'store',
     state: () => ({
         isLoggedIn: false,
         firstName: '',
@@ -8,7 +12,7 @@ export const useAuthStore = defineStore('store',{
         email: '',
     }),
     actions: {
-        login() {
+        setLoggedIn() {
             this.isLoggedIn = true;
         },
         logout() {
@@ -40,5 +44,16 @@ export const useAuthStore = defineStore('store',{
         getEmail() {
             return this.email;
         },
+    },
+
+    mutations: {
+        setLoggedIn() {
+            this.isLoggedIn = true;
+        },
+        logout() {
+            this.isLoggedIn = false;
+        }
     }
 });
+
+export default pinia;

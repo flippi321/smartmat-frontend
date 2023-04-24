@@ -37,7 +37,11 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores';
+
 export default {
+    store: true,
+
     data() {
         return {
             email: "",
@@ -46,7 +50,10 @@ export default {
     },
 
     methods: {
+
         async login(){
+            const store = useAuthStore();
+            console.log(store.getIsLoggedIn)
             document.getElementById("alert_1").innerHTML = "";
             this.email = document.querySelector("input[name=email]").value;
             this.password = document.querySelector("input[name=password]").value;
@@ -93,7 +100,9 @@ export default {
             }
               */
 
-            this.$router.push("/household");
+            store.setLoggedIn();
+            console.log(store.getIsLoggedIn)
+            this.$router.push("/household")
         },
 
         moveToRegister() {
