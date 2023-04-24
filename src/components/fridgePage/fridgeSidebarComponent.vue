@@ -3,6 +3,10 @@ defineProps({
   categories: {
     type: [],
     required: true,
+  },
+  fridgeId: {
+    type: Number,
+    required: true,
   }
 });
 </script>
@@ -25,7 +29,7 @@ export default {
       this.$router.push({ path: `/fridgeItem`, query: { itemId } });
     },
     changeCategory(categoryId) {
-      this.$router.push({ path: `/fridge`, query: { id: this.id, category: categoryId } });
+      this.$router.push({ path: `/fridge`, query: { id: this.fridgeId, category: categoryId } });
     },
   },
 }
