@@ -73,9 +73,6 @@ export default {
     setTimeout(() => {
       this.showButton = true;
     }, 2000);
-    setTimeout(() => {
-      this.sendToInformation();
-    }, 3000);
     window.addEventListener("wheel", this.handleScroll);
   },
   beforeUnmount() {
