@@ -78,7 +78,9 @@ export default {
         },
     },
 
-
+    created() {
+        this.generateWeeklyMenu();
+    },
 };
 </script>
 
