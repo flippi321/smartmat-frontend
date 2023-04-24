@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   categories: {
-    type: [],
+    type: Array,
     required: true,
   },
   fridgeId: {
