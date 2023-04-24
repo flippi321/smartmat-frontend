@@ -4,6 +4,6 @@ import RecipeIdeas from '../components/RecipeIdeasComponent.vue'
 
 <template>
     <div class="recipeIdeas">
-        <RecipeIdeas items="items"></RecipeIdeas>
+        <RecipeIdeas id="id"></RecipeIdeas>
     </div>
 </template>
