@@ -14,25 +14,54 @@
       </div>
     </div>
     <div class="scroll-down-content">
-      <div class="info-text" :class="{ showInfoText: showInfoText }">
-        <p>
-          En gjennomsnittlig norsk familie kaster årlig 42 kg mat per person. SmartMat sin visjon er å redusere dette
-          matsvinnet ved å hjelpe brukerne med å planlegge måltidene sine slik at de kaster minst mulig mat.
-        </p>
-      </div>
+      <HomePageTextComponent />
     </div>
   </div>
 </template>
 
 <script>
+import HomePageTextComponent from "@/components/HomePageTextComponent.vue";
+
 export default {
+  components: {
+    HomePageTextComponent
+  },
+
   data() {
     return {
       showTitle: false,
       showButton: false,
-      showInfoText: false,
       showImage: false,
     };
+  },
+  computed: {
+    informationComponentTop() {
+      const scrollDownContent = this.$el.querySelector(".scroll-down-content");
+      return scrollDownContent.offsetTop;
+    },
+  },
+  methods: {
+    sendToInformation() {
+      window.scrollTo({
+        top: this.informationComponentTop,
+        behavior: "smooth",
+      });
+    },
+    sendToStartPage() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+    handleScroll(event) {
+      const deltaY = event.deltaY;
+
+      if (deltaY > 0 && window.scrollY >= 0 && window.scrollY <= 500) {
+        this.sendToInformation();
+      } else if (deltaY < 0 && window.scrollY >= this.informationComponentTop - 250 && window.scrollY <= this.informationComponentTop + 250) {
+        this.sendToStartPage();
+      }
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -44,34 +73,28 @@ export default {
     setTimeout(() => {
       this.showButton = true;
     }, 2000);
-    window.addEventListener("scroll", this.handleScroll);
+    setTimeout(() => {
+      this.sendToInformation();
+    }, 3000);
+    window.addEventListener("wheel", this.handleScroll);
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      const scrollDownContent = document.querySelector(".scroll-down-content");
-      const rect = scrollDownContent.getBoundingClientRect();
-      if (rect.top <= window.innerHeight) {
-        this.showInfoText = true;
-      }
-    },
+    window.removeEventListener("wheel", this.handleScroll);
   },
 };
 </script>
 
+
 <style scoped>
 .homepage {
-  margin-top: -100px;
-  height: 100vh;
+  height: auto;
   width: 100%;
   font-family: Arial, sans-serif;
   color: #333;
 }
 
 .background-image-container {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -139,16 +162,7 @@ export default {
 }
 
 .scroll-down-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2em;
-  font-size: 1.2em;
-  line-height: 1.6;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.showInfoText {
-  opacity: 1;
+  padding-top: 100px;
+  padding-bottom: 2rem;
 }
 </style>
