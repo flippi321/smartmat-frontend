@@ -1,6 +1,6 @@
 import {describe, it, beforeEach, expect} from "vitest"
 import { mount } from '@vue/test-utils';
-import FridgeContentsComponent from "@/components/fridgePage/fridgeContentsCompoent.vue";
+import FridgeContentsComponent from "@/components/fridgePage/fridgeContentsComponent.vue";
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
 
