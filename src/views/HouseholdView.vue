@@ -19,7 +19,7 @@ defineProps({
       <img src="@/assets/icons/Fridge.png" alt="[Fridge]" class="household-icon">
       <span class="household-button fridge-button">Kjøleskap</span>
     </router-link>
-    <router-link :to="{ path: `/shoppingList`, query: { listId: this.id } }" class="button-primary">
+    <router-link :to="{ path: `/shoppingList`, query: { id: this.id, sortBy: 1 } }" class="button-primary">
       <img src="@/assets/icons/List.png" alt="[Shopping List]" class="household-icon">
       <span class="household-button shopping-list-button">Handleliste</span>
     </router-link>

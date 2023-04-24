@@ -2,7 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
-import DinnerIdeasView from "@/views/RecipeIdeasView.vue";
+import FridgeView from "@/views/FridgeView.vue";
+import AboutView from "@/views/AboutView.vue";
+import HouseholdView from "@/views/HouseholdView.vue";
+import ShoppigListView from "@/views/shoppigListView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,31 +27,28 @@ const router = createRouter({
       name: 'register',
       component: RegisterView
     },
-
-
     {
       path: '/fridge',
       name: 'fridge',
       props: route => ({ id: parseInt(route.query.id), category: parseInt(route.query.category) }),
-      component: () => import('../views/FridgeView.vue')
+      component: FridgeView
+    },
+    {
+      path: '/shoppingList',
+      name: 'shoppingList',
+      props: route => ({ id: parseInt(route.query.id), sortBy: parseInt(route.query.sortBy) }),
+      component: ShoppigListView
     },
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue')
+      component: AboutView
     },
     {
       path: '/household',
       name: 'household',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: () =>
-          import("../views/HouseholdView.vue"),
-    },
-
-    {
-      path: '/dinnerideas',
-      name: 'dinnerIdeas',
-      component: DinnerIdeasView
+      component: HouseholdView
     }
   ]
 })
