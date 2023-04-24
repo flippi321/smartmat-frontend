@@ -25,9 +25,6 @@ defineProps({
 <script>
 export default {
   methods: {
-    navigateToItem(itemId) {
-      this.$router.push({ path: `/fridgeItem`, query: { itemId } });
-    },
     changeCategory(categoryId) {
       this.$router.push({ path: `/fridge`, query: { id: this.fridgeId, category: categoryId } });
     },

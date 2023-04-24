@@ -27,8 +27,6 @@ defineProps({
   </div>
 </template>
 
-
-
 <script>
 import fridgeService from "@/services/fridgeService";
 
@@ -41,15 +39,12 @@ export default {
     };
   },
   created() {
-    fridgeService.getFridgeContents(this.id).then(response => {
-      this.items = response.data.groceryItems.groceries;
-    });
-    fridgeService.getCategoriesFromFridgeId(this.id).then(response => {
-      this.categories = response.data.categories.categories;
-    });
+    this.items = fridgeService.getFridgeContents(this.id).groceries;
+    this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
   }
 };
 </script>
+
 
 <style>
 .sidebar {
