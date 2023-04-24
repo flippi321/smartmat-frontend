@@ -26,8 +26,6 @@ const router = createRouter({
       name: 'register',
       component: RegisterView
     },
-
-
     {
       path: '/fridge',
       name: 'fridge',
