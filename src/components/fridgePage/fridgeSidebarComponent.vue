@@ -25,9 +25,12 @@ defineProps({
 <script>
 export default {
   methods: {
-    changeCategory(categoryId) {
-      this.$router.push({ path: `/fridge`, query: { id: this.fridgeId, category: categoryId } });
+    changeCategory(categoryId){
+      this.$emit("changeCategoryById", categoryId);
     },
+    removeItemsFromList(){
+      this.$emit("removeItems");
+    }
   },
 }
 </script>
