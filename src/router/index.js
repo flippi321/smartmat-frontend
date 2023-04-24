@@ -5,7 +5,7 @@ import RegisterView from '../views/RegisterView.vue'
 import FridgeView from "@/views/FridgeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import HouseholdView from "@/views/HouseholdView.vue";
-import ShoppingListView from "@/views/shoppigListView.vue";
+import ShoppingListView from "@/views/shoppingListView.vue";
 import RecipeIdeasView from "@/views/RecipeIdeasView.vue";
 
 const router = createRouter({
