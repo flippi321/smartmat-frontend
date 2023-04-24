@@ -11,7 +11,6 @@
 import smartMatLogo from "@/assets/icons/Logo.png"
 import recycle from "@/assets/icons/recycle.png"
 import fridge from "@/assets/icons/Fridge.png"
-import bananer from "@/assets/bananer.png";
 
 export default {
   name: "HomePageTextComponent",
@@ -28,8 +27,8 @@ export default {
         smartMatLogo,
         recycle,
         fridge,
-        bananer,
-        bananer,
+        smartMatLogo,
+        smartMatLogo,
       ],
     };
   },
