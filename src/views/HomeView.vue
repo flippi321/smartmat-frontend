@@ -87,7 +87,7 @@ export default {
 
 <style scoped>
 .homepage {
-  height: auto;
+  margin-top: -100px;
   width: 100%;
   font-family: Arial, sans-serif;
   color: #333;
