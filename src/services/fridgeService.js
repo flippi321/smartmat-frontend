@@ -5,29 +5,33 @@ import axios from "axios";
 Mocking responses, must be removed:
 */
 import MockAdapter from "axios-mock-adapter";
-var mock = new MockAdapter(axios);
+const mock = new MockAdapter(axios);
 import groceryItems from "@/mockDatabases/grocery-items.json";
 import categories from "@/mockDatabases/categories.json"
 
 // Mock any GET request to /fridgeFromId
-mock.onGet("/getItemsFromFridge", { params: { id: 1 } }).reply(200, {
+mock.onGet("/getItemsFromFridge").reply(200, {
     groceryItems,
 });
 
 // Mock any GET request to /fridgeFromId
-mock.onGet("/getCategoriesFromFridge", { params: { id: 1 } }).reply(200, {
+mock.onGet("/getFridgeCategories").reply(200, {
     categories,
 });
 
 export default {
     getFridgeContents(fridgeId){
-        console.log("(contents) fridge id:");
         console.log(fridgeId)
-        return(axios.get("/getItemsFromFridge", { params: { id: fridgeId } }));
+        /*
+        return(axios.get("/getItemsFromFridge"));
+         */
+        return(groceryItems);
     },
     getCategoriesFromFridgeId(fridgeId){
-        console.log("(category) fridge id:");
         console.log(fridgeId)
-        return(axios.get("/getCategoriesFromFridge", { params: { id: fridgeId } }));
+        /*
+        return(axios.get("/getFridgeCategories"));
+         */
+        return(categories);
     }
 }

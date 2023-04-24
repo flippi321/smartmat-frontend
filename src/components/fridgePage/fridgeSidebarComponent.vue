@@ -3,13 +3,17 @@ defineProps({
   categories: {
     type: [],
     required: true,
+  },
+  fridgeId: {
+    type: Number,
+    required: true,
   }
 });
 </script>
 
 <template>
   <div class="sidebar">
-    <h1>Categories:</h1>
+    <h1>Filtrer etter kategorier:</h1>
     <ul>
       <li v-for="category in categories" :key="category.id" @click="changeCategory(category.id)">
         {{ category.name }}
@@ -21,12 +25,12 @@ defineProps({
 <script>
 export default {
   methods: {
-    navigateToItem(itemId) {
-      this.$router.push({ path: `/fridgeItem`, query: { itemId } });
+    changeCategory(categoryId){
+      this.$emit("changeCategoryById", categoryId);
     },
-    changeCategory(categoryId) {
-      this.$router.push({ path: `/fridge`, query: { id: this.id, category: categoryId } });
-    },
+    removeItemsFromList(){
+      this.$emit("removeItems");
+    }
   },
 }
 </script>

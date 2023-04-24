@@ -1,0 +1,60 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Taco",
+      "description": "Taco med kjøttdeig, salat, tomat, mais, agurk, løk, ost, salsa og rømme"
+    },
+    {
+      "id": 2,
+      "name": "Pasta bolognese",
+      "description": "Pasta med kjøttsaus"
+    },
+    {
+      "id": 3,
+      "name": "Kylling tikka masala",
+      "description": "Kylling i tikka masala med ris"
+    },
+
+    {
+      "id": 4,
+        "name": "Fiskegrateng",
+        "description": "Fiskegrateng"
+    },
+
+    {
+      "id": 5,
+      "name": "Laks med ris",
+      "description": "Laks med ris og grønnsaker"
+    },
+
+    {
+      "id": 6,
+      "name": "Hamburger",
+      "description": "Hamburger med salat, tomat, agurk, løk og  ost"
+    },
+    {
+      "id": 7,
+      "name": "Fiskegrateng",
+      "description": "Fiskegrateng"
+    },
+
+    {
+      "id": 8,
+      "name": "Laks med ris",
+      "description": "Laks med ris og grønnsaker"
+    },
+    {
+      "id": 9,
+      "name": "Fiskegrateng",
+      "description": "Fiskegrateng"
+    },
+
+    {
+      "id": 10,
+      "name": "Laks med ris",
+      "description": "Laks med ris og grønnsaker"
+    }
+  ]
+}
+
