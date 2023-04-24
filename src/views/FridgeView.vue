@@ -1,6 +1,6 @@
 <script setup>
 // Import Components
-import Groceries from "@/components/fridgePage/fridgeContentsCompoent.vue"
+import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
 
 // Define Props
@@ -14,11 +14,16 @@ defineProps({
 
 <template>
   <div class="fridge-page">
-    <div class="sidebar">
-    <Sidebar :categories="categories" :fridgeId=this.id @changeCategoryById="changeCategory"></Sidebar>
-    </div>
-    <div class="groceries-container">
-      <Groceries :items="items"></Groceries>
+    <transition name="slide">
+      <div class="sidebar" v-if="showSideBar">
+        <Sidebar :categories="categories" :fridgeId=id @changeCategoryById="changeCategory"></Sidebar>
+      </div>
+    </transition>
+    <div class="groceries-container" :class="{ fullwidth: !showSideBar }">
+      <Groceries :items="items"
+                 @showFilterBar="showSideBar = true"
+                 @hideFilterBar="showSideBar = false"
+      />
     </div>
   </div>
 </template>
@@ -33,6 +38,7 @@ export default {
       items: [],
       categories: [],
       currentCategory: 1,
+      showSideBar: true
     };
   },
   created() {
@@ -65,7 +71,13 @@ body {
 }
 .groceries-container {
   margin-left: 150px;
+  transition: margin-left 0.3s;
 }
+
+.groceries-container.fullwidth {
+  margin-left: 0;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
