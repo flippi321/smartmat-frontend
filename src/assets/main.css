@@ -13,7 +13,6 @@ Needs to be updated before we should Import it
 }
 
 body {
-  margin-top: -100px;
   background: linear-gradient(to bottom, #9cc5a1, #dce1de);
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
