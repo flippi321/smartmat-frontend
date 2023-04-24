@@ -6,6 +6,7 @@ import FridgeView from "@/views/FridgeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import HouseholdView from "@/views/HouseholdView.vue";
 import ShoppigListView from "@/views/shoppigListView.vue";
+import RecipeIdeasView from "@/views/RecipeIdeasView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,12 @@ const router = createRouter({
       name: 'household',
       props: route => ({ id: parseInt(route.query.id) }),
       component: HouseholdView
+    },
+    {
+      path: '/dinnerIdeas',
+      name: 'dinnerIdeas',
+      props: route => ({ id: parseInt(route.query.id) }),
+      component: RecipeIdeasView
     }
   ]
 })
