@@ -50,7 +50,7 @@ export default {
 
 .section-image {
   display: block;
-  margin: 0 auto;
-  max-width: 30%;
+  margin: 0 auto 50px;
+  width: 20%;
 }
 </style>

@@ -72,11 +72,14 @@ export default {
     };
   },
   created() {
-    this.items = fridgeService.getFridgeContents(this.id).groceries;
-    this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
-
-
-
+    fridgeService.getFridgeContents(this.id).then((response) => {
+      console.log("Contents response:")
+      this.items = response.data.groceryItems.groceries;
+    });
+    fridgeService.getCategoriesFromFridgeId().then((response) => {
+      console.log("Categories response:")
+      this.categories = response.data.categories.categories;
+    });
   },
   methods: {
     handleFeedback2(feedbackInfo) {
@@ -96,8 +99,14 @@ export default {
     },
 
     updateFridge(){
-      this.items = fridgeService.getFridgeContents(this.id).groceries;
-      this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+      fridgeService.getFridgeContents(this.id).then((response) => {
+        console.log("Contents response:")
+        this.items = response.data.groceryItems.groceries;
+      });
+      fridgeService.getCategoriesFromFridgeId().then((response) => {
+        console.log("Categories response:")
+        this.categories = response.data.categories.categories;
+      });
     }
   }
 };
