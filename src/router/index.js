@@ -9,6 +9,8 @@ import ShoppingListView from "@/views/shoppingListView.vue";
 import RecipeIdeasView from "@/views/RecipeIdeasView.vue";
 import WeekPlannerView from "@/views/WeekPlannerView.vue";
 import { getAuthStore } from '@/stores';
+import RecipeView from "@/views/RecipeView.vue"
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +40,7 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+
     },
     {
       path: '/shoppingList',
@@ -80,6 +83,12 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/recipe',
+      name: 'recipe',
+      props: route => ({ id: parseInt(route.query.id) }),
+      component: RecipeView
     }
   ]
 })

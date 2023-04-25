@@ -15,7 +15,7 @@ defineProps({
   </div>
 
   <div class="buttons-container">
-    <router-link :to="{ path: `/fridge`, query: { id: this.id, category: 0 } }" class="button-primary">
+    <router-link :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary">
       <img src="@/assets/icons/Fridge.png" alt="[Fridge]" class="household-icon">
       <span class="household-button fridge-button">Kjøleskap</span>
     </router-link>
@@ -39,10 +39,6 @@ defineProps({
 </template>
 
 <style>
-body{
-  padding-top: 100px;
-}
-
 .buttons-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

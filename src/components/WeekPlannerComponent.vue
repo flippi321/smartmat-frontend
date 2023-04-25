@@ -13,7 +13,7 @@
                         v-for="(dinner, index) in weeklyMenu"
                         :key="index"
                         class="dinner-item"
-                        :to="{ path: `/recipes`, query: { id: dinner.id } }"
+                        :to="{ path: `/recipe`, query: { id: dinner.id } }"
                 >
                     <h3>{{ daysOfWeek[index] }}</h3>
                     <h4 class="recipeName">{{ dinner.name }}</h4>
