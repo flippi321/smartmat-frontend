@@ -1,11 +1,12 @@
 import axios from "axios";
+const apiClient = axios.create();
 //let url = 'https://localhost:8000'
 
 /*
 Mocking responses, must be removed:
 */
 import MockAdapter from "axios-mock-adapter";
-var mock = new MockAdapter(axios);
+var mock = new MockAdapter(apiClient);
 import groceryItemsById from "@/mockDatabases/shopping-list-id.json";
 import groceryItemsByAlphabet from "@/mockDatabases/shopping-list-alphabetically.json";
 import sortingChoices from "@/mockDatabases/sorting-choices.json"
@@ -30,10 +31,10 @@ mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200,
 
 export default {
     getShoppingListContents(listId, sortBy){
-        return(axios.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
+        return(apiClient.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
     },
     getSortingChoices(){
-        return(axios.get("/getSortingChoices"));
+        return(apiClient.get("/getSortingChoices"));
     },
     updateShoppingListItem(itemInformation){
         /*
