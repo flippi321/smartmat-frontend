@@ -1,77 +1,73 @@
 {
-  "recipe": [
+  "id": 1,
+  "name": "Brun Lapskaus",
+  "description": "Lapskaus er en velkjent tradisjonsrett i Norge. Rykende varm lapskaus faller garantert i smak hos liten og stor.",
+  "ingredients": [
     {
       "id": 1,
-      "name": "Brun Lapskaus",
-      "description": "Lapskaus er en velkjent tradisjonsrett i Norge. Rykende varm lapskaus faller garantert i smak hos liten og stor.",
-      "ingredients": [
-        {
-          "id": 1,
-          "name": "benfri høyrygg av storfekjøtt",
-          "amount": 800,
-          "unit": "g"
-        },
-        {
-          "id": 2,
-          "name": "Smør",
-          "amount": 2,
-          "unit": "ss"
-        },
-        {
-          "id": 3,
-          "name": "Vann",
-          "amount": 10,
-          "unit": "dl"
-        },
-        {
-          "id": 4,
-          "name": "Kjøttbuljongterning ",
-          "amount": 1,
-          "unit": "stk"
-        },
-        {
-          "id": 5,
-          "name": "Potet",
-          "amount": 800,
-          "unit": "g"
-        },
-        {
-          "id": 6,
-          "name": "Gulrot",
-          "amount": 3,
-          "unit": "stk"
-        },
-        {
-          "id": 7,
-          "name": "Kålrot",
-          "amount": 150,
-          "unit": "g"
-        },
-        {
-          "id": 8,
-          "name": "Persillerot",
-          "amount": 150,
-          "unit": "g"
-        },
-        {
-          "id": 9,
-          "name": "Purre",
-          "amount": 0.5,
-          "unit": "stk"
-        },
-        {
-          "id": 10,
-          "name": "Salt",
-          "amount": 1,
-          "unit": "ts"
-        },
-        {
-          "id": 11,
-          "name": "Grov Pepper",
-          "amount": 0.5,
-          "unit": "ts"
-        }
-      ]
+      "name": "benfri høyrygg av storfekjøtt",
+      "amount": 800,
+      "unit": "g"
+    },
+    {
+      "id": 2,
+      "name": "Smør",
+      "amount": 2,
+      "unit": "ss"
+    },
+    {
+      "id": 3,
+      "name": "Vann",
+      "amount": 10,
+      "unit": "dl"
+    },
+    {
+      "id": 4,
+      "name": "Kjøttbuljongterning ",
+      "amount": 1,
+      "unit": "stk"
+    },
+    {
+      "id": 5,
+      "name": "Potet",
+      "amount": 800,
+      "unit": "g"
+    },
+    {
+      "id": 6,
+      "name": "Gulrot",
+      "amount": 3,
+      "unit": "stk"
+    },
+    {
+      "id": 7,
+      "name": "Kålrot",
+      "amount": 150,
+      "unit": "g"
+    },
+    {
+      "id": 8,
+      "name": "Persillerot",
+      "amount": 150,
+      "unit": "g"
+    },
+    {
+      "id": 9,
+      "name": "Purre",
+      "amount": 0.5,
+      "unit": "stk"
+    },
+    {
+      "id": 10,
+      "name": "Salt",
+      "amount": 1,
+      "unit": "ts"
+    },
+    {
+      "id": 11,
+      "name": "Grov Pepper",
+      "amount": 0.5,
+      "unit": "ts"
     }
   ]
 }
