@@ -13,22 +13,12 @@ import recipeItem from "@/mockDatabases/recipe-item.json";
 // Set up the mock adapter with the new axios instance
 const mock = new MockAdapter(apiClient);
 
-mock.onGet("/getRecipes").reply(config => {
-    const { id } = config.params;
-    if (id === 1) {
-        return [200, recipes];
-    } else {
-        return [400, { message: "Household not found" }];
-    }
+mock.onGet("/getRecipes", { params: { id: 1 } }).reply(200, {
+    recipes,
 });
 
-mock.onGet("/getRecipeById").reply(config => {
-    const { id } = config.params;
-    if (id === 1) {
-        return [200, recipeItem];
-    } else {
-        return [404, { message: "Recipe not found" }];
-    }
+mock.onGet("/getRecipeById", { params: { id: 1 } }).reply(200, {
+    recipeItem,
 });
 
 /*
