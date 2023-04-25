@@ -1,5 +1,5 @@
 <script setup>
-import UserPageComponent from "@/components/UserPageComponent.vue";
+import UserPageComponent from "@/components/UserComponent.vue";
 import { useAuthStore } from "@/stores";
 
 const authStore = useAuthStore();
@@ -8,9 +8,9 @@ const authStore = useAuthStore();
 <template>
   <div>
     <UserPageComponent
-        :id="authStore.getFirstName"
-        :first-name="authStore.getLastName"
-        :last-name="authStore.getEmail"
-        :email="authStore.getUserId"/>
+        :id="authStore.getUserId"
+        :first-name="authStore.getFirstName"
+        :last-name="authStore.getLastName"
+        :email="authStore.getEmail"/>
   </div>
 </template>
