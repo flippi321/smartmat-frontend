@@ -76,7 +76,6 @@ export default {
     },
     deleteGrocery() {
       // Emit an event to notify the parent component that the grocery should be deleted
-      console.log("svære")
       this.$emit("delete-grocery1", this.item);
       this.$emit("close", this.item);
 
