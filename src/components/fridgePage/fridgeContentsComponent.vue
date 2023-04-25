@@ -10,7 +10,13 @@ defineProps({
 });
 
 // Define Emits
-const emit = defineEmits(["showFilterBar", "hideFilterBar"]);
+const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery"]);
+
+function updateGroceryHandler(updatedItem) {
+  // Kode for å oppdatere matvarelisten i FridgeView
+  emit('update-grocery', updatedItem); // Utøver hendelse og sender med oppdatert matvare
+
+}
 
 const expandedItem = ref(null);
 
@@ -43,12 +49,20 @@ function toggleExpand(item) {
           <FridgeItemDetailsComponent
               :item="item"
               @close="toggleExpand(null)"
+              @update-grocery1="handleUpdateGrocery1"
           />
         </div>
       </transition>
     </div>
   </div>
 </template>
+
+<script>
+  function handleUpdateGrocery1(groceryItem) {
+    // Send request to backend to update grocery item in database
+    console.log(groceryItem.name);
+  }
+</script>
 
 <style>
 .fridge-box-container {

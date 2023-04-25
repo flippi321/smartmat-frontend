@@ -23,6 +23,8 @@ defineProps({
       <Groceries :items="items"
                  @showFilterBar="showSideBar = true"
                  @hideFilterBar="showSideBar = false"
+                 @update-grocery2="handleUpdateGrocery"
+    />
       />
     </div>
   </div>
@@ -30,7 +32,7 @@ defineProps({
 
 <script>
 import fridgeService from "@/services/fridgeService";
-
+import FridgeContentsComponent from '@/components/fridgeContentsComponent.vue';
 export default {
   data() {
     return {
@@ -44,6 +46,11 @@ export default {
   created() {
     this.items = fridgeService.getFridgeContents(this.id).groceries;
     this.categories = fridgeService.getCategoriesFromFridgeId(this.id).categories;
+
+    function handleUpdateGrocery(groceryItem) {
+      // Send request to backend to update grocery item in database
+      console.log(groceryItem.name);
+    }
   },
   methods: {
     changeCategory(categoryId){

@@ -1,25 +1,18 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
-</script>
-
+<!--Det jeg jobber med nå er å få emit til å fungere. Emit skal brukes når jeg trykker på "Oppdater" eller "Fjern vare"
+Videre skal en melding vises til bruker når han oppdaterer eller sletter en vare, og vis den slettes skal brukeren bli
+sendt tilbake til fridge-siden (fridge-siden og detalje-om-vare-siden er teksnisk sett samme side). -->
 <template>
-<!--  byttet this.groceryInfo.name til this.name (også de andre stedene) og da får jeg ikke feilmelding lengre-->
   <div class="grocery-item">
     <div class="grocery-item-image">
-      <img :src="getImageUrl()" :alt="this.name" />
+      <img :src="getImageUrl()" :alt="item.name" />
     </div>
     <div class="grocery-item-details">
-      <h2 class="grocery-item-name">{{ this.name }}</h2>
-      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="this.amount" min="0" />
-        {{this.unit}}</p>
-      <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ this.expected_shelf_life }} dager</p>
+      <h2 class="grocery-item-name">{{ item.name }}</h2>
+      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="item.amount" min="0" />
+        {{item.unit}}</p>
+      <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
       <p class="grocery-item-actual-shelf-life">
-        Faktisk holdbarhet: <input type="number" v-model.number="this.actual_shelf_life" min="0" /> dager
+        Faktisk holdbarhet: <input type="number" v-model.number="item.actual_shelf_life" min="0" /> dager
       </p>
       <div class="grocery-item-buttons">
         <button @click="updateGrocery">Oppdater</button>
@@ -31,32 +24,26 @@ defineProps({
 
 <script>
 export default {
-
-  data() {
-    return {
-      query: ""
-    };
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
   },
 
   methods: {
     getImageUrl() {
       // Return the image URL
-     // return "../assets/" + this.groceryInfo.name + ".png";
-      return "src/assets/Bananer.png";
+      // her skal selvfølgelig bildet hentes fra databasen
+      return "src/assets/" + this.item.name + ".png";
     },
     updateGrocery() {
       // Emit an event to notify the parent component that the grocery has been updated
-      this.$emit("update-grocery", this.groceryInfo);
-      this.query = "update";
-      const query = this.query
-      this.$router.push({ path: `/fridge`, query: { query } });
+      this.$emit("update-grocery1", this.item);
     },
     deleteGrocery() {
       // Emit an event to notify the parent component that the grocery should be deleted
-      this.$emit("delete-grocery", this.id);
-      this.query = "delete";
-      const query = this.query
-      this.$router.push({ path: `/fridge`, query: { query } });
+      this.$emit("delete-grocery", this.item);
     },
   },
 };
