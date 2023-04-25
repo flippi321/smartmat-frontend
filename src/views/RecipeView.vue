@@ -7,3 +7,25 @@ import Recipe from '../components/RecipeComponent.vue'
     <Recipe/>
   </div>
 </template>
+
+<script>
+import recipeService from "@/services/recipeService";
+
+export default {
+  data() {
+    return {
+      recipe: {}
+    };
+  },
+  methods: {
+    getRecipe(id) {
+      recipeService.getRecipeById(id).then(response => {
+        this.recipe = response.data;
+      });
+    }
+  },
+  mounted() {
+    this.getRecipe(this.id);
+  }
+};
+</script>
