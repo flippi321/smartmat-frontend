@@ -1,7 +1,6 @@
-<!--Det jeg jobber med nå er å få emit til å fungere. Emit skal brukes når jeg trykker på "Oppdater" eller "Fjern vare"
-Videre skal en melding vises til bruker når han oppdaterer eller sletter en vare, og vis den slettes skal brukeren bli
-sendt tilbake til fridge-siden (fridge-siden og detalje-om-vare-siden er teksnisk sett samme side). -->
+
 <template>
+
   <div class="grocery-item">
     <div class="grocery-item-image">
       <img :src="getImageUrl()" :alt="item.name" />
@@ -17,17 +16,37 @@ sendt tilbake til fridge-siden (fridge-siden og detalje-om-vare-siden er teksnis
       <div class="grocery-item-buttons">
         <button @click="updateGrocery">Oppdater</button>
         <button @click="deleteGrocery">Fjern vare</button>
+        <button @click="returnToFridge">Returner til kjøleskap</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  data(){
+    return{
+      updatedItem:{
+         id: 0,
+         name: "",
+         category: 0,
+         unit: "",
+         expected_shelf_life: 0,
+         amount: 0,
+         actual_shelf_life: 0
+      },
+      feedbackInfo: {
+        feedbackMessage: "",
+        feedbackType: "",
+        feedback: false
+      }
     }
   },
 
@@ -39,12 +58,37 @@ export default {
     },
     updateGrocery() {
       // Emit an event to notify the parent component that the grocery has been updated
-      this.$emit("update-grocery1", this.item);
+      this.updatedItem.id = this.item.id
+      this.updatedItem.name = this.item.name
+      this.updatedItem.category = this.item.category
+      this.updatedItem.unit = this.item.unit
+      this.updatedItem.expected_shelf_life = this.item.unit
+      this.updatedItem.amount = this.item.amount
+      this.updatedItem.actual_shelf_life = this.item.actual_shelf_life
+
+      this.$emit("update-grocery1", this.updatedItem);
+
+      this.feedbackInfo.feedbackMessage = "Varen ble oppdatert";
+      this.feedbackInfo.feedbackType = "success";
+      this.feedbackInfo.feedback = true;
+      this.$emit("give-feedback1", this.feedbackInfo)
+
     },
     deleteGrocery() {
       // Emit an event to notify the parent component that the grocery should be deleted
-      this.$emit("delete-grocery", this.item);
+      console.log("svære")
+      this.$emit("delete-grocery1", this.item);
+      this.$emit("close", this.item);
+
+      this.feedbackInfo.feedbackMessage = "Varen ble slettet";
+      this.feedbackInfo.feedbackType = "success";
+      this.feedbackInfo.feedback = true;
+      this.$emit("give-feedback1", this.feedbackInfo)
     },
+    returnToFridge(){
+      this.$emit("close", this.item);
+
+    }
   },
 };
 </script>

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import FridgeItemDetailsComponent from "@/components/groceryItemComponent.vue";
 
+
 defineProps({
   items: {
     type: Array,
@@ -10,28 +11,44 @@ defineProps({
 });
 
 // Define Emits
-const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery"]);
+const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close", "close",
+"give-feedback1"]);
 
-function updateGroceryHandler(updatedItem) {
-  // Kode for å oppdatere matvarelisten i FridgeView
-  emit('update-grocery', updatedItem); // Utøver hendelse og sender med oppdatert matvare
 
+function handleUpdateGrocery1(groceryItem) {
+  // Send request to backend to update grocery item in database
+  emit("update-grocery2", groceryItem);
 }
-
+function handleDeleteGrocery1(groceryItem) {
+  // Send request to backend to update grocery item in database
+  emit("delete-grocery2", groceryItem);
+}
 const expandedItem = ref(null);
 
 function toggleExpand(item) {
-  if (expandedItem.value === item) {
-    expandedItem.value = null;
-    emit("showFilterBar");
-  } else {
-    expandedItem.value = item;
-    emit("hideFilterBar");
-  }
+  console.log("toggleExpand")
+  expandedItem.value = item;
+  emit("hideFilterBar");
+
+
+}
+function toggleRetract(){
+  setTimeout(toggleRetractHelper, 100)
+}
+
+function toggleRetractHelper(){
+  expandedItem.value = null;
+  emit("showFilterBar");
+}
+
+function handleFeedback1(feedbackInfo){
+  emit("give-feedback2", feedbackInfo);
+
 }
 </script>
 
 <template>
+
   <div class="fridge-box-container">
     <div
         class="fridge-box"
@@ -48,8 +65,10 @@ function toggleExpand(item) {
         <div class="details-container" v-if="expandedItem === item">
           <FridgeItemDetailsComponent
               :item="item"
-              @close="toggleExpand(null)"
+              @close="toggleRetract"
               @update-grocery1="handleUpdateGrocery1"
+              @delete-grocery1="handleDeleteGrocery1"
+              @give-feedback1="handleFeedback1"
           />
         </div>
       </transition>
@@ -58,10 +77,7 @@ function toggleExpand(item) {
 </template>
 
 <script>
-  function handleUpdateGrocery1(groceryItem) {
-    // Send request to backend to update grocery item in database
-    console.log(groceryItem.name);
-  }
+
 </script>
 
 <style>
@@ -125,5 +141,6 @@ function toggleExpand(item) {
     height: 90%;
     width: 90%;
   }
+
 }
 </style>
