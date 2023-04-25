@@ -33,7 +33,7 @@ const router = createRouter({
     {
       path: '/fridge',
       name: 'fridge',
-      props: route => ({ id: parseInt(route.query.id), category: parseInt(route.query.category) }),
+      props: route => ({ id: parseInt(route.query.id)}),
       component: FridgeView
     },
     {
