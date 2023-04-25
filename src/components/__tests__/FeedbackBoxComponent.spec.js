@@ -3,7 +3,7 @@ import { describe, it, beforeEach, afterEach, expect } from "vitest";
 import Vuex from "vuex";
 import FeedbackBoxComponent from "@/components/FeedbackBoxComponent.vue";
 
-import { configure } from 'vitest'
+
 
 
 

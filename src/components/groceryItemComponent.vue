@@ -7,11 +7,11 @@
     </div>
     <div class="grocery-item-details">
       <h2 class="grocery-item-name">{{ item.name }}</h2>
-      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="item.amount" min="0" />
+      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="localAmount" min="0" />
         {{item.unit}}</p>
       <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
       <p class="grocery-item-actual-shelf-life">
-        Faktisk holdbarhet: <input type="number" v-model.number="item.actual_shelf_life" min="0" /> dager
+        Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
       </p>
       <div class="grocery-item-buttons">
         <button @click="updateGrocery">Oppdater</button>
@@ -33,6 +33,8 @@ export default {
   },
   data(){
     return{
+      localAmount: this.item.amount,
+      localActual_shelf_life: this.item.actual_shelf_life,
       updatedItem:{
          id: 0,
          name: "",
@@ -63,8 +65,8 @@ export default {
       this.updatedItem.category = this.item.category
       this.updatedItem.unit = this.item.unit
       this.updatedItem.expected_shelf_life = this.item.unit
-      this.updatedItem.amount = this.item.amount
-      this.updatedItem.actual_shelf_life = this.item.actual_shelf_life
+      this.updatedItem.amount = this.localAmount
+      this.updatedItem.actual_shelf_life = this.localActual_shelf_life
 
       this.$emit("update-grocery1", this.updatedItem);
 

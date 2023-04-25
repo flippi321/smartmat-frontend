@@ -20,7 +20,7 @@ export default {
     },
   },
 
-  setup(props) {
+  setup() {
     const visible = ref(true);
 
     watchEffect(() => {

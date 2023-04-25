@@ -13,7 +13,7 @@ defineProps({
   }
 })
 
-const emit = defineEmits(["update-grocery2", "delete-grocery2", "give-feedback2"]);
+//const emit = defineEmits(["update-grocery2", "delete-grocery2", "give-feedback2"]);
 
 function handleUpdateGrocery2(groceryItem) {
   // Send request to backend to update grocery item in database
@@ -52,7 +52,6 @@ function handleDeleteGrocery2(groceryItem) {
 
 <script>
 import fridgeService from "@/services/fridgeService";
-import FridgeContentsComponent from '@/components/fridgePage/fridgeContentsComponent.vue';
 import FeedbackBoxComponent from "@/components/FeedbackBoxComponent.vue";
 export default {
   components: {

@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import Vuex from "vuex"
-import { shallowMount } from '@vue/test-utils'
 import {describe, it, beforeEach, expect} from "vitest"
 import GroceryItemComponent from '@/components/groceryItemComponent.vue'
 //jeg har kommentert ut update og delete testene fordi de ikke går når jeg ikke har noen database å sjekke opp mot
