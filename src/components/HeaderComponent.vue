@@ -1,3 +1,10 @@
+<script setup>
+import {useAuthStore} from "@/stores";
+
+const store = useAuthStore();
+
+</script>
+
 <template>
   <nav class="navbar">
     <router-link to="/" class="navbar-left">
@@ -9,9 +16,13 @@
         <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="header-icon">
         <span class="header-button button-primary-text">Om oss</span>
       </router-link>
-      <router-link to="/login" class="button-primary">
+      <router-link v-if="!store.getIsLoggedIn" to="/login" class="button-primary">
         <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
         <span class="header-button button-primary-text">Logg In</span>
+      </router-link>
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/user`, query: { id: store.getUserId } }" class="button-primary">
+        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
+        <span class="header-button button-primary-text">{{store.getFirstName || store.getEmail}}</span>
       </router-link>
     </div>
   </nav>

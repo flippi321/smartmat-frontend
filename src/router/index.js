@@ -8,7 +8,9 @@ import HouseholdView from "@/views/HouseholdView.vue";
 import ShoppingListView from "@/views/shoppingListView.vue";
 import RecipeIdeasView from "@/views/RecipeIdeasView.vue";
 import WeekPlannerView from "@/views/WeekPlannerView.vue";
+import { getAuthStore } from '@/stores';
 import RecipeView from "@/views/RecipeView.vue"
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,37 +35,54 @@ const router = createRouter({
     {
       path: '/fridge',
       name: 'fridge',
-      props: route => ({ id: parseInt(route.query.id)}),
-      component: FridgeView
+      props: route => ({ id: parseInt(route.query.id), category: parseInt(route.query.category) }),
+      component: FridgeView,
+      meta: {
+        requiresAuth: true
+      }
+
     },
     {
       path: '/shoppingList',
       name: 'shoppingList',
       props: route => ({ id: parseInt(route.query.id), sortBy: parseInt(route.query.sortBy) }),
-      component: ShoppingListView
+      component: ShoppingListView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/about',
       name: 'about',
-      component: AboutView
+      component: AboutView,
+
     },
     {
       path: '/household',
       name: 'household',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: HouseholdView
+      component: HouseholdView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/dinnerIdeas',
       name: 'dinnerIdeas',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: RecipeIdeasView
+      component: RecipeIdeasView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/weekPlanner',
       name: 'weekPlanner',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: WeekPlannerView
+      component: WeekPlannerView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/recipe',
@@ -73,5 +92,20 @@ const router = createRouter({
     }
   ]
 })
+
+
+router.beforeEach((to, from, next) => {
+  const store = getAuthStore();
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.isLoggedIn) {
+      next({ name: 'login' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

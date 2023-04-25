@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Teodor",
+      "lastName": "Birkeland",
+      "email": "teodorbi@stud.ntnu.no",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "firstName": "Christoffer",
+      "lastName": "Brevik",
+      "email": "chriss@gmail.com",
+      "password": "passord"
+    }
+    ]
+}
