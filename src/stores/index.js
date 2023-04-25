@@ -60,4 +60,8 @@ export const useAuthStore = defineStore({
     }
 });
 
+export function getAuthStore() {
+    return useAuthStore();
+}
+
 export default pinia;
