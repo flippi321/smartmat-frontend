@@ -13,7 +13,7 @@ const store = useAuthStore();
     </router-link>
     <div class="navbar-right">
       <router-link to="/about" class="button-primary">
-        <img src="@/assets/icons/plusSign.png" alt="[Plus Sign]" class="header-icon">
+        <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
         <span class="header-button button-primary-text">Om oss</span>
       </router-link>
       <router-link v-if="!store.getIsLoggedIn" to="/login" class="button-primary">
