@@ -38,6 +38,7 @@
 
 <script>
 import { useAuthStore } from '@/stores';
+import loginService from "@/services/loginService";
 
 export default {
     store: true,
@@ -100,10 +101,21 @@ export default {
             }
               */
 
-            store.setLoggedIn();
-            store.setEmail(this.email);
-            console.log(store.getIsLoggedIn)
-            this.$router.push("/household")
+            const response = await loginService.login(this.email, this.password);
+            console.log(response);
+            console.log(response.status)
+
+            if (response.status === 200) {
+                sessionStorage.setItem("token", response.jwtToken);
+                store.setLoggedIn();
+                store.setEmail(response.email);
+                store.setFirstName(response.firstName);
+                store.setLastName(response.lastName);
+                store.setUserId(response.userId);
+                this.$router.push("/household")
+            } else {
+                document.getElementById("alert_1").innerHTML = response;
+            }
         },
 
         moveToRegister() {
