@@ -78,16 +78,19 @@ function handleFeedback1(feedbackInfo){
 
 <style>
 .fridge-box-container {
+  margin-left: 50px;
+  position: relative;
+  left: 0;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  position: relative;
+  gap: 15px;
 }
 
 .fridge-box {
   background-color: white;
-  height: 20vw;
-  width: 20vw;
+  height: 35vh;
+  width: 90%;
   transition: all 0.3s;
   border-radius: 10px;
   position: relative;
@@ -136,6 +139,8 @@ function handleFeedback1(feedbackInfo){
 @media screen and (max-width: 768px) {
   .fridge-box-container {
     grid-template-columns: repeat(2, 1fr);
+    margin-left: 0;
+    padding: 20px;
   }
 
   .fridge-box {
