@@ -45,7 +45,6 @@ function handleDeleteGrocery2(groceryItem) {
                  @delete-grocery2="handleDeleteGrocery2"
                  @give-feedback2="handleFeedback2"
     />
-      />
     </div>
   </div>
 </template>
