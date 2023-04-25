@@ -1,10 +1,44 @@
+<script setup>
+import { defineProps, ref, computed } from 'vue'
+
+const props = defineProps({
+  recipe: {
+    type: Object,
+    required: true,
+  },
+})
+
+const portions = ref(4)
+
+const adjustedIngredients = computed(() => {
+  return props.recipe.ingredients.map(ingredient => {
+    const adjustedAmount = ingredient.amount * portions.value
+    const roundedAmount = Math.round(adjustedAmount * 4) / 4
+    return { ...ingredient, amount: roundedAmount }
+  })
+})
+</script>
+
 <template>
-  <div class="recipe-box">
+  <div class="recipe-box" v-if="Object.keys(recipe).length > 0">
     <h2>{{ recipe.name }}</h2>
     <p>{{ recipe.description }}</p>
+    <div class="portion-control">
+      <label for="portions">Porsjoner:</label>
+      <input
+          type="number"
+          id="portions"
+          v-model.number="portions"
+          min="1"
+          step="1"
+      />
+    </div>
     <h3>Ingredienser</h3>
     <ul>
-      <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+      <li
+          v-for="(ingredient, index) in adjustedIngredients"
+          :key="index"
+      >
         {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
       </li>
     </ul>
@@ -42,21 +76,19 @@
   color: #3a3a3a;
 }
 
-export default {
-  data() {
-    return {
-      recipe: {}
-    };
-  },
-  methods: {
-    getRecipe(id) {
-      recipeService.getRecipieById(id).then(response => {
-        this.recipe = response.data;
-      });
-    }
-  },
-  mounted() {
-    this.getRecipe(1); // Replace 1 with the actual recipe ID
-  }
-};
-</script>
+.portion-control {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.portion-control label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+.portion-control input {
+  width: 50px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+</style>
