@@ -1,63 +1,95 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
-</script>
 
 <template>
-<!--  byttet this.groceryInfo.name til this.name (også de andre stedene) og da får jeg ikke feilmelding lengre-->
+
   <div class="grocery-item">
     <div class="grocery-item-image">
-      <img :src="getImageUrl()" :alt="this.name" />
+      <img :src="getImageUrl()" :alt="item.name" />
     </div>
     <div class="grocery-item-details">
-      <h2 class="grocery-item-name">{{ this.name }}</h2>
-      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="this.amount" min="0" />
-        {{this.unit}}</p>
-      <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ this.expected_shelf_life }} dager</p>
+      <h2 class="grocery-item-name">{{ item.name }}</h2>
+      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="localAmount" min="0" />
+        {{item.unit}}</p>
+      <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
       <p class="grocery-item-actual-shelf-life">
-        Faktisk holdbarhet: <input type="number" v-model.number="this.actual_shelf_life" min="0" /> dager
+        Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
       </p>
       <div class="grocery-item-buttons">
         <button @click="updateGrocery">Oppdater</button>
         <button @click="deleteGrocery">Fjern vare</button>
+        <button @click="returnToFridge">Returner til kjøleskap</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
 
-  data() {
-    return {
-      query: ""
-    };
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  data(){
+    return{
+      localAmount: this.item.amount,
+      localActual_shelf_life: this.item.actual_shelf_life,
+      updatedItem:{
+         id: 0,
+         name: "",
+         category: 0,
+         unit: "",
+         expected_shelf_life: 0,
+         amount: 0,
+         actual_shelf_life: 0
+      },
+      feedbackInfo: {
+        feedbackMessage: "",
+        feedbackType: "",
+        feedback: false
+      }
+    }
   },
 
   methods: {
     getImageUrl() {
       // Return the image URL
-     // return "../assets/" + this.groceryInfo.name + ".png";
-      return "src/assets/Bananer.png";
+      // her skal selvfølgelig bildet hentes fra databasen
+      return "src/assets/" + this.item.name + ".png";
     },
     updateGrocery() {
       // Emit an event to notify the parent component that the grocery has been updated
-      this.$emit("update-grocery", this.groceryInfo);
-      this.query = "update";
-      const query = this.query
-      this.$router.push({ path: `/fridge`, query: { query } });
+      this.updatedItem.id = this.item.id
+      this.updatedItem.name = this.item.name
+      this.updatedItem.category = this.item.category
+      this.updatedItem.unit = this.item.unit
+      this.updatedItem.expected_shelf_life = this.item.unit
+      this.updatedItem.amount = this.localAmount
+      this.updatedItem.actual_shelf_life = this.localActual_shelf_life
+
+      this.$emit("update-grocery1", this.updatedItem);
+
+      this.feedbackInfo.feedbackMessage = "Varen ble oppdatert";
+      this.feedbackInfo.feedbackType = "success";
+      this.feedbackInfo.feedback = true;
+      this.$emit("give-feedback1", this.feedbackInfo)
+
     },
     deleteGrocery() {
       // Emit an event to notify the parent component that the grocery should be deleted
-      this.$emit("delete-grocery", this.id);
-      this.query = "delete";
-      const query = this.query
-      this.$router.push({ path: `/fridge`, query: { query } });
+      this.$emit("delete-grocery1", this.item);
+      this.$emit("close", this.item);
+
+      this.feedbackInfo.feedbackMessage = "Varen ble slettet";
+      this.feedbackInfo.feedbackType = "success";
+      this.feedbackInfo.feedback = true;
+      this.$emit("give-feedback1", this.feedbackInfo)
     },
+    returnToFridge(){
+      this.$emit("close", this.item);
+
+    }
   },
 };
 </script>
