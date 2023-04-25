@@ -58,6 +58,7 @@ export default {
       // her skal selvfølgelig bildet hentes fra databasen
       return "src/assets/" + this.item.name + ".png";
     },
+
     updateGrocery() {
       // Emit an event to notify the parent component that the grocery has been updated
       this.updatedItem.id = this.item.id
