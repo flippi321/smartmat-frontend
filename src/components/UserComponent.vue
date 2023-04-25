@@ -68,26 +68,6 @@ function saveChanges() {
   editLastName.value = false;
   editEmail.value = false;
 }
-
-function updateId(value) {
-  // Emit an event to update the id prop
-  this.$emit('update:id', parseInt(value));
-}
-
-function updateFirstName(value) {
-  // Emit an event to update the firstName prop
-  this.$emit('update:firstName', value);
-}
-
-function updateLastName(value) {
-  // Emit an event to update the lastName prop
-  this.$emit('update:lastName', value);
-}
-
-function updateEmail(value) {
-  // Emit an event to update the email prop
-  this.$emit('update:email', value);
-}
 </script>
 
 <style scoped>
