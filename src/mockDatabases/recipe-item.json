@@ -1,0 +1,73 @@
+{
+  "id": 1,
+  "name": "Brun Lapskaus",
+  "description": "Lapskaus er en velkjent tradisjonsrett i Norge. Rykende varm lapskaus faller garantert i smak hos liten og stor.",
+  "ingredients": [
+    {
+      "id": 1,
+      "name": "benfri høyrygg av storfekjøtt",
+      "amount": 200,
+      "unit": "g"
+    },
+    {
+      "id": 2,
+      "name": "Smør",
+      "amount": 0.5,
+      "unit": "ss"
+    },
+    {
+      "id": 3,
+      "name": "Vann",
+      "amount": 2.5,
+      "unit": "dl"
+    },
+    {
+      "id": 4,
+      "name": "Kjøttbuljongterning ",
+      "amount": 0.25,
+      "unit": "stk"
+    },
+    {
+      "id": 5,
+      "name": "Potet",
+      "amount": 200,
+      "unit": "g"
+    },
+    {
+      "id": 6,
+      "name": "Gulrot",
+      "amount": 0.75,
+      "unit": "stk"
+    },
+    {
+      "id": 7,
+      "name": "Kålrot",
+      "amount": 37.5,
+      "unit": "g"
+    },
+    {
+      "id": 8,
+      "name": "Persillerot",
+      "amount": 37.5,
+      "unit": "g"
+    },
+    {
+      "id": 9,
+      "name": "Purre",
+      "amount": 0.25,
+      "unit": "stk"
+    },
+    {
+      "id": 10,
+      "name": "Salt",
+      "amount": 0.25,
+      "unit": "ts"
+    },
+    {
+      "id": 11,
+      "name": "Grov Pepper",
+      "amount": 0.25,
+      "unit": "ts"
+    }
+  ]
+}
