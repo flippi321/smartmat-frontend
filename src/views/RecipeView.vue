@@ -1,10 +1,18 @@
 <script setup>
 import Recipe from '../components/RecipeComponent.vue'
+import { defineProps } from 'vue'
+
+defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+})
 </script>
 
 <template>
   <div class="recipe">
-    <Recipe/>
+    <Recipe :recipe="recipe"/>
   </div>
 </template>
 
