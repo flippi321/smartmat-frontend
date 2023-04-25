@@ -101,6 +101,7 @@ export default {
               */
 
             store.setLoggedIn();
+            store.setEmail(this.email);
             console.log(store.getIsLoggedIn)
             this.$router.push("/household")
         },

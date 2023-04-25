@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia';
 import { createPinia } from 'pinia';
+import { useSessionStorage } from '@vueuse/core'
+
 
 const pinia = createPinia();
 
 export const useAuthStore = defineStore({
     id: 'store',
     state: () => ({
-        isLoggedIn: false,
-        firstName: '',
-        lastName: '',
-        email: '',
+        isLoggedIn: useSessionStorage('isLoggedIn', false),
+        firstName: useSessionStorage('firstName', ''),
+        lastName: useSessionStorage('lastName', ''),
+        email: useSessionStorage('email', ''),
+        userId: useSessionStorage('userId', ''),
     }),
     actions: {
         setLoggedIn() {
@@ -17,6 +20,10 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.isLoggedIn = false;
+            this.firstName = '';
+            this.lastName = '';
+            this.email = '';
+            this.userId = '';
         },
         setFirstName(firstName) {
             this.firstName = firstName;
@@ -26,6 +33,9 @@ export const useAuthStore = defineStore({
         },
         setEmail(email) {
             this.email = email;
+        },
+        setUserId(userId) {
+            this.userId = userId;
         }
     },
     getters: {
@@ -44,14 +54,8 @@ export const useAuthStore = defineStore({
         getEmail() {
             return this.email;
         },
-    },
-
-    mutations: {
-        setLoggedIn() {
-            this.isLoggedIn = true;
-        },
-        logout() {
-            this.isLoggedIn = false;
+        getUserId() {
+            return this.userId;
         }
     }
 });
