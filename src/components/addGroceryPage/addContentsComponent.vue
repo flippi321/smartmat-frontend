@@ -1,29 +1,40 @@
-  <script setup>
-  defineProps({
-    items: {
-      type: Array,
-      required: true
-    }
-  });
-  </script>
+<script setup>
+import GroceryItemDetails from "@/components/addGroceryPage/addGroceryDetails.vue";
 
-  <template>
-    <div class="fridge-box-container">
-      <div
-          class="fridge-box"
-          v-for="(item, index) in items"
-          :key="index"
-          @click="toggleExpand(item)"
-          :class="{ expanded: expandedItem === item, hidden: expandedItem && expandedItem !== item }"
-      >
-        <img class="fridge-item-image" src="@/assets/icons/Logo.png" alt="Image" v-if="expandedItem !== item" />
-        <div class="fridge-item-info" v-if="expandedItem !== item">
-          <h3>{{ item.name }}</h3>
-          <p class="description">{{ item.description }}</p>
-        </div>
+defineProps({
+  items: {
+    type: Array,
+    required: true
+  }
+});
+</script>
+
+<template>
+  <div class="fridge-box-container">
+    <div
+        class="fridge-box"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="seeDetails(item)"
+        :class="{ expanded: expandedItem === item, hidden: expandedItem && expandedItem !== item }"
+    >
+      <img class="fridge-item-image" src="@/assets/icons/Logo.png" alt="Image" v-if="expandedItem !== item" />
+      <div class="fridge-item-info" v-if="expandedItem !== item">
+        <h3>{{ item.name }}</h3>
+        <p class="description">{{ item.description }}</p>
       </div>
+      <transition name="details">
+        <div class="details-container" v-if="expandedItem === item">
+          <GroceryItemDetails
+              :item="item"
+              @add-grocery="addGrocery"
+              @close="showSidebar"
+          />
+        </div>
+      </transition>
     </div>
-  </template>
+  </div>
+</template>
 
   <style>
   .fridge-box-container {
