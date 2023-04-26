@@ -17,13 +17,13 @@ defineProps({
             </div>
             <div class="scroll-container">
                 <div class="recipeList grid-container">
-                    <a class="grid-item" v-for="recipe in recipes" :key="recipe.id" :href="'/recipes/' + recipe.id">
+                    <router-link class="grid-item" v-for="recipe in recipes" :key="recipe.id" :to="{ path: `/recipe`, query: { id: recipe.id } }">
                         <h3 class="recipeName">{{ recipe.name }}</h3>
                         <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                              alt="alternatetext" width="200">
                         <p class="recipeDescription">{{ recipe.description }}</p>
                         <p class="nrOfIngredients">4/8 ingredienser</p>
-                    </a>
+                    </router-link>
                 </div>
                 <button class="scroll-button" @click="scrollRight">››</button>
             </div>
