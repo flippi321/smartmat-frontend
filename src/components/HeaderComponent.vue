@@ -7,11 +7,13 @@ const store = useAuthStore();
 
 <template>
   <nav class="navbar">
-    <router-link to="/" class="navbar-left">
-      <img src="@/assets/icons/Logo.png" alt="[Logo]" class="navbar-icon navbar-icon--larger">
-      <span class="brand-name">SmartMat</span>
-    </router-link>
-    <div class="navbar-right">
+      <router-link :to="store.isLoggedIn ? { path: '/household', query: { id: 1 } } : '/'" class="navbar-left">
+          <img src="@/assets/icons/Logo.png" alt="[Logo]" class="navbar-icon navbar-icon--larger">
+          <span class="brand-name">SmartMat</span>
+      </router-link>
+
+
+      <div class="navbar-right">
       <router-link to="/about" class="button-primary">
         <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
         <span class="header-button button-primary-text">Om oss</span>
