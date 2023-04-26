@@ -63,8 +63,10 @@ export default {
 
 .collapse-button {
   position: absolute;
-  top: -70px;
-  right: -30px;
+  margin-top: 60px;
+  margin-right: 20px;
+  height: 50px;
+  width: 50px;
   cursor: pointer;
   transition: transform 0.3s;
 }
