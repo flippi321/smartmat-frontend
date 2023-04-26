@@ -3,6 +3,10 @@ defineProps({
   id: {
     type: Number,
     required: true
+  },
+  home: {
+    type: String,
+    required: true
   }
 })
 </script>
