@@ -1,5 +1,5 @@
 <script setup>
-import GroceryItemDetails from "@/components/addGroceryPage/addGroceryDetails.vue";
+import GroceryItemDetails from "@/components/groceryItemComponent.vue";
 
 defineProps({
   items: {
@@ -23,14 +23,14 @@ defineProps({
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
       </div>
-      <transition name="details">
-        <div class="details-container" v-if="expandedItem === item">
-          <GroceryItemDetails
-              :item="item"
-              @add-grocery="addGrocery"
-              @close="showSidebar"
-          />
-        </div>
+      <transition name="details" class="details-container">
+        <GroceryItemDetails class="grocery-details"
+            v-if="expandedItem === item" :item="item"
+            :accept-message="'Legg til Kjøleskap'"
+            :decline-message="'Avbryt'"
+            @update="addGrocery"
+            @decline="showSidebar"
+        />
       </transition>
     </div>
   </div>
@@ -73,9 +73,11 @@ export default {
 <style>
 .fridge-box-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .fridge-box {
@@ -111,20 +113,23 @@ export default {
 }
 
 .fridge-box.expanded {
-  height: 70vh;
-  width: 70vw;
-  z-index: 100;
+  margin-top: 400px;
+  height: 80vh;
+  width: 80vw;
+  max-width: 70vw;
+  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-.fridge-box.hidden {
-  display: none;
+  z-index: 10;
 }
 
 .details-container {
   transition: all 0.3s;
+}
+
+.fridge-box.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -134,8 +139,11 @@ export default {
   }
 
   .fridge-box.expanded {
-    height: 90%;
-    width: 90%;
+    margin-top: 200px;
+    height: 65vh !important;
+    width: 90vw;
+    position: absolute;
+    z-index: 10;
   }
 }
 </style>
