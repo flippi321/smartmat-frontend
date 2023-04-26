@@ -34,12 +34,15 @@ defineProps({
 
 <script>
 import recipeService from "@/services/recipeService";
+import {useAuthStore} from "@/stores";
+import pinia from "@/stores";
+const store = useAuthStore(pinia);
 
 export default {
     data() {
         return {
             recipes: [],
-            nrOfPeople: 0,
+            nrOfPeople: store.getNrOfPortions,
         };
     },
     methods: {
@@ -68,6 +71,13 @@ export default {
             }
         },
     },
+
+    watch: {
+        nrOfPeople(newVal) {
+            store.setNrOfPortions(newVal);
+        },
+    },
+
     created() {
         recipeService.getRecipes(1).then(response => {
             this.recipes = response.data.recipes.recipes.map(recipe => {

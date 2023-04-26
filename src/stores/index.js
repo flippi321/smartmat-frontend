@@ -13,6 +13,7 @@ export const useAuthStore = defineStore({
         lastName: useSessionStorage('lastName', ''),
         email: useSessionStorage('email', ''),
         userId: useSessionStorage('userId', ''),
+        nrOfPortions: useSessionStorage('nrOfPortions', 2),
     }),
     actions: {
         setLoggedIn() {
@@ -36,6 +37,9 @@ export const useAuthStore = defineStore({
         },
         setUserId(userId) {
             this.userId = userId;
+        },
+        setNrOfPortions(nrOfPortions) {
+            this.nrOfPortions = nrOfPortions;
         }
     },
     getters: {
@@ -56,6 +60,9 @@ export const useAuthStore = defineStore({
         },
         getUserId() {
             return this.userId;
+        },
+        getNrOfPortions() {
+            return this.nrOfPortions;
         }
     }
 });
