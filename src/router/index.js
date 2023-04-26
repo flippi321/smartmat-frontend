@@ -11,6 +11,7 @@ import WeekPlannerView from "@/views/WeekPlannerView.vue";
 import { getAuthStore } from '@/stores';
 import RecipeView from "@/views/RecipeView.vue"
 import UserView from "@/views/UserView.vue";
+import AddGroceries from "@/components/addGroceries.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,12 +40,20 @@ const router = createRouter({
     {
       path: '/fridge',
       name: 'fridge',
-      props: route => ({ id: parseInt(route.query.id), category: parseInt(route.query.category) }),
+      props: route => ({ id: parseInt(route.query.id) }),
       component: FridgeView,
       meta: {
         requiresAuth: true
       }
-
+    },
+    {
+      path: '/addComponent',
+      name: 'addComponent',
+      props: route => ({ id: parseInt(route.query.id) }),
+      component: AddGroceries,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/shoppingList',
