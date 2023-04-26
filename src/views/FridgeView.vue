@@ -9,28 +9,43 @@ defineProps({
 
 <template>
   <div class="fridge-page">
-    <Sidebar :categories="categories" @changeCategoryById="changeCategory" @toggle-sidebar="toggleSideBar" />
+    <Sidebar
+        v-if="showAddGroceries === false"
+        :categories="categories"
+        @changeCategoryById="changeCategory"
+        @toggle-sidebar="toggleSideBar"
+    />
     <Groceries
-        :items="items" class="fridge-contents"
+        v-if="showAddGroceries === false"
+        :items="items"
+        class="fridge-contents"
         @showFilterBar="console.log('ShowBar')"
         @hideFilterBar="console.log('ShowBar')"
-        @update-grocery2="handleUpdateGrocery2"
-        @delete-grocery2="handleDeleteGrocery2"
-        @give-feedback2="handleFeedback2"
+        @add-new-items="showAddGroceriesComponent"
+    />
+    <addGroceries
+        v-if="showAddGroceries === true"
+        :id="id"
+        :home="'Fridge'"
+        @add-grocery="handleAddGrocery"
+        @close="hideGroceryDetailComponent"
     />
   </div>
 </template>
+
 
 
 <script>
 import fridgeService from "@/services/fridgeService";
 import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
+import addGroceries from "@/components/addGroceries.vue";
 
 export default {
   components: {
     Sidebar,
-    Groceries
+    Groceries,
+    addGroceries
   },
   data() {
     return {
@@ -44,6 +59,7 @@ export default {
       feedback: false,
       feedbackMessage: "",
       feedbackType: "",
+      showAddGroceries: false,
     };
   },
   created() {
@@ -65,9 +81,8 @@ export default {
       setTimeout(() => {
         this.feedback = false;
       }, 6000);
-
-
     },
+
     changeCategory(categoryId){
       this.currentCategory = categoryId;
       this.updateFridge();
@@ -86,8 +101,19 @@ export default {
 
     toggleSideBar(isCollapsed) {
       this.showSideBar = !isCollapsed;
-    }
+    },
 
+    showAddGroceriesComponent() {
+      this.showAddGroceries = true;
+    },
+
+    hideGroceryDetailComponent() {
+      this.showAddGroceries = false;
+    },
+
+    handleAddGrocery(items){
+      console.log(items)
+    }
   }
 };
 </script>
