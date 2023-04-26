@@ -1,20 +1,22 @@
 <template>
   <div class="grocery-item">
-    <div class="grocery-item-image" :style="{width: imageSize, height: imageSize}">
-      <img src="@/assets/icons/Logo.png" :alt="item.name" :style="{width: imageSize, height: imageSize}" />
-    </div>
-    <div class="grocery-item-details">
-      <h2 class="grocery-item-name">{{ item.name }}</h2>
-      <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="localAmount" min="0" />
-        {{item.unit}}</p>
-      <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
-      <p class="grocery-item-actual-shelf-life">
-        Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
-      </p>
-      <div class="grocery-item-buttons">
-        <button @click="updateGrocery">{{ acceptMessage }}</button>
-        <button @click="returnToFridge">{{ declineMessage }}</button>
-        <button @click="deleteGrocery" v-if="tertiaryMessage !== null">{{ tertiaryMessage }}</button>
+    <div class="grocery-item-content">
+      <div class="grocery-item-image" :style="{width: imageSize, height: imageSize}">
+        <img src="@/assets/icons/Logo.png" :alt="item.name" :style="{width: imageSize, height: imageSize}" />
+      </div>
+      <div class="grocery-item-details">
+        <h1 class="grocery-item-name">{{ item.name }}</h1>
+        <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="localAmount" min="0" />
+          {{item.unit}}</p>
+        <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
+        <p class="grocery-item-actual-shelf-life">
+          Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
+        </p>
+        <div class="grocery-item-buttons">
+          <button @click.stop="update(item)">{{ acceptMessage }}</button>
+          <button @click.stop="decline">{{ declineMessage }}</button>
+          <button @click.stop="special" v-if="tertiaryMessage">{{ tertiaryMessage }}</button>
+        </div>
       </div>
     </div>
   </div>
@@ -41,45 +43,46 @@ export default {
       required: false
     }
   },
-  data(){
-    return{
-      localAmount: this.item.amount,
-      localActual_shelf_life: this.item.actual_shelf_life,
-      updatedItem:{
-        id: 0,
-        name: "",
-        category: 0,
-        unit: "",
-        expected_shelf_life: 0,
-        amount: 0,
-        actual_shelf_life: 0
-      },
-      feedbackInfo: {
-        feedbackMessage: "",
-        feedbackType: "",
-        feedback: false
-      }
+
+  methods: {
+    update(item){
+      this.$emit("update", item)
+    },
+
+    decline(){
+      this.$emit("decline")
+    },
+
+    special(information){
+      this.$emit("special", information)
     }
-  },
+  }
 }
 </script>
 
-<style>
+<style scoped>
 .grocery-item {
   display: flex;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
+  flex-direction: column;
+  border: 10px;
   border-radius: 4px;
-  padding: 10px;
-  width: 600px;
-  font-size: 1.5em;
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.grocery-item-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .grocery-item-image {
-  width: 100px;
-  height: 100px;
-  margin-right: 20px;
-  overflow: hidden;
+  flex-grow: 1;
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 50%;
+  padding: 10px;
 }
 
 .grocery-item-image img {
@@ -89,26 +92,54 @@ export default {
 }
 
 .grocery-item-details {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  min-width: 50%;
+  max-width: 100%;
+  padding: 10px;
 }
 
 .grocery-item-name {
   font-size: 24px;
-  margin: 0;
+  margin: 0 0 10px;
+}
+
+.grocery-item-amount {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+input[type="number"] {
+  padding: 5px;
+  font-size: 14px;
+  width: 50px;
+}
+
+.grocery-item-expected-shelf-life {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.grocery-item-actual-shelf-life {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 8px;
 }
 
 button {
   background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
@@ -119,4 +150,21 @@ button:hover {
   background-color: #555555;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .grocery-item-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grocery-item-image {
+    max-width: 70%;
+    max-height: 70%;
+  }
+
+  .grocery-item-details {
+    align-items: center;
+  }
+}
+
 </style>
