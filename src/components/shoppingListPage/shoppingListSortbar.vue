@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ path: `/addToShoppingList`, query: { id: this.id } }" class="new-item-button">
-    <img src="@/assets/icons/plusSign.png" alt="[Add New]" class="plus-icon">
+    <img src="@/assets/icons/plusSign2.png" alt="[Add New]" class="plus-icon">
     <span class="household-button fridge-button">Legg til Mer</span>
   </router-link>
   <div class="filter-bar-container">

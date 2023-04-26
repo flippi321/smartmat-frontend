@@ -1,61 +1,36 @@
-
 <script setup>
-// Import Components
-import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
-import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
-
-
-// Define Props
 defineProps({
   id: {
     type: Number,
     required: true
   }
 })
-
-//const emit = defineEmits(["update-grocery2", "delete-grocery2", "give-feedback2"]);
-
-function handleUpdateGrocery2(groceryItem) {
-  // Send request to backend to update grocery item in database
-  console.log(groceryItem)
-}
-
-function handleDeleteGrocery2(groceryItem) {
-  // Send request to backend to update grocery item in database
-  console.log(groceryItem)
-}
-
 </script>
 
 <template>
-  <div>
-    <FeedbackBoxComponent v-if="feedback" :message="feedbackMessage" :type="feedbackType" />
-  </div>
   <div class="fridge-page">
-    <transition name="slide">
-      <div class="sidebar" v-if="showSideBar">
-        <Sidebar :categories="categories" :fridgeId=id @changeCategoryById="changeCategory"></Sidebar>
-      </div>
-    </transition>
-    <div class="groceries-container" :class="{ fullwidth: !showSideBar }">
-      <Groceries :items="items"
-                 @showFilterBar="showSideBar = true"
-                 @hideFilterBar="showSideBar = false"
-                 @update-grocery2="handleUpdateGrocery2"
-                 @delete-grocery2="handleDeleteGrocery2"
-                 @give-feedback2="handleFeedback2"
+    <Sidebar :categories="categories" @changeCategoryById="changeCategory" @toggle-sidebar="toggleSideBar" />
+    <Groceries
+        :items="items" class="fridge-contents"
+        @showFilterBar="console.log('ShowBar')"
+        @hideFilterBar="console.log('ShowBar')"
+        @update-grocery2="handleUpdateGrocery2"
+        @delete-grocery2="handleDeleteGrocery2"
+        @give-feedback2="handleFeedback2"
     />
-      />
-    </div>
   </div>
 </template>
 
+
 <script>
 import fridgeService from "@/services/fridgeService";
-import FeedbackBoxComponent from "@/components/FeedbackBoxComponent.vue";
+import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
+import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
+
 export default {
   components: {
-    FeedbackBoxComponent,
+    Sidebar,
+    Groceries
   },
   data() {
     return {
@@ -64,6 +39,7 @@ export default {
       categories: [],
       currentCategory: 1,
       showSideBar: true,
+      detailsIconVisible: false,
 
       feedback: false,
       feedbackMessage: "",
@@ -106,45 +82,30 @@ export default {
         console.log("Categories response:")
         this.categories = response.data.categories.categories;
       });
+    },
+
+    toggleSideBar(isCollapsed) {
+      this.showSideBar = !isCollapsed;
     }
+
   }
 };
 </script>
 
-
 <style>
 .fridge-page {
-  margin-top: 80px;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
 }
 
-.sidebar {
-  margin-top: 50px;
-  width: 150px;
-}
-
-.groceries-container {
-  margin-left: 150px;
-  transition: margin-left 0.3s;
-}
-
-.groceries-container.fullwidth {
-  margin-left: 0;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 150px;
-  background-color: transparent;
-  padding: 20px;
-}
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-li {
-  cursor: pointer;
+@media screen and (max-width: 768px) {
+  .fridge-page {
+    flex-direction: column;
+  }
 }
 </style>
+
+

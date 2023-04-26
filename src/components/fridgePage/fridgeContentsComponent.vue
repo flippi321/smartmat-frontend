@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import FridgeItemDetailsComponent from "@/components/groceryItemComponent.vue";
 
-
 defineProps({
   items: {
     type: Array,
@@ -48,7 +47,6 @@ function handleFeedback1(feedbackInfo){
 </script>
 
 <template>
-
   <div class="fridge-box-container">
     <div
         class="fridge-box"
@@ -57,7 +55,8 @@ function handleFeedback1(feedbackInfo){
         @click="toggleExpand(item)"
         :class="{ expanded: expandedItem === item, hidden: expandedItem && expandedItem !== item }"
     >
-      <div class="item-info" v-if="expandedItem !== item">
+      <img class="fridge-item-image" src="@/assets/icons/Logo.png" alt="Image" v-if="expandedItem !== item" />
+      <div class="fridge-item-info" v-if="expandedItem !== item">
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
       </div>
@@ -76,27 +75,46 @@ function handleFeedback1(feedbackInfo){
   </div>
 </template>
 
-<script>
-
-</script>
-
 <style>
 .fridge-box-container {
+  margin-left: 50px;
+  position: relative;
+  left: 0;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  position: relative;
+  gap: 15px;
 }
 
 .fridge-box {
   background-color: white;
-  height: 20vw;
-  width: 20vw;
+  height: 35vh;
+  width: 90%;
   transition: all 0.3s;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+}
+
+.fridge-item-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fridge-item-info {
+  font-size: 16px;
+  text-align: center;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s;
+  background-color: gray;
 }
 
 .fridge-box.expanded {
@@ -117,19 +135,11 @@ function handleFeedback1(feedbackInfo){
   transition: all 0.3s;
 }
 
-.item-info {
-  font-size: 16px;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.3s;
-}
-
 @media screen and (max-width: 768px) {
   .fridge-box-container {
     grid-template-columns: repeat(2, 1fr);
+    margin-left: 0;
+    padding: 20px;
   }
 
   .fridge-box {
@@ -141,6 +151,5 @@ function handleFeedback1(feedbackInfo){
     height: 90%;
     width: 90%;
   }
-
 }
 </style>

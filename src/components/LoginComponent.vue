@@ -112,7 +112,7 @@ export default {
                 store.setFirstName(response.firstName);
                 store.setLastName(response.lastName);
                 store.setUserId(response.userId);
-                this.$router.push("/household")
+                this.$router.push("/household?id=1")
             } else {
                 document.getElementById("alert_1").innerHTML = response;
             }
@@ -179,7 +179,7 @@ button{
     background-color: #fff;
     border: none;
     border-radius: 45px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
     cursor: pointer;
     outline: none;
@@ -187,7 +187,7 @@ button{
 }
 .btn:hover {
     background-color: #49a078;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
     color: #fff;
     transform: translate(-50%, -3px);
 }

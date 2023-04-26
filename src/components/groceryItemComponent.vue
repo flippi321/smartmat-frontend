@@ -58,6 +58,7 @@ export default {
       // her skal selvfølgelig bildet hentes fra databasen
       return "src/assets/" + this.item.name + ".png";
     },
+
     updateGrocery() {
       // Emit an event to notify the parent component that the grocery has been updated
       this.updatedItem.id = this.item.id
@@ -131,24 +132,22 @@ export default {
 }
 
 button {
-  background-color: #4CAF50; /* legger til en grønn bakgrunnsfarge */
-  border: none; /* fjerner grense */
-  color: white; /* setter teksten til hvit */
-  padding: 15px 32px; /* legger til padding */
-  text-align: center; /* setter tekst til sentrert */
-  text-decoration: none; /* fjerner understrekning */
-  display: inline-block; /* endrer display til blokk */
-  font-size: 16px; /* setter fontstørrelsen */
-  margin: 4px 2px; /* legger til margin */
-  cursor: pointer; /* legger til hover-effekt */
-  border-radius: 8px; /* legger til avrundede hjørner */
-  transition-duration: 0.4s; /* legger til en overgangsanimasjon */
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition-duration: 0.4s;
 }
 
 button:hover {
-  background-color: #555555; /* endrer bakgrunnsfarge på hover */
-  color: white; /* endrer tekstfarge på hover */
+  background-color: #555555;
+  color: white;
 }
-
-
 </style>

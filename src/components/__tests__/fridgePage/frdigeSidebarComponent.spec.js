@@ -3,6 +3,7 @@ import { mount } from "@vue/test-utils";
 import FridgeSidebarComponent from "@/components/fridgePage/fridgeSidebarComponent.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { createStore } from "vuex";
+import fridgeSidebarComponent from "@/components/fridgePage/fridgeSidebarComponent.vue";
 
 const mockData = {
     categories: [
@@ -55,14 +56,34 @@ describe("FridgeSidebarComponent", () => {
     });
 
     it("renders the correct number of categories", () => {
-        const categories = wrapper.findAll("li");
+        const categories = wrapper.findAll("ul");
         expect(categories.length).toBe(mockData.categories.length);
     });
 
     it("renders category names correctly", () => {
-        const categoryNames = wrapper.findAll("li");
+        const categoryNames = wrapper.findAll("ul");
         categoryNames.forEach((name, index) => {
             expect(name.text()).toBe(mockData.categories[index].name);
         });
+    });
+
+    it('should emit the "toggle-sidebar" event when the collapse button is clicked', async () => {
+        const wrapper = mount(fridgeSidebarComponent, {
+            global: {
+                plugins: [store],
+            },
+        });
+
+        const collapseButton = wrapper.find('.collapse-button');
+        collapseButton.trigger('click');
+
+        expect(wrapper.emitted('toggle-sidebar')).toBeTruthy();
+        expect(wrapper.emitted('toggle-sidebar').length).toBe(1);
+        expect(wrapper.emitted('toggle-sidebar')[0]).toEqual([true]);
+
+        collapseButton.trigger('click');
+
+        expect(wrapper.emitted('toggle-sidebar').length).toBe(2);
+        expect(wrapper.emitted('toggle-sidebar')[1]).toEqual([false]);
     });
 });
