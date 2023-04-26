@@ -10,8 +10,8 @@ defineProps({
 });
 
 // Define Emits
-const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close", "close",
-"give-feedback1"]);
+const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close",
+"give-feedback1", "add-new-items"]);
 
 
 function handleUpdateGrocery1(groceryItem) {
@@ -48,6 +48,9 @@ function handleFeedback1(feedbackInfo){
 
 <template>
   <div class="fridge-box-container">
+    <button @click="emit('add-new-items')" class="add-items-button">
+      Legg til varer <img src="@/assets/icons/plusSign.png" alt="Add" class="plus-icon" />
+    </button>
     <div
         class="fridge-box"
         v-for="(item, index) in items"
@@ -79,11 +82,33 @@ function handleFeedback1(feedbackInfo){
 .fridge-box-container {
   margin-left: 50px;
   position: relative;
+  margin-top: 50px;
   left: 0;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+}
+
+.add-items-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.plus-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 }
 
 .fridge-box {
