@@ -39,8 +39,9 @@
 import {ref} from "vue";
 import {useAuthStore} from "@/stores";
 import router from "@/router";
+import pinia from "@/stores";
 
-const store = useAuthStore();
+const store = useAuthStore(pinia);
 
 defineProps({
   id: {
