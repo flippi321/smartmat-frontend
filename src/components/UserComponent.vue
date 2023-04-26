@@ -32,10 +32,16 @@
     </p>
     <button v-if="editId || editEmail || editFirstName || editLastName " @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
   </div>
+    <button id="logoutBtn" @click="logout">Logg ut</button>
 </template>
 
 <script setup>
 import {ref} from "vue";
+import {useAuthStore} from "@/stores";
+import router from "@/router";
+import pinia from "@/stores";
+
+const store = useAuthStore(pinia);
 
 defineProps({
   id: {
@@ -67,6 +73,11 @@ function saveChanges() {
   editFirstName.value = false;
   editLastName.value = false;
   editEmail.value = false;
+}
+
+function logout() {
+    store.logout();
+    router.push("/");
 }
 </script>
 
@@ -139,4 +150,23 @@ button {
 button:hover {
   background-color: #555;
 }
+
+#logoutBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f44336;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#logoutBtn:hover {
+    background-color: #d32f2f;
+}
+
 </style>

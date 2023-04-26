@@ -3,28 +3,49 @@ import {useAuthStore} from "@/stores";
 
 const store = useAuthStore();
 
+defineProps({
+    id: {
+        type: Number,
+        required: true,
+        validator: (value) => !isNaN(value),
+    }
+})
+
 </script>
 
 <template>
   <nav class="navbar">
-    <router-link to="/" class="navbar-left">
-      <img src="@/assets/icons/Logo.png" alt="[Logo]" class="navbar-icon navbar-icon--larger">
-      <span class="brand-name">SmartMat</span>
-    </router-link>
-    <div class="navbar-right">
-      <router-link to="/about" class="button-primary">
-        <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
-        <span class="header-button button-primary-text">Om oss</span>
+      <router-link :to="store.getIsLoggedIn ? { path: '/household', query: { id: 1 } } : '/'" class="navbar-left">
+          <img src="@/assets/icons/Logo.png" alt="[Logo]" class="navbar-icon navbar-icon--larger">
+          <span class="brand-name">SmartMat</span>
       </router-link>
-      <router-link v-if="!store.getIsLoggedIn" to="/login" class="button-primary">
-        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
-        <span class="header-button button-primary-text">Logg In</span>
+
+      <div class="navbar-right">
+      <router-link v-if="!store.getIsLoggedIn" to="/about" class="button-primary">
+          <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
+          <span class="header-button button-primary-text">Om oss</span>
       </router-link>
-      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/user`, query: { id: store.getUserId } }" class="button-primary">
-        <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
-        <span class="header-button button-primary-text">{{store.getFirstName || store.getEmail}}</span>
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary">
+          <span>Kjøleskap</span>
       </router-link>
-    </div>
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList`, query: { id: this.id, sortBy: 1 } }" class="button-primary">
+          <span>Handleliste</span>
+      </router-link>
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas`, query: { id: this.id } }" class="button-primary">
+          <span>Middagsideer</span>
+      </router-link>
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary">
+          <span>Planlegg Uke</span>
+      </router-link>
+      <router-link v-if="store.getIsLoggedIn" to="/createAd" class="button-primary">
+          <span>Administrer Medlemmer</span>
+      </router-link>
+      <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary">
+          <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
+          <span class="header-button button-primary-text">{{ store.getIsLoggedIn ? (store.getFirstName || store.getEmail) : 'Logg In' }}</span>
+      </router-link>
+
+      </div>
   </nav>
 </template>
 
