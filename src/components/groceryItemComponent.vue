@@ -1,9 +1,7 @@
-
 <template>
-
   <div class="grocery-item">
-    <div class="grocery-item-image">
-      <img :src="getImageUrl()" :alt="item.name" />
+    <div class="grocery-item-image" :style="{width: imageSize, height: imageSize}">
+      <img src="@/assets/icons/Logo.png" :alt="item.name" :style="{width: imageSize, height: imageSize}" />
     </div>
     <div class="grocery-item-details">
       <h2 class="grocery-item-name">{{ item.name }}</h2>
@@ -23,7 +21,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     item: {
@@ -36,13 +33,13 @@ export default {
       localAmount: this.item.amount,
       localActual_shelf_life: this.item.actual_shelf_life,
       updatedItem:{
-         id: 0,
-         name: "",
-         category: 0,
-         unit: "",
-         expected_shelf_life: 0,
-         amount: 0,
-         actual_shelf_life: 0
+        id: 0,
+        name: "",
+        category: 0,
+        unit: "",
+        expected_shelf_life: 0,
+        amount: 0,
+        actual_shelf_life: 0
       },
       feedbackInfo: {
         feedbackMessage: "",
@@ -51,48 +48,7 @@ export default {
       }
     }
   },
-
-  methods: {
-    getImageUrl() {
-      // Return the image URL
-      // her skal selvfølgelig bildet hentes fra databasen
-      return "src/assets/" + this.item.name + ".png";
-    },
-
-    updateGrocery() {
-      // Emit an event to notify the parent component that the grocery has been updated
-      this.updatedItem.id = this.item.id
-      this.updatedItem.name = this.item.name
-      this.updatedItem.category = this.item.category
-      this.updatedItem.unit = this.item.unit
-      this.updatedItem.expected_shelf_life = this.item.unit
-      this.updatedItem.amount = this.localAmount
-      this.updatedItem.actual_shelf_life = this.localActual_shelf_life
-
-      this.$emit("update-grocery1", this.updatedItem);
-
-      this.feedbackInfo.feedbackMessage = "Varen ble oppdatert";
-      this.feedbackInfo.feedbackType = "success";
-      this.feedbackInfo.feedback = true;
-      this.$emit("give-feedback1", this.feedbackInfo)
-
-    },
-    deleteGrocery() {
-      // Emit an event to notify the parent component that the grocery should be deleted
-      this.$emit("delete-grocery1", this.item);
-      this.$emit("close", this.item);
-
-      this.feedbackInfo.feedbackMessage = "Varen ble slettet";
-      this.feedbackInfo.feedbackType = "success";
-      this.feedbackInfo.feedback = true;
-      this.$emit("give-feedback1", this.feedbackInfo)
-    },
-    returnToFridge(){
-      this.$emit("close", this.item);
-
-    }
-  },
-};
+}
 </script>
 
 <style>
