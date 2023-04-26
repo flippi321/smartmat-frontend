@@ -12,9 +12,9 @@
         Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
       </p>
       <div class="grocery-item-buttons">
-        <button @click="updateGrocery">Oppdater</button>
-        <button @click="deleteGrocery">Fjern vare</button>
-        <button @click="returnToFridge">Returner til kjøleskap</button>
+        <button @click="updateGrocery">{{ acceptMessage }}</button>
+        <button @click="returnToFridge">{{ declineMessage }}</button>
+        <button @click="deleteGrocery" v-if="tertiaryMessage !== null">{{ tertiaryMessage }}</button>
       </div>
     </div>
   </div>
@@ -26,6 +26,19 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    acceptMessage: {
+      type: String,
+      required: true
+    },
+    declineMessage: {
+      type: String,
+      required: true
+    },
+    // An optional message used by the fridge
+    tertiaryMessage: {
+      type: String,
+      required: false
     }
   },
   data(){
