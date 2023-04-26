@@ -28,6 +28,7 @@ defineProps({
 import fridgeService from "@/services/fridgeService";
 import Groceries from "@/components/addGroceryPage/addContentsComponent.vue"
 import Sidebar from "@/components/addGroceryPage/addGrocerySidebarComponent.vue";
+import groceryService from "@/services/groceryService";
 
 export default {
   components: {
