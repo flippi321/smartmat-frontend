@@ -146,6 +146,7 @@ function handleFeedback1(feedbackInfo){
 .fridge-box.expanded {
   position: absolute;
   left: 15vh;
+  margin-top: 15vh;
   height: 70vh;
   width: 70vw;
   z-index: 100;
@@ -162,9 +163,9 @@ function handleFeedback1(feedbackInfo){
 }
 
 @media screen and (max-width: 768px) {
-  .fridge-box-container {
+  body .fridge-box-container {
     grid-template-columns: repeat(2, 1fr);
-    margin-left: 0;
+  margin-left: 0;
     padding: 30px;
   }
 
@@ -173,9 +174,12 @@ function handleFeedback1(feedbackInfo){
     width: 40vw;
   }
 
-  .fridge-box.expanded {
-    height: 90%;
-    width: 90%;
+  body .fridge-box.expanded {
+    grid-row: span 2;
+    grid-column: span 2;
+    height: 30vh;
+    width: 80vh;
   }
 }
 </style>
+
