@@ -51,7 +51,7 @@ export default {
     },
     methods: {
         async generateWeeklyMenu() {
-            const response = await weekPlannerService.generateWeeklyMenu(this.householdId);
+            const response = await weekPlannerService.generateWeeklyMenu();
 
             // Extract the recipes from the response
             const recipes = response.data.recipes;
