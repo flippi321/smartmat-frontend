@@ -13,12 +13,20 @@ defineProps({
 
 <template>
   <div class="fridge-page">
-    <Sidebar :categories="categories" @changeCategoryById="changeCategory" @toggle-sidebar="toggleSideBar" />
+    <Sidebar v-if="this.sidebarVisible === true"
+        :categories="categories"
+        :selected="this.selectedItems"
+        :home="home"
+        @changeCategoryById="changeCategory"
+        @send-items="sendSelected"
+        @cancel="closeAdPage"
+    />
     <Groceries
-        :items="items" class="fridge-contents"
-        @showFilterBar="console.log('ShowBar')"
-        @hideFilterBar="console.log('ShowBar')"
-        @give-feedback2="handleFeedback2"
+        :items="items"
+        class="fridge-contents"
+        @show-filter-bar="this.sidebarVisible = true"
+        @hide-filter-bar="this.sidebarVisible = false"
+        @add-grocery="addGroceryToSelected"
     />
   </div>
 </template>
@@ -37,40 +45,23 @@ export default {
   },
   data() {
     return {
-      id: this.id,
       items: [],
       categories: [],
+      selectedItems: [],
       currentCategory: 1,
-      showSideBar: true,
-      detailsIconVisible: false,
-
-      feedback: false,
-      feedbackMessage: "",
-      feedbackType: "",
+      sidebarVisible: true,
     };
   },
   created() {
-    fridgeService.getFridgeContents(this.id).then((response) => {
-      console.log("Contents response:")
-      this.items = response.data.groceryItems.groceries;
+    groceryService.getAllGroceries().then((response) => {
+      this.items = response.data.groceryItems;
     });
-    fridgeService.getCategoriesFromFridgeId().then((response) => {
-      console.log("Categories response:")
+    groceryService.getAllCategories().then((response) => {
+      console.log(response.data.categories.categories)
       this.categories = response.data.categories.categories;
     });
   },
   methods: {
-    handleFeedback2(feedbackInfo) {
-      console.log(feedbackInfo)
-      this.feedback = feedbackInfo.feedback
-      this.feedbackMessage = feedbackInfo.feedbackMessage
-      this.feedbackType = feedbackInfo.feedbackType
-      setTimeout(() => {
-        this.feedback = false;
-      }, 6000);
-
-
-    },
     changeCategory(categoryId){
       this.currentCategory = categoryId;
       this.updateFridge();
@@ -87,10 +78,22 @@ export default {
       });
     },
 
-    toggleSideBar(isCollapsed) {
-      this.showSideBar = !isCollapsed;
-    }
+    addGroceryToSelected(item){
+      console.log(item)
+      this.selectedItems.push(item)
+      this.sidebarVisible = true;
+    },
 
+    sendSelected(){
+      console.log("Sending selected to fridge")
+      console.log(this.selectedItems)
+      this.$emit('addSelected', this.selectedItems);
+    },
+
+    closeAdPage(){
+      console.log("Close")
+      this.$emit('close')
+    },
   }
 };
 </script>
