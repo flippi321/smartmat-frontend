@@ -49,7 +49,7 @@ function handleFeedback1(feedbackInfo){
 <template>
   <div class="fridge-box-container">
     <button @click="emit('add-new-items')" class="add-items-button">
-      Legg til varer <img src="@/assets/icons/plusSign.png" alt="Add" class="plus-icon" />
+      Legg til varer <img src="src/assets/icons/plusSign.png" alt="Add" class="plus-icon" />
     </button>
     <div
         class="fridge-box"
@@ -92,12 +92,13 @@ function handleFeedback1(feedbackInfo){
 
 .add-items-button {
   position: absolute;
-  top: 10px;
+  top: -45px;
   right: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f0f0f0;
+  color: black;
   border: none;
   border-radius: 5px;
   padding: 8px 12px;
@@ -164,7 +165,7 @@ function handleFeedback1(feedbackInfo){
   .fridge-box-container {
     grid-template-columns: repeat(2, 1fr);
     margin-left: 0;
-    padding: 20px;
+    padding: 30px;
   }
 
   .fridge-box {
