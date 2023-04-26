@@ -13,23 +13,12 @@ defineProps({
 const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close",
 "give-feedback1", "add-new-items"]);
 
-
-function handleUpdateGrocery1(groceryItem) {
-  // Send request to backend to update grocery item in database
-  emit("update-grocery2", groceryItem);
-}
-function handleDeleteGrocery1(groceryItem) {
-  // Send request to backend to update grocery item in database
-  emit("delete-grocery2", groceryItem);
-}
 const expandedItem = ref(null);
 
 function toggleExpand(item) {
   console.log("toggleExpand")
   expandedItem.value = item;
   emit("hideFilterBar");
-
-
 }
 function toggleRetract(){
   setTimeout(toggleRetractHelper, 100)
@@ -38,11 +27,6 @@ function toggleRetract(){
 function toggleRetractHelper(){
   expandedItem.value = null;
   emit("showFilterBar");
-}
-
-function handleFeedback1(feedbackInfo){
-  emit("give-feedback2", feedbackInfo);
-
 }
 </script>
 
@@ -67,10 +51,12 @@ function handleFeedback1(feedbackInfo){
         <div class="details-container" v-if="expandedItem === item">
           <FridgeItemDetailsComponent
               :item="item"
-              @close="toggleRetract"
-              @update-grocery1="handleUpdateGrocery1"
-              @delete-grocery1="handleDeleteGrocery1"
-              @give-feedback1="handleFeedback1"
+              :accept-message="'Lagre Endringer'"
+              :decline-message="'Avbryt'"
+              :tertiary-message="'Slett'"
+              @update="updateGrocery"
+              @decline="toggleRetract"
+              @special="deleteItem"
           />
         </div>
       </transition>
