@@ -106,8 +106,8 @@ export default {
 
 <style>
 .sidebar {
+  margin-top: -10px;
   position: fixed;
-  margin-top: 60px;
   height: 100%;
   width: 400px;
   background-color: white;
@@ -116,9 +116,9 @@ export default {
 }
 
 .groceries-container {
+  margin-top: -30px;
   margin-left: 400px;
   padding: 10px;
-  margin-top: -120px; /* Only way to fix an issue where a gap appears above the v-for */
 }
 </style>
 
