@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 
 /*
@@ -29,7 +29,20 @@ export default {
         return apiClient.get("/getRecipes", { params: { id: householdId } });
     },
 
+    /**
     getRecipeById(recipeId) {
         return apiClient.get("/getRecipeById", { params: { id: recipeId } });
     },
+    */
+
+    getRecipeById(recipeId) {
+        const options = {
+            method: 'GET',
+            url: `${url}/api/recipes/${recipeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
+    }
 };
