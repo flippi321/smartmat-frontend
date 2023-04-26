@@ -18,7 +18,7 @@ defineProps({
 <template>
   <div class="fridge-sidebar" :class="{ collapsed: isCollapsed }">
     <h1>Filtrer etter kategorier:</h1>
-    <img class="collapse-button" src="@/assets/icons/Details.png" alt="Details" @click="toggleSideBar" :style="{ transform: `rotate(${iconRotation}deg)` }" />
+    <img class="collapse-button" :class="{ rotate: isRotated }" src="@/assets/icons/Details.png" alt="Details" @click="toggleSideBar" />
     <div class="fridge-sidebar-content" v-if="!isCollapsed">
       <ul v-for="category in categories" :key="category.id" @click="changeCategory(category.id)" class="category-item">
         {{ category.name }}
@@ -43,7 +43,6 @@ export default {
   data() {
     return {
       isCollapsed: false,
-      iconRotation: 90,
     };
   },
   methods: {
@@ -52,7 +51,7 @@ export default {
     },
     toggleSideBar() {
       this.isCollapsed = !this.isCollapsed;
-      this.iconRotation += 180;
+      this.isRotated = !this.isRotated;
       this.$emit('toggle-sidebar', this.isCollapsed);
     },
     sendItems(){
@@ -75,14 +74,8 @@ export default {
   transition: flex 0.3s;
 }
 
-@media screen and (max-width: 768px) {
-  .fridge-sidebar {
-    flex: 0 0 60px;
-    height: auto;
-  }
-}
-
 .collapse-button {
+  transform: rotate(90deg);
   position: absolute;
   margin-top: 60px;
   margin-right: 20px;
@@ -92,13 +85,8 @@ export default {
   transition: transform 0.3s;
 }
 
-@media screen and (max-width: 768px) {
-  .collapse-button {
-    position: static;
-    margin: 0 auto;
-    display: block;
-    transform: rotate(270deg);
-  }
+.collapse-button.rotate {
+  transform: rotate(180deg);
 }
 
 .fridge-sidebar.collapsed {
@@ -170,5 +158,24 @@ export default {
   background-color: #f8f9fa;
   border-radius: 3px;
   margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .collapse-button {
+    transform: rotate(180deg);
+  }
+
+  .collapse-button.rotate {
+    transform: rotate(0deg);
+  }
+}
+@media screen and (min-width: 769px) {
+  .collapse-button {
+    transform: rotate(90deg);
+  }
+
+  .collapse-button.rotate {
+    transform: rotate(270deg);
+  }
 }
 </style>
