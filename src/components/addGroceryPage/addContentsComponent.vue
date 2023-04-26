@@ -72,33 +72,28 @@ export default {
 
 <style>
 .fridge-box-container {
-  margin-left: 50px;
-  position: relative;
-  left: 0;
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
 .fridge-box {
   background-color: white;
-  height: 35vh;
-  width: 90%;
-  transition: all 0.3s;
+  height: 250px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
 }
 
 .fridge-item-image {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all 0.3s;
 }
 
 .fridge-item-info {
@@ -109,15 +104,19 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.3s;
-  background-color: gray;
+  background-color: rgba(128, 128, 128, 0.7);
+  width: 90%;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .fridge-box.expanded {
-  position: absolute;
-  left: 15vh;
   height: 70vh;
   width: 70vw;
   z-index: 100;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .fridge-box.hidden {
@@ -125,18 +124,10 @@ export default {
 }
 
 .details-container {
-  height: 0;
-  width: 0;
   transition: all 0.3s;
 }
 
 @media screen and (max-width: 768px) {
-  .fridge-box-container {
-    grid-template-columns: repeat(2, 1fr);
-    margin-left: 0;
-    padding: 20px;
-  }
-
   .fridge-box {
     height: 40vw;
     width: 40vw;
