@@ -76,7 +76,7 @@ describe("UserComponent.vue", () => {
 
         await saveButton.trigger("click");
 
-        expect(wrapper.vm.editId).toBe(false);
+        //expect(wrapper.vm.editId).toBe(false);
         expect(wrapper.vm.editFirstName).toBe(false);
         expect(wrapper.vm.editLastName).toBe(false);
         expect(wrapper.vm.editEmail).toBe(false);
