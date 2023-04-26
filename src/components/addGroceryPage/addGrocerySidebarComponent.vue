@@ -3,6 +3,14 @@ defineProps({
   categories: {
     type: Array,
     required: true,
+  },
+  selected: {
+    type: Array,
+    required: true
+  },
+  home: {
+    type: String,
+    required: true
   }
 });
 </script>
@@ -16,6 +24,16 @@ defineProps({
         {{ category.name }}
       </ul>
     </div>
+
+    <div class="selected-items" v-if="!isCollapsed">
+      <h2>Valgte Varer:</h2>
+      <ul>
+        <li v-for="item in selected" :key="item.id">{{ item.amount }} {{ item.unit }} {{ item.name }} med {{ item.actual_shelf_life }} dagers holdbarhet</li>
+      </ul>
+    </div>
+
+    <button @click="sendItems"> Legg til {{ home }} </button>
+    <button @click="cancel"> Avbryt </button>
   </div>
 </template>
 
@@ -36,8 +54,14 @@ export default {
       this.isCollapsed = !this.isCollapsed;
       this.iconRotation += 180;
       this.$emit('toggle-sidebar', this.isCollapsed);
+    },
+    sendItems(){
+      this.$emit('send-items')
+    },
+    cancel(){
+      this.$emit('cancel')
     }
-  },
+  }
 }
 </script>
 
@@ -122,5 +146,29 @@ export default {
 
 .fridge-sidebar .category-item:active {
   background-color: #dee2e6;
+}
+
+.selected-items {
+  margin-top: 20px;
+}
+
+.selected-items h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.selected-items ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-items li {
+  padding: 5px;
+  background-color: #f8f9fa;
+  border-radius: 3px;
+  margin-bottom: 5px;
 }
 </style>
