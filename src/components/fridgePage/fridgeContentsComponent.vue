@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import FridgeItemDetailsComponent from "@/components/groceryItemComponent.vue";
 
-
 defineProps({
   items: {
     type: Array,
@@ -56,7 +55,7 @@ function handleFeedback1(feedbackInfo){
         @click="toggleExpand(item)"
         :class="{ expanded: expandedItem === item, hidden: expandedItem && expandedItem !== item }"
     >
-      <img class="fridge-item-image" src="@/assets/icons/logo.png" alt="Image" v-if="expandedItem !== item" />
+      <img class="fridge-item-image" src="@/assets/icons/Logo.png" alt="Image" v-if="expandedItem !== item" />
       <div class="fridge-item-info" v-if="expandedItem !== item">
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
