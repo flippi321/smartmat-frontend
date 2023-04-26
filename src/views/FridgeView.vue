@@ -26,7 +26,7 @@ defineProps({
     <addGroceries
         v-if="showAddGroceries === true"
         :id="id"
-        :home="'Fridge'"
+        :home="'Kjøleskap'"
         @add-grocery="handleAddGrocery"
         @close="hideGroceryDetailComponent"
     />
