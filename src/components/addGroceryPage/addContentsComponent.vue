@@ -71,6 +71,21 @@ export default {
 </script>
 
 <style>
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+}
+
 .fridge-box-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
