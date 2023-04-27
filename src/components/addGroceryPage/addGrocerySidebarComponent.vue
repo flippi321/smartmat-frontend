@@ -72,6 +72,7 @@ export default {
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: flex 0.3s;
+  overflow-y: auto;
 }
 
 .collapse-button {
@@ -137,7 +138,7 @@ export default {
 }
 
 .selected-items {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .selected-items h2 {
@@ -161,6 +162,14 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .fridge-sidebar-content{
+    height: auto;
+  }
+
+  .collapsed{
+    min-height: 100px;
+  }
+
   .collapse-button {
     transform: rotate(180deg);
   }
