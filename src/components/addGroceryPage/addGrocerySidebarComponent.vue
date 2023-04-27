@@ -73,6 +73,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: flex 0.3s;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .collapse-button {
@@ -98,8 +99,8 @@ export default {
   height: 100%;
   overflow-y: auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
-
 .fridge-sidebar h1 {
   font-size: 24px;
   font-weight: bold;
@@ -147,11 +148,11 @@ export default {
   color: #333;
   margin-bottom: 10px;
 }
-
 .selected-items ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  width: calc(100% - 20px);
 }
 
 .selected-items li {
