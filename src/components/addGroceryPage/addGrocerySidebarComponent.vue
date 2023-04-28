@@ -37,12 +37,12 @@ defineProps({
   </div>
 </template>
 
-
 <script>
 export default {
   data() {
     return {
       isCollapsed: false,
+      isRotated: false,
     };
   },
   methods: {
@@ -68,6 +68,7 @@ export default {
 .fridge-sidebar {
   position: relative;
   height: 100%;
+  min-height: 100vh;
   flex: 0 0 500px;
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
