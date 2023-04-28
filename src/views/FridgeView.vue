@@ -50,10 +50,12 @@ export default {
     fridgeService.getFridgeContents(this.id).then((response) => {
       console.log("Contents response:")
       this.items = response.data;
+      console.log(this.items)
     });
     fridgeService.getCategoriesFromFridgeId().then((response) => {
       console.log("Categories response:" + response.data)
       this.categories = response.data;
+      console.log(this.categories)
     });
   },
   methods: {
@@ -76,11 +78,11 @@ export default {
     updateFridge(){
       fridgeService.getFridgeContents(this.id).then((response) => {
         console.log("Contents response:")
-        this.items = response.data.groceryItems.groceries;
+        this.items = response.data;
       });
       fridgeService.getCategoriesFromFridgeId().then((response) => {
         console.log("Categories response:")
-        this.categories = response.data.categories;
+        this.categories = response.data;
       });
     },
 
