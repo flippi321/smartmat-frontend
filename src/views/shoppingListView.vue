@@ -9,26 +9,39 @@ defineProps({
 
 <template>
   <div class="shopping-list-page">
-    <div class="sidebar">
-      <FilterBar :sortChoices="sortingChoices" :list-id="id" @moveToFridge="sendSelectedItems"
-                 @removeItems="removeSelectedItems" @changeSortBy="(n) => changeSorting(n)"/>
+    <div class="sidebar" v-if="showAddGroceries === false">
+      <FilterBar
+          :sortChoices="sortingChoices" :list-id="id"
+          @moveToFridge="sendSelectedItems"
+          @removeItems="removeSelectedItems"
+          @add-items="this.showAddGroceries = true"
+          @changeSortBy="(n) => changeSorting(n)"
+      />
     </div>
-    <div class="groceries-container">
+    <div class="groceries-container" v-if="showAddGroceries === false">
       <Groceries :items="items" ref="groceries" @saved-changes="updateItem"/>
     </div>
+    <addGroceries
+        v-if="showAddGroceries === true"
+        :id="id"
+        :home="'Handleliste'"
+        @add-grocery="handleAddGrocery"
+        @close="hideGroceryDetailComponent"
+    />
   </div>
 </template>
-
 
 <script>
 import shoppingListService from "@/services/shoppingListService";
 import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
 import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
+import addGroceries from "@/components/addGroceries.vue";
 
 export default {
   components: {
     Groceries,
     FilterBar,
+    addGroceries
   },
   data() {
     return {
@@ -36,6 +49,7 @@ export default {
       sortBy: 1,
       items: [],
       sortingChoices: [],
+      showAddGroceries: false,
     };
   },
   created() {
@@ -50,26 +64,14 @@ export default {
 
   methods: {
     updateItem(itemData) {
-      /*
-      shoppingListService.updateShoppingListItem(itemData)
-          .then(() => {
-
-            this.updateShoppingList();
-          })
-          .catch(error => {
-            console.error('Error updating item:', error);
-          });
-       */
       console.log(shoppingListService.updateShoppingListItem(itemData))
     },
     sendSelectedItems() {
       console.log(shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected));
-      //.then
       this.updateShoppingList()
     },
     removeSelectedItems(){
       console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
-      //.then
       this.updateShoppingList()
     },
     changeSorting(sortingId) {
@@ -77,7 +79,6 @@ export default {
       this.updateShoppingList();
     },
 
-    // TODO Temporary to show mockDB, must be replaced when merging with backend
     updateShoppingList(){
       shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
         if(response.data.groceryItemsByAlphabet){
@@ -86,6 +87,18 @@ export default {
           this.items = response.data.groceryItemsById.groceries;
         }
       });
+    },
+
+    showAddGroceriesComponent() {
+      this.showAddGroceries = true;
+    },
+
+    hideGroceryDetailComponent() {
+      this.showAddGroceries = false;
+    },
+
+    handleAddGrocery(items){
+      console.log(items)
     }
   },
 };
@@ -93,8 +106,8 @@ export default {
 
 <style>
 .sidebar {
+  margin-top: -10px;
   position: fixed;
-  margin-top: 60px;
   height: 100%;
   width: 400px;
   background-color: white;
@@ -103,9 +116,9 @@ export default {
 }
 
 .groceries-container {
+  margin-top: -30px;
   margin-left: 400px;
   padding: 10px;
-  margin-top: -120px; /* Only way to fix an issue where a gap appears above the v-for */
 }
 </style>
 

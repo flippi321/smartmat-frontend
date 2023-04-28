@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import FridgeItemDetailsComponent from "@/components/groceryItemComponent.vue";
+import FridgeItemDetailsComponent from "@/components/GroceryItemComponent.vue";
 
 defineProps({
   items: {
@@ -10,26 +10,15 @@ defineProps({
 });
 
 // Define Emits
-const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close", "close",
-"give-feedback1"]);
+const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close",
+"give-feedback1", "add-new-items"]);
 
-
-function handleUpdateGrocery1(groceryItem) {
-  // Send request to backend to update grocery item in database
-  emit("update-grocery2", groceryItem);
-}
-function handleDeleteGrocery1(groceryItem) {
-  // Send request to backend to update grocery item in database
-  emit("delete-grocery2", groceryItem);
-}
 const expandedItem = ref(null);
 
 function toggleExpand(item) {
   console.log("toggleExpand")
   expandedItem.value = item;
   emit("hideFilterBar");
-
-
 }
 function toggleRetract(){
   setTimeout(toggleRetractHelper, 100)
@@ -39,15 +28,17 @@ function toggleRetractHelper(){
   expandedItem.value = null;
   emit("showFilterBar");
 }
-
-function handleFeedback1(feedbackInfo){
-  emit("give-feedback2", feedbackInfo);
-
-}
 </script>
 
 <template>
   <div class="fridge-box-container">
+    <button
+        v-if="expandedItem === null"
+        @click="emit('add-new-items')"
+        class="add-items-button">
+      Legg til varer
+      <img src="@/assets/icons/plusSign.png" alt="Add" class="plus-icon" />
+    </button>
     <div
         class="fridge-box"
         v-for="(item, index) in items"
@@ -60,16 +51,16 @@ function handleFeedback1(feedbackInfo){
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
       </div>
-      <transition name="details">
-        <div class="details-container" v-if="expandedItem === item">
-          <FridgeItemDetailsComponent
-              :item="item"
-              @close="toggleRetract"
-              @update-grocery1="handleUpdateGrocery1"
-              @delete-grocery1="handleDeleteGrocery1"
-              @give-feedback1="handleFeedback1"
-          />
-        </div>
+      <transition name="details" v-if="expandedItem === item">
+        <FridgeItemDetailsComponent
+            :item="item"
+            :accept-message="'Lagre Endringer'"
+            :decline-message="'Avbryt'"
+            :tertiary-message="'Slett'"
+            @update="updateGrocery"
+            @decline="toggleRetract"
+            @special="deleteItem"
+        />
       </transition>
     </div>
   </div>
@@ -77,13 +68,35 @@ function handleFeedback1(feedbackInfo){
 
 <style>
 .fridge-box-container {
-  margin-left: 50px;
-  position: relative;
-  left: 0;
-  width: 100%;
+  margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.add-items-button {
+  position: absolute;
+  top: -45px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.plus-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 }
 
 .fridge-box {
@@ -120,6 +133,7 @@ function handleFeedback1(feedbackInfo){
 .fridge-box.expanded {
   position: absolute;
   left: 15vh;
+  margin-top: 15vh;
   height: 70vh;
   width: 70vw;
   z-index: 100;
@@ -129,17 +143,11 @@ function handleFeedback1(feedbackInfo){
   display: none;
 }
 
-.details-container {
-  height: 0;
-  width: 0;
-  transition: all 0.3s;
-}
-
 @media screen and (max-width: 768px) {
-  .fridge-box-container {
+  body .fridge-box-container {
     grid-template-columns: repeat(2, 1fr);
-    margin-left: 0;
-    padding: 20px;
+  margin-left: 0;
+    padding: 30px;
   }
 
   .fridge-box {
@@ -147,9 +155,12 @@ function handleFeedback1(feedbackInfo){
     width: 40vw;
   }
 
-  .fridge-box.expanded {
-    height: 90%;
-    width: 90%;
+  body .fridge-box.expanded {
+    grid-row: span 2;
+    grid-column: span 2;
+    height: 30vh;
+    width: 80vh;
   }
 }
 </style>
+
