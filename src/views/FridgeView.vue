@@ -10,7 +10,7 @@ defineProps({
 <template>
   <div class="fridge-page">
     <Sidebar
-        v-if="showAddGroceries === false"
+        v-if="showAddGroceries === false && this.sidebarVisible === true"
         :categories="categories"
         @changeCategoryById="changeCategory"
         @toggle-sidebar="toggleSideBar"
@@ -19,8 +19,8 @@ defineProps({
         v-if="showAddGroceries === false"
         :items="items"
         class="fridge-contents"
-        @showFilterBar="console.log('ShowBar')"
-        @hideFilterBar="console.log('ShowBar')"
+        @show-filter-bar="this.sidebarVisible = true"
+        @hide-filter-bar="this.sidebarVisible = false"
         @add-new-items="showAddGroceriesComponent"
     />
     <addGroceries
@@ -32,8 +32,6 @@ defineProps({
     />
   </div>
 </template>
-
-
 
 <script>
 import fridgeService from "@/services/fridgeService";
@@ -53,7 +51,7 @@ export default {
       items: [],
       categories: [],
       currentCategory: 1,
-      showSideBar: true,
+      sidebarVisible: true,
       detailsIconVisible: false,
 
       feedback: false,
