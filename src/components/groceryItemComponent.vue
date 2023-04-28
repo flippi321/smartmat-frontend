@@ -7,7 +7,7 @@
       <div class="grocery-item-details">
         <h1 class="grocery-item-name">{{ item.name }}</h1>
         <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="amount" min="0" />
-          {{item.unit}}</p>
+          {{item.category.unit}}</p>
         <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
         <p class="grocery-item-actual-shelf-life">
           Faktisk holdbarhet: <input type="number" v-model.number="actual_shelf_life" min="0" /> dager
