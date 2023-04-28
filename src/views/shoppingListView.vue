@@ -66,11 +66,15 @@ export default {
         updateItem(itemData) {
             console.log(shoppingListService.updateShoppingListItem(itemData))
         },
-        sendSelectedItems() {
-            shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, this.id, this.id);
-            //console.log(this.$refs.groceries.$data.currentlySelected)
-            this.updateShoppingList()
+        async sendSelectedItems() {
+            try {
+                await shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, this.id, this.id);
+                this.updateShoppingList();
+            } catch (error) {
+                console.error("Error sending items to fridge:", error);
+            }
         },
+
         removeSelectedItems(){
             console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
             this.updateShoppingList()
@@ -80,10 +84,14 @@ export default {
             this.updateShoppingList();
         },
 
-        updateShoppingList(){
-            shoppingListService.getShoppingListContents(this.id).then(response => {
-                this.items = response.data;
-            });
+        updateShoppingList() {
+            shoppingListService.getShoppingListContents(this.id)
+                .then(response => {
+                    this.items = response.data;
+                })
+                .catch(error => {
+                    console.error("Error updating shopping list:", error);
+                });
         },
 
         showAddGroceriesComponent() {
