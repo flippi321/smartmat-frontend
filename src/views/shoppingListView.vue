@@ -53,7 +53,7 @@ export default {
         };
     },
     created() {
-        shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
+        shoppingListService.getShoppingListContents(this.id).then(response => {
             this.items = response.data;
         });
 
@@ -67,7 +67,7 @@ export default {
             console.log(shoppingListService.updateShoppingListItem(itemData))
         },
         sendSelectedItems() {
-            shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, 1, 1);
+            shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, this.id, this.id);
             //console.log(this.$refs.groceries.$data.currentlySelected)
             this.updateShoppingList()
         },
@@ -81,12 +81,8 @@ export default {
         },
 
         updateShoppingList(){
-            shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
-                if(response.data){
-                    this.items = response.data;
-                } else if (response.data){
-                    this.items = response.data;
-                }
+            shoppingListService.getShoppingListContents(this.id).then(response => {
+                this.items = response.data;
             });
         },
 
