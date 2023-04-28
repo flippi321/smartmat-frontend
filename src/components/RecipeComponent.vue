@@ -1,5 +1,9 @@
 <script setup>
 import { defineProps, ref, computed } from 'vue'
+import {useAuthStore} from "@/stores";
+import pinia from "@/stores";
+
+const store = useAuthStore(pinia);
 
 const props = defineProps({
   recipe: {
@@ -8,7 +12,7 @@ const props = defineProps({
   },
 })
 
-const portions = ref(4)
+const portions = ref(store.getNrOfPortions)
 
 const adjustedIngredients = computed(() => {
   return props.recipe.ingredients.map(ingredient => {

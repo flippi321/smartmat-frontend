@@ -28,6 +28,7 @@ export default {
   methods: {
     getRecipe(id) {
       recipeService.getRecipeById(id).then(response => {
+          console.log(response.data)
         this.recipe = response.data;
       });
     }

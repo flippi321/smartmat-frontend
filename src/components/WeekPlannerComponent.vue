@@ -28,11 +28,14 @@
 
 <script>
 import weekPlannerService from "@/services/weekPlannerService";
+import {useAuthStore} from "@/stores";
+import pinia from "@/stores";
+const store = useAuthStore(pinia);
 
 export default {
     data() {
         return {
-            nrOfPeople: 0,
+            nrOfPeople: store.getNrOfPortions,
             weeklyMenu: [],
             householdId: 1,
             daysOfWeek: [
@@ -48,7 +51,7 @@ export default {
     },
     methods: {
         async generateWeeklyMenu() {
-            const response = await weekPlannerService.generateWeeklyMenu(this.householdId);
+            const response = await weekPlannerService.generateWeeklyMenu();
 
             // Extract the recipes from the response
             const recipes = response.data.recipes;
@@ -76,6 +79,11 @@ export default {
             }
 
             return array;
+        },
+    },
+    watch: {
+        nrOfPeople(newVal) {
+            store.setNrOfPortions(newVal);
         },
     },
 
