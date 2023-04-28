@@ -2,7 +2,7 @@ import {describe, it, beforeEach, expect} from "vitest"
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { nextTick } from 'vue';
-import GroceryItemComponent from '@/components/GroceryItemComponent.vue';
+import GroceryItemComponent from "@/components/GroceryItemComponent.vue";
 
 describe('GroceryItemComponent.vue', () => {
     let wrapper;

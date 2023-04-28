@@ -1,5 +1,5 @@
 <script setup>
-import GroceryItemDetails from "@/components/groceryItemComponent.vue";
+import GroceryItemDetails from "@/components/GroceryItemComponent.vue";
 
 defineProps({
   items: {

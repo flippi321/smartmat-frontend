@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import FridgeItemDetailsComponent from "@/components/groceryItemComponent.vue";
+import FridgeItemDetailsComponent from "@/components/GroceryItemComponent.vue";
 
 defineProps({
   items: {
