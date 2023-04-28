@@ -1,8 +1,8 @@
 <template>
   <div class="grocery-item">
     <div class="grocery-item-content">
-      <div class="grocery-item-image" :style="{width: imageSize, height: imageSize}">
-        <img src="@/assets/icons/Logo.png" :alt="item.name" :style="{width: imageSize, height: imageSize}" />
+      <div class="grocery-item-image">
+        <img src="@/assets/icons/Logo.png" :alt="item.name">
       </div>
       <div class="grocery-item-details">
         <h1 class="grocery-item-name">{{ item.name }}</h1>
