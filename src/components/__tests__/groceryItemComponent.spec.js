@@ -1,94 +1,95 @@
-import { mount } from '@vue/test-utils'
-import Vuex from "vuex"
 import {describe, it, beforeEach, expect} from "vitest"
-import GroceryItemComponent from '@/components/groceryItemComponent.vue'
-//jeg har kommentert ut update og delete testene fordi de ikke går når jeg ikke har noen database å sjekke opp mot
-//ennå - venter på oppkopling med backend
-describe('GroceryItemComponent', () => {
-    let store
-    let wrapper
+import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { nextTick } from 'vue';
+import GroceryItemComponent from '@/components/GroceryItemComponent.vue';
+
+describe('GroceryItemComponent.vue', () => {
+    let wrapper;
+    let store;
+    let item;
 
     beforeEach(() => {
-        store = new Vuex.Store({
-            state: {
-                groceries: [
-                    {
-                        id: 1,
-                        name: 'Milk',
-                        category: 1,
-                        unit: 'L',
-                        expected_shelf_life: 7,
-                        amount: 2,
-                        actual_shelf_life: 5
-                    },
-                    {
-                        id: 2,
-                        name: 'Bread',
-                        category: 2,
-                        unit: 'stk',
-                        expected_shelf_life: 3,
-                        amount: 1,
-                        actual_shelf_life: 2
-                    }
-                ]
+        item = {
+            groceryItemId: 6,
+            name: 'Egg',
+            expected_shelf_life: 30,
+            category: {
+                category: 3,
+                name: 'Kjøtt',
+                unit: 'kg',
             },
-            mutations: {
-                updateGrocery(state, payload) {
-                    const grocery = state.groceries.find(g => g.id === payload.id)
-                    grocery.name = payload.name
-                    grocery.category = payload.category
-                    grocery.unit = payload.unit
-                    grocery.expected_shelf_life = payload.expected_shelf_life
-                    grocery.amount = payload.amount
-                    grocery.actual_shelf_life = payload.actual_shelf_life
-                },
-                deleteGrocery(state, payload) {
-                    state.groceries = state.groceries.filter(g => g.id !== payload.id)
-                }
-            }
-        })
+            amount: 5,
+        };
+
+        store = createStore({
+            state: {
+                item,
+            },
+        });
 
         wrapper = mount(GroceryItemComponent, {
-            propsData: {
-                item: {
-                    id: 1,
-                    name: 'Milk',
-                    category: 1,
-                    unit: 'L',
-                    expected_shelf_life: 7,
-                    amount: 2,
-                    actual_shelf_life: 5
-                }
+            props: {
+                item,
+                acceptMessage: 'Accept',
+                declineMessage: 'Decline',
+                tertiaryMessage: 'Special',
             },
             global: {
-                plugins: [store, Vuex]
-            }
-        })
-    })
+                plugins: [store],
+            },
+        });
+    });
 
-    it('renders the grocery item', () => {
-        expect(wrapper.find('.grocery-item-name').text()).toBe('Milk')
-        expect(wrapper.find('.grocery-item-amount input').element.value).toBe('2')
-        expect(wrapper.find('.grocery-item-expected-shelf-life').text()).toBe('Beregnet holdbarhet: 7 dager')
-        expect(wrapper.find('.grocery-item-actual-shelf-life input').element.value).toBe('5')
-    })
+    it('renders the item name', () => {
+        const itemName = wrapper.find('.grocery-item-name');
+        expect(itemName.text()).toBe(item.name);
+    });
 
-    /*it('updates the grocery item', async () => {
-        await wrapper.find('.grocery-item-amount input').setValue('3')
-        await wrapper.find('.grocery-item-actual-shelf-life input').setValue('6')
-        await wrapper.find('.grocery-item-buttons button:first-of-type').trigger('click')
-        expect(store.state.groceries[0].amount).toBe(3)
-        expect(store.state.groceries[0].actual_shelf_life).toBe(6)
-    })*/
+    it('renders the item amount', () => {
+        const itemAmountInput = wrapper.find('.grocery-item-amount input');
+        expect(Number(itemAmountInput.element.value)).toBe(item.amount);
+    });
 
-    /*it('deletes the grocery item', async () => {
-        await wrapper.find('.grocery-item-buttons button:nth-of-type(2)').trigger('click')
-        expect(store.state.groceries.length).toBe(1)
-        expect(store.state.groceries[0].name).toBe('Bread')
-    })*/
+    it('renders the expected shelf life', () => {
+        const expectedShelfLife = wrapper.find('.grocery-item-expected-shelf-life');
+        expect(expectedShelfLife.text()).toContain(item.expected_shelf_life);
+    });
 
-    it('emits a "close" event when the "return to fridge" button is clicked', () => {
-        wrapper.find('.grocery-item-buttons button:last-of-type').trigger('click')
-        expect(wrapper.emitted().close).toBeTruthy()
-    })
-})
+    it('emits "update" event when the accept button is clicked', async () => {
+        const acceptButton = wrapper.find('button:nth-child(1)');
+        await acceptButton.trigger('click.stop');
+        expect(wrapper.emitted('update')).toBeTruthy();
+    });
+
+    it('emits "decline" event when the decline button is clicked', async () => {
+        const declineButton = wrapper.find('button:nth-child(2)');
+        await declineButton.trigger('click.stop');
+        expect(wrapper.emitted('decline')).toBeTruthy();
+    });
+
+    it('emits "special" event when the special button is clicked', async () => {
+        const specialButton = wrapper.find('button:nth-child(3)');
+        await specialButton.trigger('click.stop');
+        expect(wrapper.emitted('special')).toBeTruthy();
+    });
+
+    it('updates the actual shelf life and amount on created', async () => {
+        expect(wrapper.vm.actual_shelf_life).toBe(item.expected_shelf_life);
+        expect(wrapper.vm.amount).toBe(item.amount);
+    });
+
+    it('updates the amount when the input is changed', async () => {
+        const input = wrapper.find('.grocery-item-amount input');
+        await input.setValue(10);
+        await nextTick();
+        expect(wrapper.vm.amount).toBe(10);
+    });
+
+    it('updates the actual shelf life when the input is changed', async () => {
+        const input = wrapper.find('.grocery-item-actual-shelf-life input');
+        await input.setValue(20);
+        await nextTick();
+        expect(wrapper.vm.actual_shelf_life).toBe(20);
+    });
+});
