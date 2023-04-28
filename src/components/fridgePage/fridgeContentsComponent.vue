@@ -66,14 +66,13 @@ function toggleRetractHelper(){
 
 <style>
 .fridge-box-container {
-  margin-left: 50px;
-  position: relative;
   margin-top: 50px;
-  left: 0;
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .add-items-button {
