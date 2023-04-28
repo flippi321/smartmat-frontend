@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 /*
 Mocking responses, must be removed:
@@ -30,9 +30,24 @@ mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200,
 })
 
 export default {
+    /**
     getShoppingListContents(listId, sortBy){
         return(apiClient.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
     },
+    */
+    getShoppingListContents(listId){
+        const options = {
+            method: 'GET',
+            url: `${url}/api/groceryItems/shoppinglist/${listId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
+
+    },
+
+
     getSortingChoices(){
         return(apiClient.get("/getSortingChoices"));
     },

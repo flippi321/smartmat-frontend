@@ -39,8 +39,8 @@ export default {
     };
   },
   created() {
-    shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
-      this.items = response.data.groceryItemsById.groceries;
+    shoppingListService.getShoppingListContents(this.id).then(response => {
+      this.items = response.data;
     });
 
     shoppingListService.getSortingChoices().then(response => {
