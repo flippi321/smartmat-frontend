@@ -6,11 +6,11 @@
       </div>
       <div class="grocery-item-details">
         <h1 class="grocery-item-name">{{ item.name }}</h1>
-        <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="localAmount" min="0" />
+        <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="amount" min="0" />
           {{item.unit}}</p>
         <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
         <p class="grocery-item-actual-shelf-life">
-          Faktisk holdbarhet: <input type="number" v-model.number="localActual_shelf_life" min="0" /> dager
+          Faktisk holdbarhet: <input type="number" v-model.number="actual_shelf_life" min="0" /> dager
         </p>
         <div class="grocery-item-buttons">
           <button @click.stop="update(item)">{{ acceptMessage }}</button>
@@ -24,6 +24,13 @@
 
 <script>
 export default {
+  data(){
+    return {
+      amount: 0,
+      actual_shelf_life: 0,
+    }
+  },
+
   props: {
     item: {
       type: Object,
@@ -56,6 +63,11 @@ export default {
     special(information){
       this.$emit("special", information)
     }
+  },
+
+  created() {
+    this.actual_shelf_life = this.item.expected_shelf_life;
+    this.amount = this.item.amount;
   }
 }
 </script>
@@ -103,30 +115,30 @@ export default {
 }
 
 .grocery-item-name {
-  font-size: 24px;
+  font-size: 48px;
   margin: 0 0 10px;
 }
 
 .grocery-item-amount {
-  font-size: 16px;
+  font-size: 28px;
   line-height: 1.5;
   margin-bottom: 8px;
 }
 
 input[type="number"] {
   padding: 5px;
-  font-size: 14px;
+  font-size: 28px;
   width: 50px;
 }
 
 .grocery-item-expected-shelf-life {
-  font-size: 14px;
+  font-size: 28px;
   line-height: 1.5;
   margin-bottom: 8px;
 }
 
 .grocery-item-actual-shelf-life {
-  font-size: 16px;
+  font-size: 28px;
   line-height: 1.5;
   margin-bottom: 8px;
 }
@@ -164,6 +176,26 @@ button:hover {
 
   .grocery-item-details {
     align-items: center;
+  }
+
+  .grocery-item-name {
+    font-size: 24px;
+  }
+
+  .grocery-item-amount {
+    font-size: 16px;
+  }
+
+  input[type="number"] {
+    font-size: 14px;
+  }
+
+  .grocery-item-expected-shelf-life {
+    font-size: 14px;
+  }
+
+  .grocery-item-actual-shelf-life {
+    font-size: 16px;
   }
 }
 
