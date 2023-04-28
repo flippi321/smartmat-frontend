@@ -143,21 +143,6 @@ input[type="number"] {
   margin-bottom: 8px;
 }
 
-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition-duration: 0.4s;
-}
-
 button:hover {
   background-color: #555555;
   color: white;
