@@ -57,10 +57,18 @@ export default {
          */
         return JSON.stringify(itemInformation)
     },
-    //TODO Update methods when Database is ready
-    sendItemsToFridge(itemInformation){
-        //return(axios.post("/moveItemToFridge", itemInformation))
-        return JSON.stringify(itemInformation)
+
+    sendItemsToFridge(items, shoppingListId, fridgeId){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/transfer/${shoppingListId}/${fridgeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: items
+        };
+        console.log(options.data)
+        return axios.request(options);
     },
     removeItemsFromList(itemInformation){
         //return(axios.post("/removeItemsFromShoppingList", itemInformation))

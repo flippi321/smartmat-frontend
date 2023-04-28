@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="shopping-list-page">
     <div class="sidebar" v-if="showAddGroceries === false">
@@ -19,7 +10,14 @@ defineProps({
       />
     </div>
     <div class="groceries-container" v-if="showAddGroceries === false">
-      <Groceries :items="items" ref="groceries" @saved-changes="updateItem"/>
+        <Groceries
+            :items="items"
+            ref="groceries"
+            :updateSelectedItems="updateSelectedItems"
+            @saved-changes="updateItem"
+        />
+
+
     </div>
     <addGroceries
         v-if="showAddGroceries === true"
@@ -37,11 +35,41 @@ import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
 import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
 import addGroceries from "@/components/addGroceries.vue";
 
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    items: {
+        type: Array,
+        required: true,
+    },
+    selectedItemIds: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const sendSelectedItems = () => {
+    this.$emit("selected-items", props.selectedItemIds);
+};
+
+
+
+
 export default {
   components: {
     Groceries,
     FilterBar,
     addGroceries
+  },
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    selectedItemIds: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -50,11 +78,20 @@ export default {
       items: [],
       sortingChoices: [],
       showAddGroceries: false,
+      selectedIds: [],
     };
   },
-  created() {
+
+    computed: {
+      selectedIds() {
+          return this.$refs.groceries.selectedItemIds;
+      },
+    },
+
+    created() {
     shoppingListService.getShoppingListContents(this.id).then(response => {
       this.items = response.data;
+      console.log(this.items)
     });
 
     shoppingListService.getSortingChoices().then(response => {
@@ -67,9 +104,20 @@ export default {
       console.log(shoppingListService.updateShoppingListItem(itemData))
     },
     sendSelectedItems() {
-      console.log(shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected));
-      this.updateShoppingList()
+      console.log(this.selectedIds);
+
+      shoppingListService.sendItemsToFridge(this.selectedIds, 1, 1).then(response => {
+        console.log(response.data);
+        this.updateShoppingList();
+      }).catch(error => {
+        console.log(error);
+      });
     },
+
+    updateSelectedItems(selectedItemIds) {
+      this.selectedIds = selectedItemIds;
+    },
+
     removeSelectedItems(){
       console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
       this.updateShoppingList()
@@ -80,12 +128,8 @@ export default {
     },
 
     updateShoppingList(){
-      shoppingListService.getShoppingListContents(this.id, this.sortBy).then(response => {
-        if(response.data.groceryItemsByAlphabet){
-          this.items = response.data.groceryItemsByAlphabet.groceries;
-        } else if (response.data.groceryItemsById){
-          this.items = response.data.groceryItemsById.groceries;
-        }
+      shoppingListService.getShoppingListContents(this.id).then(response => {
+          this.items = response.data;
       });
     },
 

@@ -1,76 +1,98 @@
-<script setup>
-import { defineProps } from 'vue'
-
-defineProps({
-  items: {
-    type: Array,
-    required: true,
-  },
-})
-</script>
 
 <template>
-  <div class="box-container">
-    <transition name="fade" mode="out-in" :duration="2000">
-      <div class="success-box" v-if="showSaveSuccess">
-        <span>Saved successfully!</span>
-      </div>
-    </transition>
-    <div class="box" v-for="item in items" :key="item.id">
-      <div class="item-info">
-        <div class="checkbox-and-name" @click.stop="item.selected = !item.selected">
-          <input type="checkbox" class="checkbox" v-model="item.selected">
-          <div class="name">{{ item.name }}</div>
+    <div class="box-container">
+        <transition name="fade" mode="out-in" :duration="2000">
+            <div class="success-box" v-if="showSaveSuccess">
+                <span>Saved successfully!</span>
+            </div>
+        </transition>
+        <div class="box" v-for="item in items" :key="item.groceryItemId">
+            <div class="item-info">
+                <div class="checkbox-and-name">
+                    <input type="checkbox" class="checkbox" :checked="item.selected" @change="toggleSelection(item)">
+                    <div class="name">{{ item.name }}</div>
+                </div>
+
+                <div class="details-icon" @click="describeItem = describeItem === item ? null : item">
+                    <img src="@/assets/icons/Details.png" alt="Details" class="details-icon-img">
+                </div>
+            </div>
+            <div class="description" v-if="describeItem === item">
+                <p>
+                    Mengde:
+                    <input type="number" v-model.number="item.amount" min="0" step="1">
+                    {{ item.unit }}
+                </p>
+                <p>Forventet varighet: {{ item.expected_shelf_life }} dager</p>
+                <p>
+                    Faktisk varighet:
+                    <input type="number" v-model.number="item.actual_shelf_life" min="0" step="1"> dager
+                </p>
+                <div class="button-container">
+                    <button class="save-button" @click="saveChanges(item)">Save</button>
+                </div>
+            </div>
         </div>
-        <div class="details-icon" @click="describeItem = describeItem === item ? null : item">
-          <img src="@/assets/icons/Details.png" alt="Details" class="details-icon-img">
-        </div>
-      </div>
-      <div class="description" v-if="describeItem === item">
-        <p>
-          Mengde:
-          <input type="number" v-model.number="item.amount" min="0" step="1">
-          {{ item.unit }}
-        </p>
-        <p>Forventet varighet: {{ item.expected_shelf_life }} dager</p>
-        <p>
-          Faktisk varighet:
-          <input type="number" v-model.number="item.actual_shelf_life" min="0" step="1"> dager
-        </p>
-        <div class="button-container">
-          <button class="save-button" @click="saveChanges(item)">Save</button>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
+
 
 <script>
 export default {
-  data() {
-    return {
-      describeItem: null,
-      showSaveSuccess: false,
-      currentlySelected: [],
-    };
-  },
-  watch: {
-    items: {
-      handler(newItems) {
-        this.currentlySelected = newItems.filter(item => item.selected).map(item => item.id);
-      },
-      deep: true,
+    props: {
+        items: {
+            type: Array,
+            required: true,
+        },
+        updateSelectedItems: {
+            type: Function,
+            required: true,
+        },
     },
-  },
-  methods: {
-    saveChanges(item) {
-      this.showSaveSuccess = true
-      setTimeout(() => {
-        this.showSaveSuccess = false
-      }, 3000)
-      this.$emit('saved-changes', [item.id, item.amount, item.actual_shelf_life])
-    }
-  },
+    data() {
+        return {
+            describeItem: null,
+            showSaveSuccess: false,
+            currentlySelected: [],
+        };
+    },
+    computed: {
+        selectedItemIds() {
+            return this.currentlySelected.map((item) => item.groceryItemId);
+        },
+    },
+    watch: {
+        items: {
+            deep: true,
+            handler() {
+                this.currentlySelected = this.items.filter(item => item.selected);
+            },
+        },
+    },
+    methods: {
+        saveChanges(item) {
+            this.showSaveSuccess = true
+            setTimeout(() => {
+                this.showSaveSuccess = false
+            }, 3000)
+            this.$emit('saved-changes', [item.groceryItemId, item.amount, item.actual_shelf_life])
+        },
+        toggleSelection(item) {
+            const index = this.currentlySelected.findIndex(
+                (selectedItem) => selectedItem.groceryItemId === item.groceryItemId
+            );
+            if (index > -1) {
+                this.currentlySelected.splice(index, 1);
+            } else {
+                this.currentlySelected.push(item);
+            }
+            item.selected = !item.selected;
+
+            // Call the updateSelectedItems function from the parent component
+            this.updateSelectedItems(this.selectedItemIds);
+        },
+
+    },
 };
 </script>
 
