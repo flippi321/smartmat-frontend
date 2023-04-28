@@ -17,8 +17,8 @@ defineProps({
 
 <template>
   <div class="fridge-sidebar" :class="{ collapsed: isCollapsed }">
-    <h1>Filtrer etter kategorier:</h1>
-    <img class="collapse-button" :class="{ rotate: isRotated }" src="@/assets/icons/Details.png" alt="Details" @click="toggleSideBar" />
+    <h1 v-show="!isCollapsed || isMobile">Filtrer etter kategorier:</h1>
+    <img class="collapse-button" :class="{ rotate: isRotated }" src="@/assets/icons/Details.png" alt="Details" @click="toggleSideBar"/>
     <div class="fridge-sidebar-content" v-if="!isCollapsed">
       <ul v-for="category in categories" :key="category.id" @click="changeCategory(category.id)" class="category-item">
         {{ category.name }}
@@ -32,8 +32,8 @@ defineProps({
       </ul>
     </div>
 
-    <button @click="sendItems"> Legg til {{ home }} </button>
-    <button @click="cancel"> Avbryt </button>
+    <button @click="sendItems" v-show="!isCollapsed"> Legg til {{ home }} </button>
+    <button @click="cancel" v-show="!isCollapsed"> Avbryt </button>
   </div>
 </template>
 
@@ -43,9 +43,19 @@ export default {
     return {
       isCollapsed: false,
       isRotated: false,
+      isMobile: window.innerWidth <= 768,
     };
   },
+  created() {
+    window.addEventListener('resize', this.updateIsMobile);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.updateIsMobile);
+  },
   methods: {
+    updateIsMobile() {
+      this.isMobile = window.innerWidth <= 768;
+    },
     changeCategory(categoryId) {
       this.$emit("changeCategoryById", categoryId);
     },
