@@ -1,8 +1,8 @@
 <template>
-  <router-link :to="{ path: `/addToShoppingList`, query: { id: this.id } }" class="new-item-button">
+  <div @click="$emit('add-items')" class="new-item-button">
     <img src="@/assets/icons/plusSign2.png" alt="[Add New]" class="plus-icon">
     <span class="household-button fridge-button">Legg til Mer</span>
-  </router-link>
+  </div>
   <div class="filter-bar-container">
     <div class="filter-bar-content">
       <div class="sorting-bar" :class="{ expanded: isExpanded }">

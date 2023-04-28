@@ -9,28 +9,41 @@ defineProps({
 
 <template>
   <div class="fridge-page">
-    <Sidebar :categories="categories" @changeCategoryById="changeCategory" @toggle-sidebar="toggleSideBar" />
+    <Sidebar
+        v-if="showAddGroceries === false && this.sidebarVisible === true"
+        :categories="categories"
+        @changeCategoryById="changeCategory"
+        @toggle-sidebar="toggleSideBar"
+    />
     <Groceries
-        :items="items" class="fridge-contents"
-        @showFilterBar="console.log('ShowBar')"
-        @hideFilterBar="console.log('ShowBar')"
-        @update-grocery2="handleUpdateGrocery2"
-        @delete-grocery2="handleDeleteGrocery2"
-        @give-feedback2="handleFeedback2"
+        v-if="showAddGroceries === false"
+        :items="items"
+        class="fridge-contents"
+        @show-filter-bar="this.sidebarVisible = true"
+        @hide-filter-bar="this.sidebarVisible = false"
+        @add-new-items="showAddGroceriesComponent"
+    />
+    <addGroceries
+        v-if="showAddGroceries === true"
+        :id="id"
+        :home="'Kjøleskap'"
+        @add-grocery="handleAddGrocery"
+        @close="hideGroceryDetailComponent"
     />
   </div>
 </template>
-
 
 <script>
 import fridgeService from "@/services/fridgeService";
 import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
+import addGroceries from "@/components/addGroceries.vue";
 
 export default {
   components: {
     Sidebar,
-    Groceries
+    Groceries,
+    addGroceries
   },
   data() {
     return {
@@ -38,12 +51,13 @@ export default {
       items: [],
       categories: [],
       currentCategory: 1,
-      showSideBar: true,
+      sidebarVisible: true,
       detailsIconVisible: false,
 
       feedback: false,
       feedbackMessage: "",
       feedbackType: "",
+      showAddGroceries: false,
     };
   },
   created() {
@@ -67,9 +81,8 @@ export default {
       setTimeout(() => {
         this.feedback = false;
       }, 6000);
-
-
     },
+
     changeCategory(categoryId){
       this.currentCategory = categoryId;
       this.updateFridge();
@@ -88,26 +101,19 @@ export default {
 
     toggleSideBar(isCollapsed) {
       this.showSideBar = !isCollapsed;
-    }
+    },
 
+    showAddGroceriesComponent() {
+      this.showAddGroceries = true;
+    },
+
+    hideGroceryDetailComponent() {
+      this.showAddGroceries = false;
+    },
+
+    handleAddGrocery(items){
+      console.log(items)
+    }
   }
 };
 </script>
-
-<style>
-.fridge-page {
-  margin-top: -10px;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .fridge-page {
-    flex-direction: column;
-  }
-}
-</style>
-
-
