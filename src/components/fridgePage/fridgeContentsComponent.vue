@@ -47,18 +47,16 @@ function toggleRetractHelper(){
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
       </div>
-      <transition name="details">
-        <div class="details-container" v-if="expandedItem === item">
-          <FridgeItemDetailsComponent
-              :item="item"
-              :accept-message="'Lagre Endringer'"
-              :decline-message="'Avbryt'"
-              :tertiary-message="'Slett'"
-              @update="updateGrocery"
-              @decline="toggleRetract"
-              @special="deleteItem"
-          />
-        </div>
+      <transition name="details" v-if="expandedItem === item">
+        <FridgeItemDetailsComponent
+            :item="item"
+            :accept-message="'Lagre Endringer'"
+            :decline-message="'Avbryt'"
+            :tertiary-message="'Slett'"
+            @update="updateGrocery"
+            @decline="toggleRetract"
+            @special="deleteItem"
+        />
       </transition>
     </div>
   </div>
@@ -139,12 +137,6 @@ function toggleRetractHelper(){
 
 .fridge-box.hidden {
   display: none;
-}
-
-.details-container {
-  height: 0;
-  width: 0;
-  transition: all 0.3s;
 }
 
 @media screen and (max-width: 768px) {
