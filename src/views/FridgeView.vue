@@ -115,21 +115,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.fridge-page {
-  margin-top: -10px;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .fridge-page {
-    flex-direction: column;
-  }
-}
-</style>
-
-
