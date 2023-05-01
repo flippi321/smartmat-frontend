@@ -76,8 +76,12 @@ export default {
         },
 
         removeSelectedItems(){
-            console.log(shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected));
-            this.updateShoppingList()
+            try {
+                shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected, this.id);
+                this.updateShoppingList();
+            } catch (error) {
+                console.error("Error removing items from list:", error);
+            }
         },
         changeSorting(sortingId) {
             this.sortBy = sortingId;
@@ -104,6 +108,10 @@ export default {
 
         handleAddGrocery(items){
             console.log(items)
+
+            items.forEach(item => {
+                shoppingListService.addItemToList(this.id, item.id, item.amount)
+            })
         }
     },
 };

@@ -70,8 +70,26 @@ export default {
         console.log(options.data)
         return axios.request(options);
     },
-    removeItemsFromList(itemInformation){
-        //return(axios.post("/removeItemsFromShoppingList", itemInformation))
-        return JSON.stringify(itemInformation)
+    removeItemsFromList(items, shoppingListId){
+        const options = {
+            method: 'DELETE',
+            url: `${url}/api/groceryItems/shoppinglist/deleteItems/${shoppingListId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: items
+        };
+        return axios.request(options);
+    },
+
+    addItemToList(shoppingListId, groceryItemId, amount){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/shoppinglist/addItems/${shoppingListId}/${groceryItemId}/${amount}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        return axios.request(options);
     }
 }

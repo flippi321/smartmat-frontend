@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 /*
 Mocking responses, must be removed:
@@ -22,10 +22,24 @@ mock.onGet("/getAllCategories").reply(200, {
 
 export default {
     getAllGroceries(){
-        return apiClient.get("/getAllGroceries");
+        const options = {
+            method: 'GET',
+            url: `${url}/api/groceryItems/all`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
     },
 
     getAllCategories(){
-        return apiClient.get("/getAllCategories");
+        const options = {
+            method: 'GET',
+            url: `${url}/categories/all`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
     },
 }
