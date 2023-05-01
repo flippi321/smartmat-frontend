@@ -37,7 +37,7 @@ defineProps({
       <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary">
           <span>Planlegg Uke</span>
       </router-link>
-      <router-link v-if="store.getIsLoggedIn" to="/createAd" class="button-primary">
+      <router-link v-if="store.getIsLoggedIn" :to="{ path: '/household/admin', query: { id:this.id }}" class="button-primary">
           <span>Administrer Medlemmer</span>
       </router-link>
       <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary">
