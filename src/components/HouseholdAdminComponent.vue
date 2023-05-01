@@ -1,35 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-
-defineProps({
-  id: {
-    type: Number,
-    required: true
-  },
-  members: {
-    type: Array,
-    required: true,
-  }
-})
-
-const newMemberEmail = ref('')
-const selectedMember = ref(null)
-
-const addMember = () => {
-  if (newMemberEmail.value.trim()) {
-    members.value.push(newMemberEmail.value.trim())
-    newMemberEmail.value = ''
-  }
-}
-
-const removeMember = () => {
-  const index = members.value.findIndex(member => member === selectedMember.value)
-  if (index !== -1) {
-    members.value.splice(index, 1)
-  }
-}
-</script>
-
 <template>
   <div class="container">
     <div class="left">
@@ -57,11 +25,47 @@ const removeMember = () => {
 
 <script>
 export default {
-  name: "HouseholdAdminComponent"
-}
+  name: "HouseholdAdminComponent",
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+    members: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      newMemberEmail: "",
+      selectedMember: null,
+    };
+  },
+
+  methods: {
+    addMember() {
+      if (this.newMemberEmail.trim()) {
+        this.$emit("addMember", this.newMemberEmail.trim());
+        this.updateMembers();
+      }
+    },
+    removeMember() {
+      if (this.selectedMember !== null) {
+        this.$emit("removeMember", this.selectedMember.id);
+        this.updateMembers();
+      }
+    },
+    updateMembers() {
+      console.log("Updating Page...");
+      this.$emit("getMembers");
+    },
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .container {
   display: flex;
   justify-content: center;
@@ -78,6 +82,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  max-width: 50%;
 }
 
 .members-list {
@@ -135,6 +140,7 @@ button {
     flex: 1;
     height: auto;
     margin-bottom: 1rem;
+    max-width: 100%;
   }
 }
 </style>
