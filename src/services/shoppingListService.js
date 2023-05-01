@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 /*
 Mocking responses, must be removed:
@@ -30,9 +30,24 @@ mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200,
 })
 
 export default {
+    /**
     getShoppingListContents(listId, sortBy){
         return(apiClient.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
     },
+    */
+    getShoppingListContents(listId){
+        const options = {
+            method: 'GET',
+            url: `${url}/api/groceryItems/shoppinglist/${listId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
+
+    },
+
+
     getSortingChoices(){
         return(apiClient.get("/getSortingChoices"));
     },
@@ -42,13 +57,39 @@ export default {
          */
         return JSON.stringify(itemInformation)
     },
-    //TODO Update methods when Database is ready
-    sendItemsToFridge(itemInformation){
-        //return(axios.post("/moveItemToFridge", itemInformation))
-        return JSON.stringify(itemInformation)
+
+    sendItemsToFridge(items, shoppingListId, fridgeId){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/transfer/${shoppingListId}/${fridgeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: items
+        };
+        console.log(options.data)
+        return axios.request(options);
     },
-    removeItemsFromList(itemInformation){
-        //return(axios.post("/removeItemsFromShoppingList", itemInformation))
-        return JSON.stringify(itemInformation)
+    removeItemsFromList(items, shoppingListId){
+        const options = {
+            method: 'DELETE',
+            url: `${url}/api/groceryItems/shoppinglist/deleteItems/${shoppingListId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: items
+        };
+        return axios.request(options);
+    },
+
+    addItemToList(shoppingListId, groceryItemId, amount){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/shoppinglist/addItems/${shoppingListId}/${groceryItemId}/${amount}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        return axios.request(options);
     }
 }

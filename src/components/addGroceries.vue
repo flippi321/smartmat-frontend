@@ -54,11 +54,11 @@ export default {
   },
   created() {
     groceryService.getAllGroceries().then((response) => {
-      this.items = response.data.groceryItems;
+      this.items = response.data;
     });
     groceryService.getAllCategories().then((response) => {
-      console.log(response.data.categories.categories)
-      this.categories = response.data.categories.categories;
+      console.log(response.data)
+      this.categories = response.data;
     });
   },
   methods: {

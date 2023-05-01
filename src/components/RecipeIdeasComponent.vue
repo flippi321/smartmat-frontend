@@ -79,15 +79,8 @@ export default {
     },
 
     created() {
-        recipeService.getRecipes(1).then(response => {
-            this.recipes = response.data.recipes.recipes.map(recipe => {
-                return {
-                    id: recipe.id,
-                    name: recipe.name,
-                    imageUrl: recipe.imageUrl,
-                    description: recipe.description
-                };
-            });
+        recipeService.getRecipes(1).then((response) => {
+            this.recipes = response.data;
         });
     },
 };

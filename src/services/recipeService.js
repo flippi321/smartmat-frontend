@@ -25,8 +25,16 @@ mock.onGet("/getRecipeById", { params: { id: 1 } }).reply(200, {
 Sending API Calls to server
  */
 export default {
-    getRecipes(householdId) {
-        return apiClient.get("/getRecipes", { params: { id: householdId } });
+    getRecipes(fridgeId) {
+        //return apiClient.get("/getRecipes", { params: { id: householdId } });
+        const options = {
+            method: 'GET',
+            url: `${url}/api/recipes/recommender/${fridgeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        return axios.request(options);
     },
 
     /**
