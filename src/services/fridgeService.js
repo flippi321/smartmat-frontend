@@ -46,7 +46,7 @@ export default {
     getCategoriesFromFridgeId(){
         const options = {
             method: 'GET',
-            url: `${url}/categories/all`,
+            url: `${url}/api/categories/all`,
             headers: {
                 'Content-Type': 'application/json',
             },
