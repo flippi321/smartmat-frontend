@@ -31,7 +31,7 @@ defineProps({
       <img src="@/assets/icons/Dinner.png" alt="[Plan Week]" class="household-icon">
       <span class="household-button planner-button">Planlegg Uke</span>
     </router-link>
-    <router-link to="/createAd" class="button-primary">
+    <router-link to="/household/admin" class="button-primary">
       <img src="@/assets/icons/Admin.png" alt="[Admin]" class="household-icon">
       <span class="household-button admin-button">Administrer Medlemmer</span>
     </router-link>
