@@ -18,7 +18,7 @@ defineProps({
         @click="seeDetails(item)"
         :class="{ expanded: expandedItem === item, hidden: expandedItem && expandedItem !== item }"
     >
-      <img class="fridge-item-image" src="@/assets/icons/Logo.png" alt="Image" v-if="expandedItem !== item" />
+      <img class="fridge-item-image" :src="item.imageLink" alt="Image" v-if="expandedItem !== item" />
       <div class="fridge-item-info" v-if="expandedItem !== item">
         <h3>{{ item.name }}</h3>
         <p class="description">{{ item.description }}</p>
