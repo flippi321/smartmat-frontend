@@ -90,26 +90,26 @@ onBeforeUnmount(() => {
             <div class="mobile-menu-content">
                 <div class="mobile-menu-content">
                     <div class="mobile-menu-close" @click="toggleMobileMenu">&times;</div>
-                    <router-link v-if="!store.getIsLoggedIn" to="/about" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="!store.getIsLoggedIn" to="/about" class="button-primary" @click="closeMobileMenu">
                         <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
                         <span class="header-button button-primary-text">Om oss</span>
                     </router-link>
-                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary" @click="closeMobileMenu">
                         <span>Kjøleskap</span>
                     </router-link>
-                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList`, query: { id: this.id, sortBy: 1 } }" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList`, query: { id: this.id, sortBy: 1 } }" class="button-primary" @click="closeMobileMenu">
                         <span>Handleliste</span>
                     </router-link>
-                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas`, query: { id: this.id } }" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas`, query: { id: this.id } }" class="button-primary" @click="closeMobileMenu">
                         <span>Middagsideer</span>
                     </router-link>
-                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary" @click="closeMobileMenu">
                         <span>Planlegg Uke</span>
                     </router-link>
-                    <router-link v-if="store.getIsLoggedIn" to="/createAd" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link v-if="store.getIsLoggedIn" to="/createAd" class="button-primary" @click="closeMobileMenu">
                         <span>Administrer Medlemmer</span>
                     </router-link>
-                    <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary" @click.native="closeMobileMenu">
+                    <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary" @click="closeMobileMenu">
                         <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
                         <span class="header-button button-primary-text">{{ store.getIsLoggedIn ? (store.getFirstName || store.getEmail) : 'Logg In' }}</span>
                     </router-link>
