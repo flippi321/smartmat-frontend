@@ -72,7 +72,7 @@ const router = createRouter({
     {
       path: '/household/admin',
       name: 'household-admin',
-      props: route => ({ id: parseInt(route.query.id) }),
+      props: route => ({ householdId: parseInt(route.query.householdId) }),
       component: HouseholdAdminView,
       meta: {
         requiresAuth: true
