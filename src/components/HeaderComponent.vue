@@ -308,10 +308,6 @@ onBeforeUnmount(() => {
 
 
 @media (max-width: 768px) {
-    .header-button {
-        display: none;
-    }
-
     .mobile-menu-icon {
         display: block;
     }
