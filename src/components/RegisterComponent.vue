@@ -100,10 +100,10 @@ export default {
             if (response.status === 200) {
                 sessionStorage.setItem("token", response.data.access_token);
                 store.setLoggedIn();
-                store.setEmail(response.email);
-                store.setFirstName(response.firstName);
-                store.setLastName(response.lastName);
-                store.setUserId(response.userId);
+                store.setEmail(response.data.email);
+                store.setFirstName(response.data.firstname);
+                store.setLastName(response.data.lastname);
+                store.setUserId(response.data.id);
                 this.$router.push("/household?id=1")
             } else {
                 document.getElementById("alert_1").innerHTML = "Something went wrong: " + response.data.message;
