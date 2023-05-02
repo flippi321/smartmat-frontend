@@ -80,7 +80,7 @@ export default {
 }
 
 .box {
-  width: 60%;
+  width: 80%;
   margin-bottom: 20px;
   border-radius: 10px;
   background-color: #fff;
@@ -89,7 +89,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 75%;
   max-width: 800px;
 }
 
