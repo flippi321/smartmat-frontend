@@ -1,35 +1,42 @@
 <template>
-  <div @click="$emit('add-items')" class="new-item-button">
-    <img src="@/assets/icons/plusSign2.png" alt="[Add New]" class="plus-icon">
-    <span class="household-button fridge-button">Legg til Mer</span>
-  </div>
-  <div class="filter-bar-container">
-    <div class="filter-bar-content">
-      <div class="sorting-bar" :class="{ expanded: isExpanded }">
-        <div class="header" @click="toggleExpansion">
-          <h2>Sorter etter: {{ selectedChoice }}</h2>
-          <i class="arrow-icon" :class="{ 'arrow-down': !isExpanded, 'arrow-up': isExpanded }"></i>
-        </div>
-        <ul>
-          <li v-for="choice in sortChoices" :key="choice.id" @click="changeSorting(choice)">
-            {{ choice.name }}
-          </li>
-        </ul>
+  <div class="shopping-list-sidebar" :class="{ collapsed: isCollapsed }">
+    <img class="collapse-icon" src="@/assets/icons/Details.png" alt="Details" @click="toggleSidebar" :style="{ transform: `rotate(${iconRotation}deg)` }"/>
+    <div v-show="!isCollapsed">
+      <div @click="$emit('add-items')" class="new-item-button">
+        <img src="@/assets/icons/plusSign.png" alt="[Add New]" class="plus-icon">
+        <span class="household-button fridge-button">Legg til Mer</span>
       </div>
-    </div>
-    <div class="buttons-container">
-      <button class="shopping-list-button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
-      <button class="shopping-list-button" @click="removeItemsFromList">Fjern Valgte</button>
+      <div class="filter-bar-container">
+        <div class="filter-bar-content">
+          <div class="sorting-bar" :class="{ expanded: isExpanded }">
+            <div class="header" @click="toggleExpansion">
+              <h2>Sorter etter: {{ selectedChoice }}</h2>
+              <i class="arrow-icon" :class="{ 'arrow-down': !isExpanded, 'arrow-up': isExpanded }"></i>
+            </div>
+            <ul>
+              <li v-for="choice in sortChoices" :key="choice.id" @click="changeSorting(choice)">
+                {{ choice.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="buttons-container">
+          <button class="shopping-list-button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
+          <button class="shopping-list-button" @click="removeItemsFromList">Fjern Valgte</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
   data() {
     return {
-      isExpanded: false,
-      selectedChoice: '', // add new data property for selected choice
+      selectedChoice: '',
+      isCollapsed: false,
+      iconRotation: 90,
     };
   },
   props: {
@@ -44,8 +51,8 @@ export default {
   },
   methods: {
     changeSorting(choice) {
-      this.selectedChoice = choice.name; // set the selected choice
-      this.isExpanded = false; // collapse the dropdown
+      this.selectedChoice = choice.name;
+      this.isExpanded = false;
       this.$emit("changeSortBy", choice.id);
     },
     toggleExpansion() {
@@ -56,13 +63,84 @@ export default {
     },
     removeItemsFromList(){
       this.$emit("removeItems");
+    },
+    toggleSidebar() {
+      this.isCollapsed = !this.isCollapsed;
+      this.iconRotation += 180;
+      this.$emit('toggle-sidebar', this.isCollapsed);
     }
   },
 };
 </script>
 
+<style>
+.shopping-list-sidebar {
+  position: relative;
+  height: 100%;
+  flex: 0 0 500px;
+  background-image: linear-gradient(white, rgba(255, 255, 255, 0));
+  transition: flex 0.3s;
+}
 
-<style scoped>
+@media screen and (max-width: 768px) {
+  .shopping-list-sidebar {
+    flex: 0 0 60px;
+    height: auto;
+  }
+}
+
+.collapse-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  z-index: 50;
+}
+
+@media screen and (max-width: 768px) {
+  .collapse-icon {
+    position: static;
+    margin: 0 auto;
+    display: block;
+    transform: rotate(270deg);
+  }
+}
+
+.shopping-list-sidebar.collapsed {
+  flex: 0 0 60px;
+}
+
+.shopping-list-sidebar:not(.collapsed) .new-item-button,
+.shopping-list-sidebar:not(.collapsed) .filter-bar-container {
+  padding: 0 20px;
+}
+
+.new-item-button {
+  position: relative;
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.household-button {
+  font-size: 16px;
+  color: #007aff;
+}
+
 .filter-bar-container {
   top: 50px;
   background-color: white;
@@ -118,49 +196,13 @@ ul {
   transition: max-height 0.2s ease-in-out;
 }
 
-.new-item-button {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.new-item-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.plus-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 5px;
-}
-
-.household-button {
-  font-size: 16px;
-  color: #007aff;
-}
-
 .buttons-container {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .shopping-list-button {
