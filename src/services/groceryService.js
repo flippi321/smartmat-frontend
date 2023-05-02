@@ -22,22 +22,27 @@ mock.onGet("/getAllCategories").reply(200, {
 
 export default {
     getAllGroceries(){
+        console.log(sessionStorage.getItem("token"));
+
         const options = {
             method: 'GET',
             url: `${url}/api/groceryItems/all`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
     },
 
     getAllCategories(){
+        console.log(sessionStorage.getItem("token"));
         const options = {
             method: 'GET',
             url: `${url}/api/categories/all`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);

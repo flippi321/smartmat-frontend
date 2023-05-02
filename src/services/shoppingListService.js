@@ -41,6 +41,7 @@ export default {
             url: `${url}/api/groceryItems/shoppinglist/${listId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
@@ -64,6 +65,7 @@ export default {
             url: `${url}/api/groceryItems/transfer/${shoppingListId}/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
             data: items
         };
@@ -76,6 +78,7 @@ export default {
             url: `${url}/api/groceryItems/shoppinglist/deleteItems/${shoppingListId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
             data: items
         };
@@ -88,6 +91,7 @@ export default {
             url: `${url}/api/groceryItems/shoppinglist/addItems/${shoppingListId}/${groceryItemId}/${amount}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         return axios.request(options);
