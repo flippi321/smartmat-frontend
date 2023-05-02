@@ -27,7 +27,7 @@ defineProps({
         v-if="showAddGroceries === true"
         :id="id"
         :home="'Kjøleskap'"
-        @add-grocery="handleAddGrocery"
+        @addSelected="handleAddGrocery"
         @close="hideGroceryDetailComponent"
     />
   </div>
@@ -112,7 +112,15 @@ export default {
     },
 
     handleAddGrocery(items){
-      console.log(items)
+      fridgeService.addMultipleItems(this.id, items).then(response => {
+        if(response.data().equals(items)){
+          console.log("Success");
+        }
+        else{
+          console.log("Error got this:");
+          console.log(response.data());
+        }
+      })
     }
   }
 };
