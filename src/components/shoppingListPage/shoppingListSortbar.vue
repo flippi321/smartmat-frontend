@@ -77,16 +77,20 @@ export default {
 .shopping-list-sidebar {
   position: relative;
   height: 100%;
+  width: 100%;
   flex: 0 0 500px;
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: flex 0.3s;
+  overflow: hidden;
 }
 
-@media screen and (max-width: 768px) {
-  .shopping-list-sidebar {
-    flex: 0 0 60px;
-    height: auto;
-  }
+.shopping-list-sidebar.collapsed {
+  width: 50px;
+}
+
+.shopping-list-sidebar.collapsed {
+  flex: 0 0 60px;
 }
 
 .collapse-icon {
@@ -101,16 +105,16 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .shopping-list-sidebar {
+    height: auto;
+  }
+
   .collapse-icon {
     position: static;
     margin: 0 auto;
     display: block;
     transform: rotate(270deg);
   }
-}
-
-.shopping-list-sidebar.collapsed {
-  flex: 0 0 60px;
 }
 
 .shopping-list-sidebar:not(.collapsed) .new-item-button,
