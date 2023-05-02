@@ -52,5 +52,9 @@ export default {
             },
         };
         return axios.request(options);
-    }
+    },
+
+    addMultipleItems(fridgeId, itemList){
+        return(axios.post("/addMultipleItemsToShoppingList", { params: { listId: fridgeId, items: itemList } }))
+    },
 }
