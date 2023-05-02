@@ -29,7 +29,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   data() {
@@ -85,10 +84,6 @@ export default {
 }
 
 .shopping-list-sidebar.collapsed {
-  width: 50px;
-}
-
-.shopping-list-sidebar.collapsed {
   flex: 0 0 60px;
 }
 
@@ -102,27 +97,24 @@ export default {
   transition: transform 0.3s;
 }
 
-.new-item-button{
-  margin-top: 50px;
-  background-color: #cccaca;
-  width: 80%;
-  left: 10%;
-}
-
-.buttons-container {
-  margin-top: 60%;
-}
-
 @media screen and (max-width: 768px) {
   .shopping-list-sidebar {
     height: auto;
+  }
+
+  .shopping-list-sidebar.collapsed {
+    width: 100%;
   }
 
   .collapse-icon {
     position: static;
     margin: 0 auto;
     display: block;
-    transform: rotate(270deg);
+    transform: rotate(180deg);
+  }
+
+  .new-item-button {
+    margin-top: 100px;
   }
 }
 
@@ -150,7 +142,6 @@ export default {
 
 .household-button {
   font-size: 16px;
-  color: #007aff;
 }
 
 .filter-bar-container {
@@ -187,10 +178,6 @@ export default {
   transition: transform 0.2s ease-in-out;
 }
 
-.arrow-up {
-  transform: rotate(-135deg);
-}
-
 ul {
   list-style: none;
   padding: 0;
@@ -216,4 +203,3 @@ ul {
   margin-bottom: 20px;
 }
 </style>
-
