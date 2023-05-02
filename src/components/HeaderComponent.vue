@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
     align-items: center;
     padding: 0.5rem 1rem;
     box-shadow: none;
-    z-index: 1;
+    z-index: 99;
 }
 
 .navbar-backdrop {
