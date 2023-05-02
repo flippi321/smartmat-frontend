@@ -1,5 +1,5 @@
-//import axios from "axios";
-//let url = 'https://localhost:8000'
+import axios from "axios";
+let url = 'http://localhost:8080'
 /*
 Mocking responses, must be removed:
 */
@@ -9,6 +9,8 @@ import users from "@/mockDatabases/users.json";
 //const apiClient = axios.create();
 //const mock = new MockAdapter(apiClient);
 
+
+/**
 export default class LoginService {
     static async login(email, password) {
         try {
@@ -34,5 +36,22 @@ export default class LoginService {
             return (`Failed to login: ${error.message}`);
         }
     }
+}
+*/
 
+export default {
+    login(email, password) {
+        const options = {
+            method: 'POST',
+            url: `${url}/api/v1/auth/authenticate`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                email: email,
+                password: password
+            }
+        };
+        return axios.request(options);
+    }
 }

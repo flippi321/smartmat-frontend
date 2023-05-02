@@ -70,14 +70,7 @@ export default {
                 return;
             }
 
-
-
-            /**
-            if (this.password.length < 8) {
-                document.getElementById("alert_1").innerHTML = "Password should be at least 8 characters long";
-                return;
-            }
-              */
+            console.log("yooo")
 
 
 
@@ -106,7 +99,7 @@ export default {
             console.log(response.status)
 
             if (response.status === 200) {
-                sessionStorage.setItem("token", response.jwtToken);
+                sessionStorage.setItem("token", response.data.access_token);
                 store.setLoggedIn();
                 store.setEmail(response.email);
                 store.setFirstName(response.firstName);
@@ -114,6 +107,7 @@ export default {
                 store.setUserId(response.userId);
                 this.$router.push("/household?id=1")
             } else {
+                console.log("error" + response)
                 document.getElementById("alert_1").innerHTML = response;
             }
         },
