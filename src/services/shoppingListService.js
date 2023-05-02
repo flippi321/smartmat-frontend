@@ -47,15 +47,16 @@ export default {
 
     },
 
-
     getSortingChoices(){
         return(apiClient.get("/getSortingChoices"));
     },
+
     updateShoppingListItem(itemInformation){
-        /*
         return(axios.post("/updateShoppingListItem", { params: {data: itemInformation}}))
-         */
-        return JSON.stringify(itemInformation)
+    },
+
+    addMultipleItems(listId, itemList){
+        return(axios.post("/addMultipleItemsToShoppingList", { params: { listId: listId, items: itemList } }))
     },
 
     sendItemsToFridge(items, shoppingListId, fridgeId){
