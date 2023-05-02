@@ -19,10 +19,10 @@
               </li>
             </ul>
           </div>
-        </div>
-        <div class="buttons-container">
-          <button class="shopping-list-button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
-          <button class="shopping-list-button" @click="removeItemsFromList">Fjern Valgte</button>
+          <div class="buttons-container">
+            <button class="button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
+            <button class="button" @click="removeItemsFromList">Fjern Valgte</button>
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +80,6 @@ export default {
   width: 100%;
   flex: 0 0 500px;
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: flex 0.3s;
   overflow: hidden;
 }
@@ -128,7 +127,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
@@ -147,7 +145,6 @@ export default {
 
 .filter-bar-container {
   top: 50px;
-  background-color: white;
   padding: 10px;
   margin-bottom: 10px;
   position: relative;
@@ -207,23 +204,6 @@ ul {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-
-.shopping-list-button {
-  width: 100%;
-  height: 40px;
-  background-color: #007aff;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  margin-bottom: 5px;
-}
-
-.shopping-list-button:hover {
-  background-color: #0051b8;
 }
 </style>
 
