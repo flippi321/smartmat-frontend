@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import registerService from "@/services/registerService";
+import pinia, { useAuthStore } from "@/stores";
 export default {
     data() {
         return {
@@ -55,6 +57,7 @@ export default {
 
     methods: {
         async register(){
+            const store = useAuthStore(pinia);
             document.getElementById("alert_1").innerHTML = "";
 
             this.firstName = document.querySelector("input[name=firstName]").value;
@@ -83,30 +86,28 @@ export default {
                 return;
             }
 
-
-            /**
-             const response = await fetch("http://localhost:8080/api/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
+            const user = {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 email: this.email,
                 password: this.password,
-            }),
-        });
+            };
 
+            const response = await registerService.registerUser(user);
+            console.log(response);
+            console.log(response.status)
 
-             if (response.status === 201) {
-            this.$router.push("/login");
-        } else {
-            document.getElementById("alert_1").innerHTML = "Something went wrong";
-        }
-             */
-
-            this.$router.push("/household")
+            if (response.status === 200) {
+                sessionStorage.setItem("token", response.data.access_token);
+                store.setLoggedIn();
+                store.setEmail(response.email);
+                store.setFirstName(response.firstName);
+                store.setLastName(response.lastName);
+                store.setUserId(response.userId);
+                this.$router.push("/household?id=1")
+            } else {
+                document.getElementById("alert_1").innerHTML = "Something went wrong: " + response.data.message;
+            }
 
 
         },

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores';
+import pinia, { useAuthStore } from '@/stores';
 import loginService from "@/services/loginService";
 
 export default {
@@ -53,7 +53,7 @@ export default {
     methods: {
 
         async login(){
-            const store = useAuthStore();
+            const store = useAuthStore(pinia);
             console.log(store.getIsLoggedIn)
             document.getElementById("alert_1").innerHTML = "";
             this.email = document.querySelector("input[name=email]").value;
