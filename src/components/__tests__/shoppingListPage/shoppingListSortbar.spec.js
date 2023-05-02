@@ -47,7 +47,7 @@ describe('sortBar.vue', () => {
             props: { listId: 1, sortChoices },
         })
 
-        const moveToFridgeButton = wrapper.find('.shopping-list-button')
+        const moveToFridgeButton = wrapper.find('.move-to-fridge-button')
         await moveToFridgeButton.trigger('click')
 
         const emittedEvent = wrapper.emitted('moveToFridge')
@@ -59,7 +59,7 @@ describe('sortBar.vue', () => {
             props: { listId: 1, sortChoices },
         })
 
-        const removeItemsButton = wrapper.findAll('.shopping-list-button')[1]
+        const removeItemsButton = wrapper.find('.remove-selected-button')
         await removeItemsButton.trigger('click')
 
         const emittedEvent = wrapper.emitted('removeItems')

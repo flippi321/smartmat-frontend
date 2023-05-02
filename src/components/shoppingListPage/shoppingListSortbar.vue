@@ -20,8 +20,8 @@
             </ul>
           </div>
           <div class="buttons-container">
-            <button class="button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
-            <button class="button" @click="removeItemsFromList">Fjern Valgte</button>
+            <button class="move-to-fridge-button button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
+            <button class="remove-selected-button button" @click="removeItemsFromList">Fjern Valgte</button>
           </div>
         </div>
       </div>
