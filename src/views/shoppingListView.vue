@@ -118,19 +118,24 @@ export default {
 </script>
 
 <style>
+.shopping-list-page {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .sidebar {
-    margin-top: -10px;
-    position: fixed;
-    height: 100%;
-    width: 400px;
-    background-color: white;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+  left: 0;
+  top: -40px;
 }
 
 .groceries-container {
-    margin-top: -30px;
-    margin-left: 400px;
-    padding: 10px;
+  width: 70%;
+}
+
+@media (max-width: 767px) {
+  .sidebar,
+  .groceries-container {
+    width: 100%;
+  }
 }
 </style>
