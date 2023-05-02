@@ -32,6 +32,7 @@ export default {
             url: `${url}/api/recipes/recommender/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
@@ -49,6 +50,7 @@ export default {
             url: `${url}/api/recipes/${recipeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
