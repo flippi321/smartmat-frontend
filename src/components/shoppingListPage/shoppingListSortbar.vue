@@ -100,7 +100,17 @@ export default {
   width: 50px;
   cursor: pointer;
   transition: transform 0.3s;
-  z-index: 50;
+}
+
+.new-item-button{
+  margin-top: 50px;
+  background-color: #cccaca;
+  width: 80%;
+  left: 10%;
+}
+
+.buttons-container {
+  margin-top: 60%;
 }
 
 @media screen and (max-width: 768px) {
