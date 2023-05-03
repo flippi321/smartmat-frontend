@@ -20,6 +20,8 @@
                     <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                          alt="alternatetext" width="200">
                     <p class="recipeDescription">{{ dinner.description }}</p>
+                    <p class="nrOfIngredients">{{ missingIngredientsMap[dinner.id]?.available }}/{{ missingIngredientsMap[dinner.id]?.total }} ingredienser</p>
+
                 </router-link>
             </div>
         </div>
@@ -30,6 +32,7 @@
 import weekPlannerService from "@/services/weekPlannerService";
 import  {useAuthStore} from "@/stores";
 import pinia from "@/stores";
+import {set} from "@vueuse/core";
 
 const store = useAuthStore(pinia);
 
@@ -48,15 +51,39 @@ export default {
                 "Lørdag",
                 "Søndag",
             ],
+            missingIngredientsMap: {},
         };
     },
+    computed: {
+        missingIngredientsMap() {
+            return this.missingIngredientsMap;
+        },
+    },
+
     methods: {
         generateWeeklyMenu() {
-            weekPlannerService.generateWeeklyMenu(1).then((response) => {
+            return weekPlannerService.generateWeeklyMenu(1).then((response) => {
                 console.log(response.data);
                 this.weeklyMenu = response.data;
             });
         },
+
+        getMissingIngredients(fridgeId, recipeId) {
+            weekPlannerService.getMissingIngredients(fridgeId, recipeId).then((response) => {
+                const missingIngredientsResponse = response.data;
+                const missingIngredients = missingIngredientsResponse[0].ingredients;
+                const recipe = missingIngredientsResponse[1];
+                const totalIngredients = recipe.ingredients.length;
+                const availableIngredients = totalIngredients - missingIngredients.length;
+
+                set(this.missingIngredientsMap, recipeId, {
+                    available: availableIngredients,
+                    total: totalIngredients,
+                });
+            });
+        },
+
+
     },
     watch: {
         nrOfPeople(newVal) {
@@ -65,8 +92,13 @@ export default {
     },
 
     created() {
-        this.generateWeeklyMenu();
+        this.generateWeeklyMenu().then(() => {
+            this.weeklyMenu.forEach((dinner) => {
+                this.getMissingIngredients(this.householdId, dinner.id);
+            });
+        });
     },
+
 };
 </script>
 
