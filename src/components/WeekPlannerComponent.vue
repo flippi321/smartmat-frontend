@@ -51,12 +51,12 @@ export default {
                 "Lørdag",
                 "Søndag",
             ],
-            missingIngredientsMap: {},
+            missingIngredients: {},
         };
     },
     computed: {
         missingIngredientsMap() {
-            return this.missingIngredientsMap;
+            return this.missingIngredients;
         },
     },
 
@@ -76,7 +76,7 @@ export default {
                 const totalIngredients = recipe.ingredients.length;
                 const availableIngredients = totalIngredients - missingIngredients.length;
 
-                set(this.missingIngredientsMap, recipeId, {
+                set(this.missingIngredients, recipeId, {
                     available: availableIngredients,
                     total: totalIngredients,
                 });

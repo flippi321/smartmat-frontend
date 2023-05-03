@@ -45,13 +45,13 @@ export default {
         return {
             recipes: [],
             nrOfPeople: store.getNrOfPortions,
-            availableIngredientsMap: {},
+            availableIngredients: {},
         };
     },
 
     computed: {
         availableIngredientsMap() {
-            return this.availableIngredientsMap;
+            return this.availableIngredients;
         },
     },
 

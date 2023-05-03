@@ -1,24 +1,19 @@
 import { mount } from '@vue/test-utils';
 import RecipeIdeasComponent from '@/components/RecipeIdeasComponent.vue';
 import recipeService from '@/services/recipeService';
-import {describe, it} from "vitest";
+import { describe, it, expect } from 'vitest';
 import sinon from 'sinon';
-
 
 // Mock recipeService.getRecipes
 recipeService.getRecipes = async () => ({
-    data: {
-        recipes: {
-            recipes: [
-                {
-                    id: 1,
-                    name: 'Test Recipe',
-                    imageUrl: 'test-image-url',
-                    description: 'Test description',
-                },
-            ],
+    data: [
+        {
+            id: 1,
+            name: 'Test Recipe',
+            imageUrl: 'test-image-url',
+            description: 'Test description',
         },
-    },
+    ],
 });
 
 describe('RecipeIdeasComponent.vue', () => {
@@ -34,8 +29,8 @@ describe('RecipeIdeasComponent.vue', () => {
         const headerElement = wrapper.find('.header');
         const recipeNameElement = wrapper.find('.recipeName');
 
-        console.assert(headerElement.text() === 'Middagsforslag', 'Header text does not match');
-        console.assert(recipeNameElement.text() === 'Test Recipe', 'Recipe name does not match');
+        expect(headerElement.text()).toBe('Middagsforslag');
+        expect(recipeNameElement.text()).toBe('Test Recipe');
     });
 
     it('scrolls right', async () => {
@@ -58,10 +53,8 @@ describe('RecipeIdeasComponent.vue', () => {
         await wrapper.find('.scroll-button').trigger('click');
         await wrapper.vm.$nextTick();
 
-        console.assert(gridContainer.scrollTo.called, 'scrollTo was not called');
+        expect(gridContainer.scrollTo.called).toBeTruthy();
     });
-
-
 
     it('updates nrOfPeople when input changes', async () => {
         const wrapper = mount(RecipeIdeasComponent, {
@@ -76,6 +69,6 @@ describe('RecipeIdeasComponent.vue', () => {
         await input.setValue(3);
         await wrapper.vm.$nextTick();
 
-        console.assert(wrapper.vm.nrOfPeople === 3, 'nrOfPeople does not match input value');
+        expect(wrapper.vm.nrOfPeople).toBe(3);
     });
 });
