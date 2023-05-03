@@ -105,10 +105,9 @@ export default {
 }
 
 .fridge-box.expanded {
-  margin-top: 400px;
-  height: 80vh;
-  width: 80vw;
-  max-width: 70vw;
+  margin-top: 250px;
+  height: 70vh;
+  width: 70vw;
   position: absolute;
   left: 50%;
   top: 50%;
