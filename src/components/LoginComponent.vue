@@ -70,29 +70,8 @@ export default {
                 return;
             }
 
-            console.log("yooo")
+            console.log("trying to log in")
 
-
-
-            /**
-            const response = await fetch("http://localhost:8080/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: this.email,
-                    password: this.password,
-                }),
-            });
-            const data = await response.json();
-            if (data.status === "success") {
-                sessionStorage.setItem("token", data.token);
-                this.$router.push("/household");
-            } else {
-                document.getElementById("alert_1").innerHTML = data.message;
-            }
-              */
 
             const response = await loginService.login(this.email, this.password);
             console.log(response);
@@ -100,6 +79,7 @@ export default {
 
             if (response.status === 200) {
                 sessionStorage.setItem("token", response.data.access_token);
+                sessionStorage.setItem("refresh_token", response.data.refresh_token);
                 store.setLoggedIn();
                 store.setEmail(response.data.email);
                 store.setFirstName(response.data.firstname);

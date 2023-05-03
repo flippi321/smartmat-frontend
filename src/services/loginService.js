@@ -16,5 +16,19 @@ export default {
             }
         };
         return axios.request(options);
-    }
+    },
+
+    refreshAccessToken(refreshToken) {
+        const options = {
+            method: 'POST',
+            url: `${url}/api/v1/auth/refresh-token`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${refreshToken}`
+            }
+        };
+        return axios.request(options);
+    },
+
+
 }
