@@ -7,7 +7,7 @@
     </transition>
     <div class="box" v-for="item in items" :key="item.groceryItemId">
       <div class="item-info">
-        <div class="checkbox-and-name" @click.stop="item.selected = !item.selected">
+        <div class="checkbox-and-name" @click.stop="updateSelectedItems(item)">
           <input type="checkbox" class="checkbox" v-model="item.selected">
           <div class="name">{{ item.name }}</div>
         </div>
@@ -44,6 +44,7 @@ export default {
     return {
       describeItem: null,
       showSaveSuccess: false,
+      currentlySelected: [],
     };
   },
   methods: {
@@ -53,6 +54,18 @@ export default {
         this.showSaveSuccess = false;
       }, 3000);
       this.$emit('saved-changes', [item.groceryItemId, item.amount, item.actual_shelf_life]);
+    },
+
+    updateSelectedItems(item) {
+      item.selected = !item.selected;
+      if (item.selected) {
+        this.currentlySelected.push(item);
+      }
+      else {
+        this.currentlySelected = this.currentlySelected.filter(
+            selectedItem => selectedItem.groceryItemId !== item.groceryItemId
+        );
+      }
     },
   },
 };
