@@ -71,22 +71,28 @@ export default {
           //TODO FETCH HOUSEHOLD FRIDGE ID
           const selectedIds = this.$refs.groceries.$data.currentlySelected.map(item => item.groceryItemId);
           console.log(selectedIds);
-          shoppingListService.sendItemsToFridge(selectedIds, this.id, 1).then(
-              console.log("Sent")
-          )
-          this.updateShoppingList();
+          shoppingListService.sendItemsToFridge(selectedIds, this.id, 1).then(() => {
+            this.updateShoppingList();
+          }).catch(error => {
+            console.error("Error removing items from the list:", error);
+          });
         },
 
-        removeSelectedItems(){
-            try {
-                shoppingListService.removeItemsFromList(this.$refs.groceries.$data.currentlySelected, this.id);
-                this.updateShoppingList();
-            } catch (error) {
-                console.error("Error removing items from list:", error);
-            }
-        },
+      removeSelectedItems() {
+        const selectedIds = this.$refs.groceries.$data.currentlySelected.map(item => item.groceryItemId);
+        console.log(selectedIds);
+        shoppingListService.removeItemsFromList(selectedIds, this.id)
+            .then(response => {
+              console.log(response);
+              this.updateShoppingList();
+            })
+            .catch(error => {
+              console.error("Error removing items from the list:", error);
+            });
+      },
 
-        changeSorting(sortingId) {
+
+      changeSorting(sortingId) {
             this.sortBy = sortingId;
             this.updateShoppingList();
         },
