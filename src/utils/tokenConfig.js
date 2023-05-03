@@ -40,7 +40,7 @@ axios.interceptors.response.use(
                     isRefreshing = false;
                 }
             } else {
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                     subscribeTokenRefresh(token => {
                         originalRequest.headers["Authorization"] = `Bearer ${token}`;
                         resolve(axios(originalRequest));
