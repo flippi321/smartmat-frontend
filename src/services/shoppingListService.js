@@ -56,7 +56,15 @@ export default {
     },
 
     addMultipleItems(listId, itemList){
-        return(axios.post("/addMultipleItemsToShoppingList", { params: { listId: listId, items: itemList } }))
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/shoppinglist/add/${listId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: itemList
+        };
+        return axios.request(options);
     },
 
     sendItemsToFridge(items, shoppingListId, fridgeId){
