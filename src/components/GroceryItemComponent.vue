@@ -84,13 +84,14 @@ export default {
 
 <style scoped>
 .grocery-item {
+  top: 0;
   display: flex;
   flex-direction: column;
   border: 10px;
   border-radius: 4px;
   padding: 30px;
   width: 100%;
-  height: 100%;
+  min-height: 80vh;
 }
 
 .grocery-item-content {

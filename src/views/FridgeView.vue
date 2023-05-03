@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  id: {
+  fridgeId: {
     type: Number,
     required: true
   }
@@ -21,11 +21,13 @@ defineProps({
         class="fridge-contents"
         @show-filter-bar="this.sidebarVisible = true"
         @hide-filter-bar="this.sidebarVisible = false"
-        @add-new-items="showAddGroceriesComponent"
+        @addNewItems="showAddGroceriesComponent"
+        @updateItem="updateItem"
+        @deleteItem="deleteItemFromFridge"
     />
     <addGroceries
         v-if="showAddGroceries === true"
-        :id="id"
+        :id="fridgeId"
         :home="'Kjøleskap'"
         @addSelected="handleAddGrocery"
         @close="hideGroceryDetailComponent"
@@ -47,7 +49,7 @@ export default {
   },
   data() {
     return {
-      id: this.id,
+      fridgeId: this.fridgeId,
       items: [],
       categories: [],
       currentCategory: 1,
@@ -61,7 +63,7 @@ export default {
     };
   },
   created() {
-    fridgeService.getFridgeContents(this.id).then((response) => {
+    fridgeService.getFridgeContents(this.fridgeId).then((response) => {
       console.log("Contents response:")
       this.items = response.data;
       console.log(this.items)
@@ -89,7 +91,7 @@ export default {
     },
 
     updateFridge(){
-      fridgeService.getFridgeContents(this.id).then((response) => {
+      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
         console.log("Contents response:")
         this.items = response.data;
       });
@@ -113,7 +115,7 @@ export default {
     },
 
     handleAddGrocery(items){
-      fridgeService.addMultipleItems(this.id, items).then(response => {
+      fridgeService.addMultipleItems(this.fridgeId, items).then(response => {
         if(response.data().equals(items)){
           console.log("Success");
         }
@@ -121,6 +123,20 @@ export default {
           console.log("Error got this:");
           console.log(response.data());
         }
+      })
+    },
+
+    updateItem(item){
+      fridgeService.updateItemDetails(this.fridgeId, item).then(response => {
+        console.log(response)
+        this.hideGroceryDetailComponent()
+      });
+    },
+
+    deleteItemFromFridge(item){
+      fridgeService.removeItem(this.fridgeId, item.groceryItemId).then(response => {
+        console.log(response)
+        this.hideGroceryDetailComponent()
       })
     }
   }
