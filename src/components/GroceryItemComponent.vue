@@ -15,7 +15,7 @@
         <div class="grocery-item-buttons">
           <button @click.stop="update(item)">{{ acceptMessage }}</button>
           <button @click.stop="decline">{{ declineMessage }}</button>
-          <button @click.stop="special" v-if="tertiaryMessage">{{ tertiaryMessage }}</button>
+          <button @click.stop="special(item)" v-if="tertiaryMessage">{{ tertiaryMessage }}</button>
         </div>
       </div>
     </div>
@@ -63,27 +63,35 @@ export default {
       this.$emit("decline")
     },
 
-    special(information){
-      this.$emit("special", information)
+    special(item){
+      this.$emit("special", item)
     }
   },
 
   created() {
     console.log(this.item);
-    this.actualShelfLife = this.item.expectedShelfLife;
+    if(this.item.amount){
+      this.amount = this.item.amount;
+    }
+    if(this.item.actualShelfLife){
+      this.actualShelfLife = this.item.actualShelfLife;
+    } else {
+      this.actualShelfLife = this.item.expectedShelfLife;
+    }
   }
 }
 </script>
 
 <style scoped>
 .grocery-item {
+  top: 0;
   display: flex;
   flex-direction: column;
   border: 10px;
   border-radius: 4px;
   padding: 30px;
   width: 100%;
-  height: 100%;
+  min-height: 80vh;
 }
 
 .grocery-item-content {
@@ -97,6 +105,7 @@ export default {
   min-width: 30px;
   min-height: 30px;
   max-width: 50%;
+  max-height: 60vh;
   padding: 10px;
 }
 

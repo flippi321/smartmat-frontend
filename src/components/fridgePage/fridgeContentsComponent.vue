@@ -10,8 +10,8 @@ defineProps({
 });
 
 // Define Emits
-const emit = defineEmits(["showFilterBar", "hideFilterBar", "update-grocery1", "delete-grocery1", "close",
-"give-feedback1", "add-new-items"]);
+const emit = defineEmits(["showFilterBar", "hideFilterBar", "close",
+"give-feedback1", "add-new-items", "deleteItem"]);
 
 const expandedItem = ref(null);
 
@@ -27,6 +27,14 @@ function toggleRetract(){
 function toggleRetractHelper(){
   expandedItem.value = null;
   emit("showFilterBar");
+}
+
+function updateItem(item){
+  emit("updateItem", item)
+}
+
+function deleteItem(item){
+  emit("deleteItem", item)
 }
 </script>
 
@@ -57,7 +65,7 @@ function toggleRetractHelper(){
             :accept-message="'Lagre Endringer'"
             :decline-message="'Avbryt'"
             :tertiary-message="'Slett'"
-            @update="updateGrocery"
+            @update="updateItem"
             @decline="toggleRetract"
             @special="deleteItem"
         />

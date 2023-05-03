@@ -36,6 +36,7 @@ export default {
       selectedChoice: '',
       isCollapsed: false,
       iconRotation: 90,
+      isExpanded: false,
     };
   },
   props: {

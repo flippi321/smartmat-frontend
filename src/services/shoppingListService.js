@@ -67,6 +67,17 @@ export default {
         return axios.request(options);
     },
 
+    fetchHouseholdInfo(householdId){
+        const options = {
+            method: 'GET',
+            url: `${url}/api/households/${householdId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        return axios.request(options);
+    },
+
     sendItemsToFridge(items, shoppingListId, fridgeId){
         const options = {
             method: 'POST',
@@ -76,9 +87,9 @@ export default {
             },
             data: items
         };
-        console.log(options.data)
         return axios.request(options);
     },
+
     removeItemsFromList(items, shoppingListId){
         const options = {
             method: 'DELETE',
