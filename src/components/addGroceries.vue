@@ -79,14 +79,11 @@ export default {
     },
 
     addGroceryToSelected(item){
-      console.log(item)
       this.selectedItems.push(item)
       this.sidebarVisible = true;
     },
 
     sendSelected(){
-      console.log("Sending selected to fridge")
-      console.log(this.selectedItems)
       this.$emit('addSelected', this.selectedItems);
     },
 
