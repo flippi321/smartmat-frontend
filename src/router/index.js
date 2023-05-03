@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: '/fridge',
       name: 'fridge',
-      props: route => ({ id: parseInt(route.query.id) }),
+      props: route => ({ fridgeId: parseInt(route.query.id) }),
       component: FridgeView,
       meta: {
         requiresAuth: true
