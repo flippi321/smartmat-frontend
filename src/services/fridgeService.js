@@ -57,11 +57,33 @@ export default {
     addMultipleItems(fridgeId, itemList){
         const options = {
             method: 'POST',
-            url: `${url}/api/groceryItems/fridge/add/${fridgeId}`,
+            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/{groceryItemID}`,
             headers: {
                 'Content-Type': 'application/json',
             },
             data: itemList
+        };
+        return axios.request(options);
+    },
+
+    updateItem(fridgeId, groceryItemId){
+        const options = {
+            method: 'UPDATE',
+            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        return axios.request(options);
+    },
+
+    removeItem(fridgeId, groceryItemId){
+        const options = {
+            method: 'DELETE',
+            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
         };
         return axios.request(options);
     },
