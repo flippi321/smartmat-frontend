@@ -85,11 +85,16 @@ export default {
 
     sendSelected(){
       this.$emit('addSelected', this.selectedItems);
+      this.update();
     },
 
     closeAdPage(){
-      console.log("Close")
       this.$emit('close')
+    },
+
+    async update() {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      this.closeAdPage();
     },
   }
 };
