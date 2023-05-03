@@ -11,7 +11,7 @@ defineProps({
     <div class="shopping-list-page">
         <div class="sidebar" v-if="showAddGroceries === false">
             <FilterBar
-                    :sortChoices="sortingChoices" :list-id="id"
+                    :sortChoices="sortingChoices" :list-id="this.id"
                     @moveToFridge="sendSelectedItems"
                     @removeItems="removeSelectedItems"
                     @add-items="this.showAddGroceries = true"
@@ -67,13 +67,14 @@ export default {
             console.log(shoppingListService.updateShoppingListItem(itemData))
         },
 
-        async sendSelectedItems() {
-            try {
-                await shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, this.id, this.id);
-                this.updateShoppingList();
-            } catch (error) {
-                console.error("Error sending items to fridge:", error);
-            }
+        sendSelectedItems() {
+          //TODO FETCH HOUSEHOLD FRIDGE ID
+          const selectedIds = this.$refs.groceries.$data.currentlySelected.map(item => item.groceryItemId);
+          console.log(selectedIds);
+          shoppingListService.sendItemsToFridge(selectedIds, this.id, 1).then(
+              console.log("Sent")
+          )
+          this.updateShoppingList();
         },
 
         removeSelectedItems(){
@@ -84,6 +85,7 @@ export default {
                 console.error("Error removing items from list:", error);
             }
         },
+
         changeSorting(sortingId) {
             this.sortBy = sortingId;
             this.updateShoppingList();
