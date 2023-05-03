@@ -109,6 +109,7 @@ export default {
 
     hideGroceryDetailComponent() {
       this.showAddGroceries = false;
+      this.updateFridge();
     },
 
     handleAddGrocery(items){
