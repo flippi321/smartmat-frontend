@@ -79,20 +79,22 @@ export default {
     },
 
     addGroceryToSelected(item){
-      console.log(item)
       this.selectedItems.push(item)
       this.sidebarVisible = true;
     },
 
     sendSelected(){
-      console.log("Sending selected to fridge")
-      console.log(this.selectedItems)
       this.$emit('addSelected', this.selectedItems);
+      this.update();
     },
 
     closeAdPage(){
-      console.log("Close")
       this.$emit('close')
+    },
+
+    async update() {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      this.closeAdPage();
     },
   }
 };

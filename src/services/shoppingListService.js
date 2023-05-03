@@ -47,15 +47,24 @@ export default {
 
     },
 
-
     getSortingChoices(){
         return(apiClient.get("/getSortingChoices"));
     },
+
     updateShoppingListItem(itemInformation){
-        /*
         return(axios.post("/updateShoppingListItem", { params: {data: itemInformation}}))
-         */
-        return JSON.stringify(itemInformation)
+    },
+
+    addMultipleItems(listId, itemList){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/shoppinglist/add/${listId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: itemList
+        };
+        return axios.request(options);
     },
 
     sendItemsToFridge(items, shoppingListId, fridgeId){

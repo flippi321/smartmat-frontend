@@ -52,5 +52,17 @@ export default {
             },
         };
         return axios.request(options);
-    }
+    },
+
+    addMultipleItems(fridgeId, itemList){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/groceryItems/fridge/add/${fridgeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: itemList
+        };
+        return axios.request(options);
+    },
 }

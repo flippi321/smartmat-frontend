@@ -6,11 +6,11 @@
       </div>
       <div class="grocery-item-details">
         <h1 class="grocery-item-name">{{ item.name }}</h1>
-        <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="amount" min="0" />
+        <p class="grocery-item-amount">Mengde: <input type="number" v-model.number="this.amount" min="1" />
           {{item.category.unit}}</p>
-        <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expected_shelf_life }} dager</p>
+        <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expectedShelfLife }} dager</p>
         <p class="grocery-item-actual-shelf-life">
-          Faktisk holdbarhet: <input type="number" v-model.number="actual_shelf_life" min="0" /> dager
+          Faktisk holdbarhet: <input type="number" v-model.number="actualShelfLife" min="0" /> dager
         </p>
         <div class="grocery-item-buttons">
           <button @click.stop="update(item)">{{ acceptMessage }}</button>
@@ -26,8 +26,8 @@
 export default {
   data(){
     return {
-      amount: 0,
-      actual_shelf_life: 0,
+      amount: 1,
+      actualShelfLife: 0,
     }
   },
 
@@ -53,6 +53,9 @@ export default {
 
   methods: {
     update(item){
+      item.actualShelfLife = this.actualShelfLife;
+      item.amount = this.amount;
+      console.log(item)
       this.$emit("update", item)
     },
 
@@ -66,8 +69,8 @@ export default {
   },
 
   created() {
-    this.actual_shelf_life = this.item.expected_shelf_life;
-    this.amount = this.item.amount;
+    console.log(this.item);
+    this.actualShelfLife = this.item.expectedShelfLife;
   }
 }
 </script>
@@ -128,7 +131,7 @@ export default {
 input[type="number"] {
   padding: 5px;
   font-size: 28px;
-  width: 50px;
+  width: 100px;
 }
 
 .grocery-item-expected-shelf-life {

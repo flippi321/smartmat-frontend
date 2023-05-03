@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .shopping-list-sidebar {
   position: relative;
   height: 100%;
