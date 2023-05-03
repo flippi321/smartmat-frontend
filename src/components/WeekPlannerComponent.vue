@@ -28,8 +28,9 @@
 
 <script>
 import weekPlannerService from "@/services/weekPlannerService";
-import {useAuthStore} from "@/stores";
+import  {useAuthStore} from "@/stores";
 import pinia from "@/stores";
+
 const store = useAuthStore(pinia);
 
 export default {
@@ -50,35 +51,11 @@ export default {
         };
     },
     methods: {
-        async generateWeeklyMenu() {
-            const response = await weekPlannerService.generateWeeklyMenu();
-
-            // Extract the recipes from the response
-            const recipes = response.data.recipes;
-
-            // Shuffle the recipes array
-            const shuffledRecipes = this.shuffleArray(recipes);
-
-            // Take the first 7 recipes to create the weekly menu
-            this.weeklyMenu = shuffledRecipes.slice(0, 7);
-        },
-
-        // Fisher-Yates shuffle algorithm
-        shuffleArray(array) {
-            let currentIndex = array.length,
-                temporaryValue,
-                randomIndex;
-
-            while (0 !== currentIndex) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-
-            return array;
+        generateWeeklyMenu() {
+            weekPlannerService.generateWeeklyMenu(1).then((response) => {
+                console.log(response.data);
+                this.weeklyMenu = response.data;
+            });
         },
     },
     watch: {
