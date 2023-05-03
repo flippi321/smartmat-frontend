@@ -25,7 +25,7 @@ defineProps({
                 v-if="showAddGroceries === true"
                 :id="id"
                 :home="'Handleliste'"
-                @add-grocery="handleAddGrocery"
+                @addSelected="handleAddGrocery"
                 @close="hideGroceryDetailComponent"
         />
     </div>
@@ -66,6 +66,7 @@ export default {
         updateItem(itemData) {
             console.log(shoppingListService.updateShoppingListItem(itemData))
         },
+
         async sendSelectedItems() {
             try {
                 await shoppingListService.sendItemsToFridge(this.$refs.groceries.$data.currentlySelected, this.id, this.id);
@@ -107,11 +108,16 @@ export default {
         },
 
         handleAddGrocery(items){
+            console.log("Adding selected to shopping List:")
             console.log(items)
 
-            items.forEach(item => {
-                shoppingListService.addItemToList(this.id, item.id, item.amount)
-            })
+          shoppingListService.addMultipleItems(this.id, items)
+              .then(response => {
+                this.items = response.data;
+              })
+              .catch(error => {
+                console.error("Error updating shopping list:", error);
+              });
         }
     },
 };
