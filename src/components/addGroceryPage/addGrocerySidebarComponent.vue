@@ -28,7 +28,7 @@ defineProps({
     <div class="selected-items" v-if="!isCollapsed">
       <h2>Valgte Varer:</h2>
       <ul>
-        <li v-for="item in selected" :key="item.id">{{ item.amount }} {{ item.unit }} {{ item.name }} med {{ item.days_until_spoilt }} dagers holdbarhet</li>
+        <li v-for="item in selected" :key="item.id">{{ item.amount }} {{ item.category.unit }} {{ item.name }} med {{ item.actualShelfLife }} dagers holdbarhet</li>
       </ul>
     </div>
 
