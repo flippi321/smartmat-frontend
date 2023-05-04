@@ -36,7 +36,6 @@ export default {
     },
 
     getAllCategories(){
-        console.log(sessionStorage.getItem("token"));
         const options = {
             method: 'GET',
             url: `${url}/api/categories/all`,
