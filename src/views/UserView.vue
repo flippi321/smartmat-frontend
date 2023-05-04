@@ -6,10 +6,8 @@ import UserPageComponent from "@/components/UserComponent.vue";
   <div>
     <UserPageComponent
         :id="this.store.getUserId"
-        :first-name="this.store.getFirstName"
-        :last-name="this.store.getLastName"
-        :email="this.store.getEmail"
-        @update="updateUser"
+        :user="this.user"
+        @updateUser="updateUser"
     />
   </div>
 </template>
@@ -23,18 +21,37 @@ export default {
   data(){
     return{
       store: authStore,
+      user: null,
     }
   },
 
   methods:{
     updateUser(userInfo){
-      userService.updateUserInformation(userInfo).then(response => {
-        let newInfo = response.data;
-        this.store.setFirstName(newInfo.firstName);
-        this.store.setLastName(newInfo.lastName);
-        this.store.setEmail(newInfo.email);
+      userService.updateUserInformation(userInfo, this.store.getEmail).then(response => {
+        //Update the store
+        this.store.setFirstName(response.data.firstName);
+        this.store.setLastName(response.data.lastName);
+        this.store.setEmail(response.data.email);
+
+        //Update the values so the user sees the changes
+        this.getUser();
+      }).catch(error => {
+        console.log(error)
       })
-    }
+    },
+
+    getUser(){
+      userService.getUserInformation(authStore.getUserId).then(response => {
+        console.log(response)
+        this.user = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+  },
+
+  created() {
+    this.getUser();
   }
 }
 </script>
