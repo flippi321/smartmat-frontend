@@ -30,11 +30,6 @@ mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200,
 })
 
 export default {
-    /**
-    getShoppingListContents(listId, sortBy){
-        return(apiClient.get("/getItemsFromShoppingList", { params: { id: listId, sortBy: sortBy } }));
-    },
-    */
     getShoppingListContents(listId){
         const options = {
             method: 'GET',
@@ -52,8 +47,17 @@ export default {
         return(apiClient.get("/getSortingChoices"));
     },
 
-    updateShoppingListItem(itemInformation){
-        return(axios.post("/updateShoppingListItem", { params: {data: itemInformation}}))
+    updateShoppingListItem(listId, item){
+        const options = {
+            method: 'PUT',
+            url: `${url}/api/groceryItems/shoppinglist/updateItem/${listId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+            data: item
+        }
+        return axios.request(options);
     },
 
     addMultipleItems(listId, itemList){

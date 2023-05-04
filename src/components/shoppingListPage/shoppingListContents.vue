@@ -21,6 +21,7 @@
             acceptMessage="Lagre"
             declineMessage="Avbryt"
             @update="saveChanges"
+            @decline="describeItem = null"
         />
       </div>
     </div>
@@ -53,7 +54,7 @@ export default {
       setTimeout(() => {
         this.showSaveSuccess = false;
       }, 3000);
-      this.$emit('saved-changes', [item.groceryItemId, item.amount, item.actual_shelf_life]);
+      this.$emit('saved-changes', item);
     },
 
     updateSelectedItems(item) {
