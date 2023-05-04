@@ -144,5 +144,74 @@ describe('AddGroceries.vue', () => {
 
         expect(wrapper.vm.categories).toHaveLength(2);
     });
-});
 
+    it('shows the sidebar by default', () => {
+        const wrapper = mount(AddGroceries, {
+            props: {
+                id: 1,
+                home: 'test',
+            },
+        });
+
+        expect(wrapper.vm.sidebarVisible).toBe(true);
+    });
+
+    it('adds a grocery item to selectedItems on add-grocery event', async () => {
+        const wrapper = mount(AddGroceries, {
+            props: {
+                id: 1,
+                home: 'test',
+            },
+        });
+
+        await wrapper.vm.$nextTick();
+
+        const sampleItem = {
+            "groceryItemId": 6,
+            "name": "Gulrøtt",
+            "expectedShelfLife": 30,
+            "actualShelfLife": 0,
+            "imageLink": "https://bilder.kolonial.no/produkter/840c1ecf-12aa-427b-909c-226568c4f5de.jpg?auto=format&fit=max&w=500&s=05bff6f537c33ab4425279c066b9b251",
+            "amount": 0,
+            "category": {
+                "category": 3,
+                "name": "Frukt og grønt",
+                "unit": "kg"
+            }
+        };
+
+        wrapper.vm.addGroceryToSelected(sampleItem);
+
+        expect(wrapper.vm.selectedItems).toHaveLength(1);
+    });
+
+    it('emits addSelected event when sendSelected is called', async () => {
+        const wrapper = mount(AddGroceries, {
+            props: {
+                id: 1,
+                home: 'test',
+            },
+        });
+
+        await wrapper.vm.$nextTick();
+
+        wrapper.vm.sendSelected();
+
+        expect(wrapper.emitted('addSelected')).toBeTruthy();
+    });
+
+    it('emits close event when closeAdPage is called', async () => {
+        const wrapper = mount(AddGroceries, {
+            props: {
+                id: 1,
+                home: 'test',
+            },
+        });
+
+        await wrapper.vm.$nextTick();
+
+        wrapper.vm.closeAdPage();
+
+        expect(wrapper.emitted('close')).toBeTruthy();
+    });
+});
