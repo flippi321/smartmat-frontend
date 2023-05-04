@@ -12,6 +12,7 @@ import WeekPlannerView from "@/views/WeekPlannerView.vue";
 import { getAuthStore } from '@/stores';
 import RecipeView from "@/views/RecipeView.vue"
 import UserView from "@/views/UserView.vue";
+import JoinHouseholdView from "@/views/JoinHouseholdView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +60,14 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView,
+    },
+    {
+      path: '/joinHousehold',
+      name: 'joinHousehold',
+      component: JoinHouseholdView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/household',
