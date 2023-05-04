@@ -26,6 +26,7 @@ const adjustedIngredients = computed(() => {
 <template>
   <div class="recipe-box" v-if="Object.keys(recipe).length > 0">
     <h2>{{ recipe.name }}</h2>
+    <img class="recipeImg" :src="recipe.imageLink" :alt="recipe.description" />
     <p>{{ recipe.description }}</p>
     <div class="portion-control">
       <label for="portions">Porsjoner:</label>
@@ -46,6 +47,12 @@ const adjustedIngredients = computed(() => {
         {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
       </li>
     </ul>
+    <h3>Fremgangsmåte</h3>
+      <ol>
+          <li v-for="(step, index) in recipe.steps" :key="index">
+              {{ step }}
+          </li>
+      </ol>
   </div>
 </template>
 
@@ -71,11 +78,11 @@ const adjustedIngredients = computed(() => {
   list-style-type: none;
   padding: 0;
 }
-.recipe-box li {
+.recipe-box ul li {
   font-size: 14px;
   margin-bottom: 5px;
 }
-.recipe-box li::before {
+.recipe-box ul li::before {
   content: "• ";
   color: #3a3a3a;
 }
@@ -94,5 +101,13 @@ const adjustedIngredients = computed(() => {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 4px 6px;
+}
+
+.recipe-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
 </style>
