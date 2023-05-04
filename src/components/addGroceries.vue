@@ -1,16 +1,3 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true
-  },
-  home: {
-    type: String,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="fridge-page">
     <Sidebar v-if="this.sidebarVisible === true"
@@ -39,6 +26,17 @@ import Sidebar from "@/components/addGroceryPage/addGrocerySidebarComponent.vue"
 import groceryService from "@/services/groceryService";
 
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    home: {
+      type: String,
+      required: true
+    }
+  },
+
   components: {
     Sidebar,
     Groceries
