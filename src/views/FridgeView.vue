@@ -39,7 +39,7 @@ defineProps({
 import fridgeService from "@/services/fridgeService";
 import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
-import addGroceries from "@/components/addGroceries.vue";
+import addGroceries from "@/components/AddGroceries.vue";
 
 export default {
   components: {
