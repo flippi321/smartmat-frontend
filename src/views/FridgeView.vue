@@ -134,10 +134,11 @@ export default {
     },
 
     updateItem(item){
-      fridgeService.updateItemDetails(this.fridgeId, item).then(response => {
-        console.log(response)
-        this.hideGroceryDetailComponent()
-      });
+      fridgeService.updateItemDetails(this.fridgeId, item).then(() => {
+        this.hideGroceryDetailComponent();
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
     deleteItemFromFridge(item){
