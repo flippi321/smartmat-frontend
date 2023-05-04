@@ -54,7 +54,8 @@ export default {
       items: [],
       filteredItems: [],
       categories: [],
-      currentCategory: 1,
+      currentCategory: 0,
+      currentSearchTerm: '',
       sidebarVisible: true,
       detailsIconVisible: false,
 
@@ -66,14 +67,11 @@ export default {
   },
   created() {
     fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-      console.log("Contents response:")
       this.items = response.data;
-      console.log(this.items)
+      this.filteredItems = this.items;
     });
     fridgeService.getCategoriesFromFridgeId(this.fridgeId).then((response) => {
-      console.log("Categories response:" + response.data)
       this.categories = response.data;
-      console.log(this.categories)
     });
   },
 
@@ -89,19 +87,19 @@ export default {
     },
 
     applyFilters() {
+      this.updateFridge()
+
       let filtered = this.items;
 
       if (this.currentCategoryId !== 0) {
         filtered = filtered.filter(item => item.category.category === this.currentCategoryId);
       }
 
-      if (this.currentSearchTerm && this.currentSearchTerm.trim() !== '') {
+      if ((this.currentSearchTerm && this.currentSearchTerm.trim() !== '') && this.currentSearchTerm !== '') {
         filtered = filtered.filter(item => item.name.toLowerCase().includes(this.currentSearchTerm.toLowerCase()));
       }
 
       this.filteredItems = filtered;
-
-      this.updateFridge()
     },
 
     updateFridge(){
