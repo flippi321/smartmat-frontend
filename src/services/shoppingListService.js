@@ -97,7 +97,7 @@ export default {
     removeItemsFromList(items, shoppingListId){
         const options = {
             method: 'DELETE',
-            url: `${url}/api/groceryItems/shoppinglist/deleteItem/${shoppingListId}`,
+            url: `${url}/api/groceryItems/shoppinglist/deleteItems/${shoppingListId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
