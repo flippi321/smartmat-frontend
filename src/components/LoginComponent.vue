@@ -73,22 +73,28 @@ export default {
             console.log("trying to log in")
 
 
-            const response = await loginService.login(this.email, this.password);
-            console.log(response);
-            console.log(response.status)
+            try {
+                const response = await loginService.login(this.email, this.password);
+                console.log(response);
+                console.log(response.status);
 
-            if (response.status === 200) {
-                sessionStorage.setItem("token", response.data.access_token);
-                sessionStorage.setItem("refresh_token", response.data.refresh_token);
-                store.setLoggedIn();
-                store.setEmail(response.data.email);
-                store.setFirstName(response.data.firstname);
-                store.setLastName(response.data.lastname);
-                store.setUserId(response.data.id);
-                this.$router.push("/household?id=1")
-            } else {
-                console.log("error" + response)
-                document.getElementById("alert_1").innerHTML = response;
+                if (response.status === 200) {
+                    sessionStorage.setItem("token", response.data.access_token);
+                    sessionStorage.setItem("refresh_token", response.data.refresh_token);
+                    store.setLoggedIn();
+                    store.setEmail(response.data.email);
+                    store.setFirstName(response.data.firstname);
+                    store.setLastName(response.data.lastname);
+                    store.setUserId(response.data.id);
+                    this.$router.push("/household?id=1");
+                }
+            } catch (error) {
+                console.log("error", error.response);
+                if (error.response && error.response.status === 401) {
+                    document.getElementById("alert_1").innerHTML = "Feil brukernavn eller passord";
+                } else {
+                    document.getElementById("alert_1").innerHTML = "En feil oppstod under innlogging";
+                }
             }
         },
 
