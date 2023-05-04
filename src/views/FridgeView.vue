@@ -12,12 +12,13 @@ defineProps({
     <Sidebar
         v-if="showAddGroceries === false && this.sidebarVisible === true"
         :categories="categories"
-        @changeCategoryById="changeCategory"
+        @search="filterByName"
+        @filterCategory="filterByCategory"
         @toggle-sidebar="toggleSideBar"
     />
     <Groceries
         v-if="showAddGroceries === false"
-        :items="items"
+        :items="filteredItems"
         class="fridge-contents"
         @show-filter-bar="this.sidebarVisible = true"
         @hide-filter-bar="this.sidebarVisible = false"
@@ -51,8 +52,10 @@ export default {
     return {
       fridgeId: this.fridgeId,
       items: [],
+      filteredItems: [],
       categories: [],
-      currentCategory: 1,
+      currentCategory: 0,
+      currentSearchTerm: '',
       sidebarVisible: true,
       detailsIconVisible: false,
 
@@ -64,39 +67,48 @@ export default {
   },
   created() {
     fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-      console.log("Contents response:")
       this.items = response.data;
-      console.log(this.items)
+      this.filteredItems = this.items;
     });
-    fridgeService.getCategoriesFromFridgeId().then((response) => {
-      console.log("Categories response:" + response.data)
+    fridgeService.getCategoriesFromFridgeId(this.fridgeId).then((response) => {
       this.categories = response.data;
-      console.log(this.categories)
     });
   },
+
   methods: {
-    handleFeedback2(feedbackInfo) {
-      console.log(feedbackInfo)
-      this.feedback = feedbackInfo.feedback
-      this.feedbackMessage = feedbackInfo.feedbackMessage
-      this.feedbackType = feedbackInfo.feedbackType
-      setTimeout(() => {
-        this.feedback = false;
-      }, 6000);
+    filterByCategory(category){
+      this.currentCategoryId = category;
+      this.applyFilters();
     },
 
-    changeCategory(categoryId){
-      this.currentCategory = categoryId;
-      this.updateFridge();
+    filterByName(name){
+      this.currentSearchTerm = name;
+      this.applyFilters();
+    },
+
+    applyFilters() {
+      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
+        this.items = response.data;
+      });
+
+      let filtered = this.items;
+
+      if (this.currentCategoryId !== 0) {
+        filtered = filtered.filter(item => item.category.category === this.currentCategoryId);
+      }
+
+      if ((this.currentSearchTerm && this.currentSearchTerm.trim() !== '') && this.currentSearchTerm !== '') {
+        filtered = filtered.filter(item => item.name.toLowerCase().includes(this.currentSearchTerm.toLowerCase()));
+      }
+
+      this.filteredItems = filtered;
     },
 
     updateFridge(){
       fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-        console.log("Contents response:")
         this.items = response.data;
       });
       fridgeService.getCategoriesFromFridgeId().then((response) => {
-        console.log("Categories response:")
         this.categories = response.data;
       });
     },
@@ -111,19 +123,13 @@ export default {
 
     hideGroceryDetailComponent() {
       this.showAddGroceries = false;
-      this.updateFridge();
+      this.applyFilters();
     },
 
-    handleAddGrocery(items){
-      fridgeService.addMultipleItems(this.fridgeId, items).then(response => {
-        if(response.data().equals(items)){
-          console.log("Success");
-        }
-        else{
-          console.log("Error got this:");
-          console.log(response.data());
-        }
-      })
+    handleAddGrocery(items) {
+      fridgeService.addMultipleItems(this.fridgeId, items).then(() => {
+        this.hideGroceryDetailComponent();
+      });
     },
 
     updateItem(item){

@@ -26,7 +26,7 @@ defineProps({
       <transition name="details" class="details-container">
         <GroceryItemDetails class="grocery-details"
             v-if="expandedItem === item" :item="item"
-            :accept-message="'Legg til Kjøleskap'"
+            :accept-message="'Legg til'"
             :decline-message="'Avbryt'"
             @update="addGrocery"
             @decline="showSidebar"

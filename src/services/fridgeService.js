@@ -59,7 +59,7 @@ export default {
     addMultipleItems(fridgeId, itemList){
         const options = {
             method: 'POST',
-            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/{groceryItemID}`,
+            url: `${url}/api/groceryItems/fridge/add/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
             },
