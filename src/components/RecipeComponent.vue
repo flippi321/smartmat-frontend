@@ -103,7 +103,7 @@ const adjustedIngredients = computed(() => {
   padding: 4px 6px;
 }
 
-.recipe-image {
+.recipeImg {
     width: 100%;
     max-height: 300px;
     object-fit: cover;
