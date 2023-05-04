@@ -30,13 +30,13 @@
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="editEmail = true" class="edit-img">
       </span>
     </p>
-    <button v-if="editId || editEmail || editFirstName || editLastName " @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
+    <button v-if="editId || editEmail || editFirstName || editLastName" @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
   </div>
-    <button id="logoutBtn" @click="logout">Logg ut</button>
+  <button id="logoutBtn" @click="logout">Logg ut</button>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, unref} from "vue";
 import {useAuthStore} from "@/stores";
 import router from "@/router";
 import pinia from "@/stores";
@@ -68,11 +68,11 @@ let editLastName = ref(false);
 let editEmail = ref(false);
 
 function saveChanges() {
-  // Handle saving changes to the server or local storage
-  editId.value = false;
-  editFirstName.value = false;
-  editLastName.value = false;
-  editEmail.value = false;
+  this.$emit("updateUser", {
+    firstname: unref(this.firstName),
+    lastname: unref(this.lastName),
+    email: unref(this.email),
+  });
 }
 
 function logout() {
