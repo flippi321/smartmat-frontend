@@ -13,14 +13,14 @@
                         v-for="(dinner, index) in weeklyMenu"
                         :key="index"
                         class="dinner-item"
-                        :to="{ path: `/recipe`, query: { id: dinner.id } }"
+                        :to="{ path: `/recipe`, query: { id: dinner.recipe_id } }"
                 >
                     <h3>{{ daysOfWeek[index] }}</h3>
                     <h4 class="recipeName">{{ dinner.name }}</h4>
-                    <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
+                    <img class="recipeImg" :src="dinner.imageLink"
                          alt="alternatetext" width="200">
                     <p class="recipeDescription">{{ dinner.description }}</p>
-                    <p class="nrOfIngredients">{{ missingIngredientsMap[dinner.id]?.available }}/{{ missingIngredientsMap[dinner.id]?.total }} ingredienser</p>
+                    <p class="nrOfIngredients">{{ missingIngredientsMap[dinner.recipe_id]?.available }}/{{ missingIngredientsMap[dinner.recipe_id]?.total }} ingredienser</p>
 
                 </router-link>
             </div>
@@ -94,7 +94,7 @@ export default {
     created() {
         this.generateWeeklyMenu().then(() => {
             this.weeklyMenu.forEach((dinner) => {
-                this.getMissingIngredients(this.householdId, dinner.id);
+                this.getMissingIngredients(this.householdId, dinner.recipe_id);
             });
         });
     },
