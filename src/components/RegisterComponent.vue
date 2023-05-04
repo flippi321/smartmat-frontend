@@ -66,7 +66,7 @@ export default {
             this.password = document.querySelector("input[name=password]").value;
             this.confirmPassword = document.querySelector("input[name=confirmPassword]").value;
 
-            if (!this.firstName || !this.lastName || !this.email || !this.password || !this.confirmPassword) {
+            if (!this.firstName.trim() || !this.lastName.trim() || !this.email.trim() || !this.password || !this.confirmPassword) {
                 document.getElementById("alert_1").innerHTML = "Fyll inn alle felter!";
                 return;
             }
