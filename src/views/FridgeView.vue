@@ -141,7 +141,7 @@ export default {
     },
 
     deleteItemFromFridge(item){
-      fridgeService.removeItem(this.fridgeId, item.groceryItemId).then(response => {
+      fridgeService.removeItem(this.fridgeId, item).then(response => {
         console.log(response)
         this.hideGroceryDetailComponent()
       })

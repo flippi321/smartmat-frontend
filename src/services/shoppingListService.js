@@ -62,6 +62,7 @@ export default {
             url: `${url}/api/groceryItems/shoppinglist/add/${listId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
             data: itemList
         };
@@ -74,6 +75,7 @@ export default {
             url: `${url}/api/households/${householdId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         return axios.request(options);
@@ -95,7 +97,7 @@ export default {
     removeItemsFromList(items, shoppingListId){
         const options = {
             method: 'DELETE',
-            url: `${url}/api/groceryItems/shoppinglist/deleteItems/${shoppingListId}`,
+            url: `${url}/api/groceryItems/shoppinglist/deleteItem/${shoppingListId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
