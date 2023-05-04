@@ -87,7 +87,9 @@ export default {
     },
 
     applyFilters() {
-      this.updateFridge()
+      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
+        this.items = response.data;
+      });
 
       let filtered = this.items;
 
@@ -121,19 +123,13 @@ export default {
 
     hideGroceryDetailComponent() {
       this.showAddGroceries = false;
-      this.updateFridge();
+      this.applyFilters();
     },
 
-    handleAddGrocery(items){
-      fridgeService.addMultipleItems(this.fridgeId, items).then(response => {
-        if(response.data().equals(items)){
-          console.log("Success");
-        }
-        else{
-          console.log("Error got this:");
-          console.log(response.data());
-        }
-      })
+    handleAddGrocery(items) {
+      fridgeService.addMultipleItems(this.fridgeId, items).then(() => {
+        this.hideGroceryDetailComponent();
+      });
     },
 
     updateItem(item){
