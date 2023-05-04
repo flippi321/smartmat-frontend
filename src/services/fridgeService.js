@@ -62,6 +62,7 @@ export default {
             url: `${url}/api/groceryItems/fridge/add/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
             data: itemList
         };
@@ -74,6 +75,7 @@ export default {
             url: `${url}/api/groceryItems/fridge/updateItem/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
             data: groceryItem
         };
