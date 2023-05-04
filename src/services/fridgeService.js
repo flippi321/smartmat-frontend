@@ -89,7 +89,8 @@ export default {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-            }
+            },
+            data: groceryItem
         };
         return axios.request(options);
     },
