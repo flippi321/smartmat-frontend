@@ -68,13 +68,14 @@ export default {
         return axios.request(options);
     },
 
-    updateItem(fridgeId, groceryItemId){
+    updateItemDetails(fridgeId, groceryItem){
         const options = {
-            method: 'UPDATE',
-            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
+            method: 'PUT',
+            url: `${url}/api/groceryItems/fridge/updateItem/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            data: groceryItem
         };
         return axios.request(options);
     },
