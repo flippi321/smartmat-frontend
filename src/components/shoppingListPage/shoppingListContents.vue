@@ -75,7 +75,7 @@ export default {
 <style>
 .success-box {
   position: fixed;
-  top: 0;
+  top: 75px;
   left: 50%;
   transform: translateX(-50%);
   width: 200px;
@@ -85,6 +85,7 @@ export default {
   text-align: center;
   font-weight: bold;
   border-radius: 15px;
+  z-index: 100;
 }
 
 .box-container {
