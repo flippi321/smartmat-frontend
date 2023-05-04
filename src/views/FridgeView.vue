@@ -12,12 +12,13 @@ defineProps({
     <Sidebar
         v-if="showAddGroceries === false && this.sidebarVisible === true"
         :categories="categories"
-        @changeCategoryById="changeCategory"
+        @search="filterByName"
+        @filterCategory="filterByCategory"
         @toggle-sidebar="toggleSideBar"
     />
     <Groceries
         v-if="showAddGroceries === false"
-        :items="items"
+        :items="filteredItems"
         class="fridge-contents"
         @show-filter-bar="this.sidebarVisible = true"
         @hide-filter-bar="this.sidebarVisible = false"
@@ -51,6 +52,7 @@ export default {
     return {
       fridgeId: this.fridgeId,
       items: [],
+      filteredItems: [],
       categories: [],
       currentCategory: 1,
       sidebarVisible: true,
@@ -98,10 +100,12 @@ export default {
       }
 
       this.filteredItems = filtered;
+
+      this.updateFridge()
     },
 
     updateFridge(){
-      fridgeService.getFridgeContents(this.id).then((response) => {
+      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
         this.items = response.data;
       });
       fridgeService.getCategoriesFromFridgeId().then((response) => {
