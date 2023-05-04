@@ -69,11 +69,9 @@ export default {
 
     updateFridge(){
       fridgeService.getFridgeContents(this.id).then((response) => {
-        console.log("Contents response:")
         this.items = response.data.groceryItems.groceries;
       });
       fridgeService.getCategoriesFromFridgeId().then((response) => {
-        console.log("Categories response:")
         this.categories = response.data.categories.categories;
       });
     },
