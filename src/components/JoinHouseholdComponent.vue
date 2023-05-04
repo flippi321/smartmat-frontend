@@ -3,9 +3,9 @@
     <h1>Join or Create a Household</h1>
     <div class="choices">
       <form @submit.prevent="joinHousehold" class="choice">
-        <h2>Join a Household</h2>
+        <h2>Bli med i en Husholdning</h2>
         <div class="input">
-          <label for="household-code">Enter 6-digit household code:</label>
+          <label for="household-code">Husholdningskode:</label>
           <input
               class="form-control"
               type="text"
@@ -14,12 +14,12 @@
               v-model="householdCode"
           />
         </div>
-        <button type="submit" class="btn">Join Household</button>
+        <button type="submit" class="btn">Bli medlem!</button>
       </form>
       <div class="choice create">
-        <h2>Create a Household</h2>
-        <p>Start a new household:</p>
-        <button @click="createHousehold" class="btn">Create</button>
+        <h2>Eller lag in egen</h2>
+        <p>Lag en ny Husholdning:</p>
+        <button @click="createHousehold" class="btn">Nå!</button>
       </div>
     </div>
   </div>
@@ -36,13 +36,13 @@ export default {
   methods: {
     joinHousehold() {
       if (this.householdCode.length !== 6) {
-        alert("Please enter a valid 6-digit code");
+        alert("Vennligst bruk en valid husholdningskode på 6 siffer");
         return;
       }
-      console.log("Joining household with code:", this.householdCode);
+      this.$emit("joinHousehold", this.householdCode)
     },
     createHousehold() {
-      console.log("create");
+      this.$emit("createHousehold")
     },
   },
 };
