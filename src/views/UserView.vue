@@ -5,7 +5,7 @@ import UserPageComponent from "@/components/UserComponent.vue";
 <template>
   <div>
     <UserPageComponent
-        :id="this.store.getUserId"
+        :id="parseInt(this.store.getUserId)"
         :user="this.user"
         @updateUser="updateUser"
     />
