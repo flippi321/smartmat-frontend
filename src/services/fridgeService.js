@@ -86,6 +86,7 @@ export default {
             url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         return axios.request(options);
