@@ -14,43 +14,43 @@ describe('WeekPlannerComponent.vue', () => {
         axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/weekRecommender\/\d+/) })).resolves({
             data: [
                 {
-                    id: 1,
+                    recipe_id: 1,
                     name: 'Test Recipe',
                     imageUrl: 'test-image-url',
                     description: 'Test description',
                 },
                 {
-                    id: 2,
+                    recipe_id: 2,
                     name: 'Test Recipe 2',
                     imageUrl: 'test-image-url-2',
                     description: 'Test description 2',
                 },
                 {
-                    id: 3,
+                    recipe_id: 3,
                     name: 'Test Recipe 3',
                     imageUrl: 'test-image-url-3',
                     description: 'Test description 3',
                 },
                 {
-                    id: 4,
+                    recipe_id: 4,
                     name: 'Test Recipe 4',
                     imageUrl: 'test-image-url-4',
                     description: 'Test description 4',
                 },
                 {
-                    id: 5,
+                    recipe_id: 5,
                     name: 'Test Recipe 5',
                     imageUrl: 'test-image-url-5',
                     description: 'Test description 5',
                 },
                 {
-                    id: 6,
+                    recipe_id: 6,
                     name: 'Test Recipe 6',
                     imageUrl: 'test-image-url-6',
                     description: 'Test description 6',
                 },
                 {
-                    id: 7,
+                    recipe_id: 7,
                     name: 'Test Recipe 7',
                     imageUrl: 'test-image-url-7',
                     description: 'Test description 7',
@@ -61,13 +61,13 @@ describe('WeekPlannerComponent.vue', () => {
         axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/missingIngredients\/\d+\/\d+/) })).resolves({
             data: [
                 {
-                    "id": 1,
+                    "recipe_id": 1,
                     "name": "Missing Ingredients of: Eggerøre",
                     "description": "Missing items",
                     "ingredients": []
                 },
                 {
-                    "id": 1,
+                    "recipe_id": 1,
                     "name": "Eggerøre",
                     "description": "En enkel og deilig frokostrett laget med egg, melk og smør.",
                     "ingredients": [

@@ -17,12 +17,12 @@ defineProps({
             </div>
             <div class="scroll-container">
                 <div class="recipeList grid-container">
-                    <router-link class="grid-item" v-for="recipe in recipes" :key="recipe.id" :to="{ path: `/recipe`, query: { id: recipe.id } }">
+                    <router-link class="grid-item" v-for="recipe in recipes" :key="recipe.recipe_id" :to="{ path: `/recipe`, query: { id: recipe.recipe_id } }">
                         <h3 class="recipeName">{{ recipe.name }}</h3>
-                        <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
-                             alt="alternatetext" width="200">
+                        <img class="recipeImg" :src="recipe.imageLink"
+                             :alt="recipe.name" width="200">
                         <p class="recipeDescription">{{ recipe.description }}</p>
-                        <p class="nrOfIngredients">{{ availableIngredientsMap[recipe.id]?.available }}/{{ availableIngredientsMap[recipe.id]?.total }} ingredienser</p>
+                        <p class="nrOfIngredients">{{ availableIngredientsMap[recipe.recipe_id]?.available }}/{{ availableIngredientsMap[recipe.recipe_id]?.total }} ingredienser</p>
                     </router-link>
                 </div>
                 <button class="scroll-button" @click="scrollRight">››</button>
@@ -108,7 +108,7 @@ export default {
         recipeService.getRecipes(1).then((response) => {
             this.recipes = response.data;
             this.recipes.forEach((recipe) => {
-                this.getMissingIngredients(1, recipe.id);
+                this.getMissingIngredients(1, recipe.recipe_id);
             })
         });
     },

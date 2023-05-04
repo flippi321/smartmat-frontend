@@ -12,23 +12,44 @@ describe('RecipeIdeasComponent.vue', () => {
         axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/recommender\/\d+/) })).resolves({
             data: [
                 {
-                    id: 1,
-                    name: 'Test Recipe',
-                    imageUrl: 'test-image-url',
-                    description: 'Test description',
+                    "recipe_id": 2,
+                    "name": "Havregrøt",
+                    "description": "En sunn og mettende frokost laget med havregryn, melk eller vann og en klype salt.",
+                    "imageLink": "https://dummyimage.com/600x400/000/fff",
+                    "steps": [
+                        "Preheat oven to 350°F (175°C) and grease a loaf pan.",
+                        "In a large bowl, mash the ripe bananas with a fork.",
+                        "Mix in sugar, melted butter, beaten egg, and vanilla extract.",
+                        "Stir in the flour, baking soda, and salt until just combined.",
+                        "Pour batter into the prepared loaf pan and bake for 60-65 minutes, or until a toothpick inserted into the center comes out clean."
+                    ],
+                    "ingredients": [
+                        {
+                            "id": 1,
+                            "name": "Melk",
+                            "amount": 2,
+                            "unit": "L"
+                        },
+                        {
+                            "id": 14,
+                            "name": "Ris",
+                            "amount": 1,
+                            "unit": "kg"
+                        }
+                    ]
                 },
             ],
         });
         axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/missingIngredients\/\d+\/\d+/) })).resolves({
             data: [
                 {
-                    "id": 1,
+                    "recipe_id": 1,
                     "name": "Missing Ingredients of: Eggerøre",
                     "description": "Missing items",
                     "ingredients": []
                 },
                 {
-                    "id": 1,
+                    "recipe_id": 1,
                     "name": "Eggerøre",
                     "description": "En enkel og deilig frokostrett laget med egg, melk og smør.",
                     "ingredients": [
@@ -68,7 +89,7 @@ describe('RecipeIdeasComponent.vue', () => {
             const recipeNameElement = wrapper.find('.recipeName');
 
             expect(headerElement.text()).toBe('Middagsforslag');
-            expect(recipeNameElement.text()).toBe('Test Recipe');
+            expect(recipeNameElement.text()).toBe('Havregrøt');
         });
 
         it('scrolls right', async () => {
