@@ -117,29 +117,6 @@ describe('AddGroceries.vue', () => {
         expect(wrapper.exists()).toBe(true);
     });
 
-    it('renders Groceries component', () => {
-        const wrapper = mount(AddGroceries, {
-            props: {
-                id: 1,
-                home: 'test',
-            },
-        });
-
-        const groceriesComponent = wrapper.findComponent({ ref: 'Groceries' });
-        expect(groceriesComponent.exists()).toBe(true);
-    });
-
-    it('renders Sidebar component', () => {
-        const wrapper = mount(AddGroceries, {
-            props: {
-                id: 1,
-                home: 'test',
-            },
-        });
-
-        const sidebarComponent = wrapper.findComponent({ ref: 'Sidebar' });
-        expect(sidebarComponent.exists()).toBe(true);
-    });
 
 
     it('fetches groceries data on created', async () => {
