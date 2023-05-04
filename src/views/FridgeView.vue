@@ -68,25 +68,43 @@ export default {
       this.items = response.data;
       console.log(this.items)
     });
-    fridgeService.getCategoriesFromFridgeId().then((response) => {
+    fridgeService.getCategoriesFromFridgeId(this.fridgeId).then((response) => {
       console.log("Categories response:" + response.data)
       this.categories = response.data;
       console.log(this.categories)
     });
   },
+
   methods: {
-    changeCategory(categoryId){
-      this.currentCategory = categoryId;
-      this.updateFridge();
+    filterByCategory(category){
+      this.currentCategoryId = category;
+      this.applyFilters();
+    },
+
+    filterByName(name){
+      this.currentSearchTerm = name;
+      this.applyFilters();
+    },
+
+    applyFilters() {
+      let filtered = this.items;
+
+      if (this.currentCategoryId !== 0) {
+        filtered = filtered.filter(item => item.category.category === this.currentCategoryId);
+      }
+
+      if (this.currentSearchTerm && this.currentSearchTerm.trim() !== '') {
+        filtered = filtered.filter(item => item.name.toLowerCase().includes(this.currentSearchTerm.toLowerCase()));
+      }
+
+      this.filteredItems = filtered;
     },
 
     updateFridge(){
-      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-        console.log("Contents response:")
+      fridgeService.getFridgeContents(this.id).then((response) => {
         this.items = response.data;
       });
       fridgeService.getCategoriesFromFridgeId().then((response) => {
-        console.log("Categories response:")
         this.categories = response.data;
       });
     },
