@@ -22,7 +22,7 @@ defineProps({
                         <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                              alt="alternatetext" width="200">
                         <p class="recipeDescription">{{ recipe.description }}</p>
-                        <p class="nrOfIngredients">4/8 ingredienser</p>
+                        <p class="nrOfIngredients">{{ availableIngredientsMap[recipe.id]?.available }}/{{ availableIngredientsMap[recipe.id]?.total }} ingredienser</p>
                     </router-link>
                 </div>
                 <button class="scroll-button" @click="scrollRight">››</button>
@@ -36,6 +36,8 @@ defineProps({
 import recipeService from "@/services/recipeService";
 import {useAuthStore} from "@/stores";
 import pinia from "@/stores";
+import weekPlannerService from "@/services/weekPlannerService";
+import {set} from "@vueuse/core";
 const store = useAuthStore(pinia);
 
 export default {
@@ -43,8 +45,16 @@ export default {
         return {
             recipes: [],
             nrOfPeople: store.getNrOfPortions,
+            availableIngredients: {},
         };
     },
+
+    computed: {
+        availableIngredientsMap() {
+            return this.availableIngredients;
+        },
+    },
+
     methods: {
         scrollRight() {
             const gridContainer = this.$el.querySelector('.grid-container');
@@ -70,6 +80,22 @@ export default {
                 });
             }
         },
+
+        getMissingIngredients(fridgeId, recipeId) {
+            weekPlannerService.getMissingIngredients(fridgeId, recipeId).then((response) => {
+                const missingIngredientsResponse = response.data;
+                const missingIngredients = missingIngredientsResponse[0].ingredients;
+                const recipe = missingIngredientsResponse[1];
+                const totalIngredients = recipe.ingredients.length;
+                const availableIngredients = totalIngredients - missingIngredients.length;
+
+                set(this.availableIngredientsMap, recipeId, {
+                    available: availableIngredients,
+                    total: totalIngredients,
+                });
+            });
+        },
+
     },
 
     watch: {
@@ -81,6 +107,9 @@ export default {
     created() {
         recipeService.getRecipes(1).then((response) => {
             this.recipes = response.data;
+            this.recipes.forEach((recipe) => {
+                this.getMissingIngredients(1, recipe.id);
+            })
         });
     },
 };

@@ -20,6 +20,8 @@
                     <img class="recipeImg" src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80"
                          alt="alternatetext" width="200">
                     <p class="recipeDescription">{{ dinner.description }}</p>
+                    <p class="nrOfIngredients">{{ missingIngredientsMap[dinner.id]?.available }}/{{ missingIngredientsMap[dinner.id]?.total }} ingredienser</p>
+
                 </router-link>
             </div>
         </div>
@@ -28,8 +30,10 @@
 
 <script>
 import weekPlannerService from "@/services/weekPlannerService";
-import {useAuthStore} from "@/stores";
+import  {useAuthStore} from "@/stores";
 import pinia from "@/stores";
+import {set} from "@vueuse/core";
+
 const store = useAuthStore(pinia);
 
 export default {
@@ -47,39 +51,39 @@ export default {
                 "Lørdag",
                 "Søndag",
             ],
+            missingIngredients: {},
         };
     },
+    computed: {
+        missingIngredientsMap() {
+            return this.missingIngredients;
+        },
+    },
+
     methods: {
-        async generateWeeklyMenu() {
-            const response = await weekPlannerService.generateWeeklyMenu();
-
-            // Extract the recipes from the response
-            const recipes = response.data.recipes;
-
-            // Shuffle the recipes array
-            const shuffledRecipes = this.shuffleArray(recipes);
-
-            // Take the first 7 recipes to create the weekly menu
-            this.weeklyMenu = shuffledRecipes.slice(0, 7);
+        generateWeeklyMenu() {
+            return weekPlannerService.generateWeeklyMenu(1).then((response) => {
+                console.log(response.data);
+                this.weeklyMenu = response.data;
+            });
         },
 
-        // Fisher-Yates shuffle algorithm
-        shuffleArray(array) {
-            let currentIndex = array.length,
-                temporaryValue,
-                randomIndex;
+        getMissingIngredients(fridgeId, recipeId) {
+            weekPlannerService.getMissingIngredients(fridgeId, recipeId).then((response) => {
+                const missingIngredientsResponse = response.data;
+                const missingIngredients = missingIngredientsResponse[0].ingredients;
+                const recipe = missingIngredientsResponse[1];
+                const totalIngredients = recipe.ingredients.length;
+                const availableIngredients = totalIngredients - missingIngredients.length;
 
-            while (0 !== currentIndex) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-
-            return array;
+                set(this.missingIngredients, recipeId, {
+                    available: availableIngredients,
+                    total: totalIngredients,
+                });
+            });
         },
+
+
     },
     watch: {
         nrOfPeople(newVal) {
@@ -88,8 +92,13 @@ export default {
     },
 
     created() {
-        this.generateWeeklyMenu();
+        this.generateWeeklyMenu().then(() => {
+            this.weeklyMenu.forEach((dinner) => {
+                this.getMissingIngredients(this.householdId, dinner.id);
+            });
+        });
     },
+
 };
 </script>
 
