@@ -86,7 +86,7 @@ export default {
                     store.setFirstName(response.data.firstname);
                     store.setLastName(response.data.lastname);
                     store.setUserId(response.data.id);
-                    this.$router.push("/household?id=1");
+                    this.$router.push("/joinHousehold");
                 }
             } catch (error) {
                 console.log("error", error.response);
