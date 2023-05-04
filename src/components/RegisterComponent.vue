@@ -93,20 +93,27 @@ export default {
                 password: this.password,
             };
 
-            const response = await registerService.registerUser(user);
-            console.log(response);
-            console.log(response.status)
+            try {
+                const response = await registerService.registerUser(user);
+                console.log(response);
+                console.log(response.status);
 
-            if (response.status === 200) {
-                sessionStorage.setItem("token", response.data.access_token);
-                store.setLoggedIn();
-                store.setEmail(response.data.email);
-                store.setFirstName(response.data.firstname);
-                store.setLastName(response.data.lastname);
-                store.setUserId(response.data.id);
-                this.$router.push("/household?id=1")
-            } else {
-                document.getElementById("alert_1").innerHTML = "Something went wrong: " + response.data.message;
+                if (response.status === 200) {
+                    sessionStorage.setItem("token", response.data.access_token);
+                    store.setLoggedIn();
+                    store.setEmail(response.data.email);
+                    store.setFirstName(response.data.firstname);
+                    store.setLastName(response.data.lastname);
+                    store.setUserId(response.data.id);
+                    this.$router.push("/household?id=1");
+                }
+            } catch (error) {
+                console.log("error", error.response);
+                if (error.response && error.response.data && error.response.data) {
+                    document.getElementById("alert_1").innerHTML = "Noe gikk galt: " + error.response.data;
+                } else {
+                    document.getElementById("alert_1").innerHTML = "En feil oppstod under registrering";
+                }
             }
 
 
