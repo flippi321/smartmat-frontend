@@ -29,9 +29,9 @@ export default {
     updateUser(userInfo){
       userService.updateUserInformation(userInfo, this.store.getEmail).then(response => {
         //Update the store
-        this.store.setFirstName(response.data.firstName);
-        this.store.setLastName(response.data.lastName);
-        this.store.setEmail(response.data.email);
+        this.store.firstName = response.data.firstname;
+        this.store.lastName = response.data.lastname;
+        this.store.email = response.data.email;
 
         //Update the values so the user sees the changes
         this.getUser();
