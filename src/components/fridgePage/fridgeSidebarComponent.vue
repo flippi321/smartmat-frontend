@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     changeCategory(categoryId) {
-      this.$emit("changeCategoryById", categoryId);
+      this.$emit("filterCategory", categoryId);
     },
     emitSearch() {
       this.$emit("search", this.searchTerm);
