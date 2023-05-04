@@ -5,28 +5,28 @@
     <p>
       <span><strong>User ID:</strong></span>
       <span>
-        <input type="text" :value="id" :disabled="!editId" @input="updateId($event.target.value)" style="margin-left: 10px;">
+        <input type="text" :value="this.id" :disabled="!editId" @input="updateId($event.target.value)" style="margin-left: 10px;">
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editId" @click="editId = true" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>First Name:</strong></span>
       <span>
-        <input type="text" :value="firstName" :disabled="!editFirstName" @input="updateFirstName($event.target.value)" style="margin-left: 10px;">
+        <input type="text" v-model="userInfo.firstname" :disabled="!editFirstName" style="margin-left: 10px;">
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editFirstName" @click="editFirstName = true" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Last Name:</strong></span>
       <span>
-        <input type="text" :value="lastName" :disabled="!editLastName" @input="updateLastName($event.target.value)" style="margin-left: 10px;">
+        <input type="text" v-model="userInfo.lastname" :disabled="!editLastName" style="margin-left: 10px;">
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editLastName" @click="editLastName = true" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Email:</strong></span>
       <span>
-        <input type="text" :value="email" :disabled="!editEmail" @input="updateEmail($event.target.value)" style="margin-left: 10px;">
+        <input type="text" v-model="userInfo.email" :disabled="!editEmail" style="margin-left: 10px;">
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="editEmail = true" class="edit-img">
       </span>
     </p>
@@ -35,52 +35,48 @@
   <button id="logoutBtn" @click="logout">Logg ut</button>
 </template>
 
-<script setup>
-import {ref, unref} from "vue";
+<script>
 import {useAuthStore} from "@/stores";
 import router from "@/router";
-import pinia from "@/stores";
 
-const store = useAuthStore(pinia);
-
-defineProps({
-  id: {
-    type: Number,
-    required: true
+export default {
+  props: {
+    id:{
+      type: Number,
+      required: true
+    },
+    user: {
+      type: Object,
+      required: true
+    }
   },
-  firstName: {
-    type: String,
-    required: true
+  data() {
+    return {
+      userInfo: this.user,
+      editId: false,
+      editFirstName: false,
+      editLastName: false,
+      editEmail: false,
+    }
   },
-  lastName: {
-    type: String,
-    required: true
+  emits: ['updateUser'],
+
+  methods: {
+    saveChanges() {
+      this.$emit("updateUser", this.userInfo);
+    },
+    logout() {
+      const store = useAuthStore(this.$store);
+      store.logout();
+      router.push("/");
+    }
   },
-  email: {
-    type: String,
-    required: true
-  },
-})
 
-let editId = ref(false);
-let editFirstName = ref(false);
-let editLastName = ref(false);
-let editEmail = ref(false);
-
-function saveChanges() {
-  this.$emit("updateUser", {
-    firstname: unref(this.firstName),
-    lastname: unref(this.lastName),
-    email: unref(this.email),
-  });
-}
-
-function logout() {
-    store.logout();
-    router.push("/");
+  created() {
+    console.log(this.user)
+  }
 }
 </script>
-
 <style scoped>
 div {
   display: flex;
