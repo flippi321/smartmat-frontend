@@ -10,7 +10,7 @@ export const useAuthStore = defineStore({
     id: 'store',
     state: () => ({
         isLoggedIn: useSessionStorage('isLoggedIn', false),
-        householdId: useSessionStorage('householdId', 0),
+        householdId: useSessionStorage('householdId', -1),
         firstName: useSessionStorage('firstName', ''),
         lastName: useSessionStorage('lastName', ''),
         email: useSessionStorage('email', ''),
@@ -26,6 +26,7 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.isLoggedIn = false;
+            this.householdId = -1;
             this.firstName = '';
             this.lastName = '';
             this.email = '';
