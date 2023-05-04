@@ -43,7 +43,7 @@ export default {
        }*/
     createHousehold(userId){
         const options = {
-            method: 'GET',
+            method: 'POST',
             url: `${url}/api/household/create/${userId}`,
             headers: {
                 'Content-Type': 'application/json',
@@ -51,5 +51,25 @@ export default {
             },
         };
         return axios.request(options);
-    }
+    },
+
+    /*
+    {
+        "firstname" : "test1",
+        "lastname" : "test1surname",
+        "email" : "test1@test.com",
+        "password" : "passord"
+      }
+        */
+    joinHousehold(userId, invitationNr){
+        const options = {
+            method: 'POST',
+            url: `${url}/api/household/addNewUser/${userId}/${invitationNr}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+        };
+        return axios.request(options);
+    },
 }
