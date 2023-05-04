@@ -72,4 +72,16 @@ export default {
         };
         return axios.request(options);
     },
+
+    getUsersHousehold(userId){
+        const options = {
+            method: 'GET',
+            url: `${url}/api/household/byUser/${userId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+        };
+        return axios.request(options);
+    },
 }
