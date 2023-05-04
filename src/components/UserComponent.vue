@@ -4,10 +4,7 @@
     <img src="@/assets/icons/Logo.png" alt="User image">
     <p>
       <span><strong>User ID:</strong></span>
-      <span>
-        <input type="text" :value="this.id" :disabled="!editId" @input="updateId($event.target.value)" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editId" @click="editId = true" class="edit-img">
-      </span>
+      <span :style="{marginLeft: '10px'}">{{this.id}}</span>
     </p>
     <p>
       <span><strong>First Name:</strong></span>
@@ -30,7 +27,7 @@
         <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="editEmail = true" class="edit-img">
       </span>
     </p>
-    <button v-if="editId || editEmail || editFirstName || editLastName" @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
+    <button v-if="editEmail || editFirstName || editLastName" @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
   </div>
   <button id="logoutBtn" @click="logout">Logg ut</button>
 </template>
@@ -53,7 +50,6 @@ export default {
   data() {
     return {
       userInfo: this.user,
-      editId: false,
       editFirstName: false,
       editLastName: false,
       editEmail: false,
