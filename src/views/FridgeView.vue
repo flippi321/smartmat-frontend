@@ -75,16 +75,6 @@ export default {
     });
   },
   methods: {
-    handleFeedback2(feedbackInfo) {
-      console.log(feedbackInfo)
-      this.feedback = feedbackInfo.feedback
-      this.feedbackMessage = feedbackInfo.feedbackMessage
-      this.feedbackType = feedbackInfo.feedbackType
-      setTimeout(() => {
-        this.feedback = false;
-      }, 6000);
-    },
-
     changeCategory(categoryId){
       this.currentCategory = categoryId;
       this.updateFridge();
