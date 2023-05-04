@@ -35,7 +35,7 @@ defineProps({
 import shoppingListService from "@/services/shoppingListService";
 import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
 import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
-import addGroceries from "@/components/addGroceries.vue";
+import addGroceries from "@/components/AddGroceries.vue";
 
 export default {
     components: {
