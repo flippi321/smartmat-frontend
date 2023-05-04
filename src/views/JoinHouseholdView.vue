@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import joinHouseholdComponent from "@/components/joinHouseholdComponent.vue"
+import joinHouseholdComponent from "@/components/JoinHouseholdComponent.vue"
 import householdService from "@/services/householdService";
 
 export default {
