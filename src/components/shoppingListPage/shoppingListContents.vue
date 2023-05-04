@@ -2,7 +2,7 @@
   <div class="box-container">
     <transition name="fade" mode="out-in" :duration="2000">
       <div class="success-box" v-if="showSaveSuccess">
-        <span>Saved successfully!</span>
+        <span>Lagring vellykket!</span>
       </div>
     </transition>
     <div class="box" v-for="item in items" :key="item.groceryItemId">
