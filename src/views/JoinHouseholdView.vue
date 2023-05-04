@@ -1,5 +1,8 @@
 <template>
-  <joinHouseholdComponent />
+  <joinHouseholdComponent
+      @createHousehold="createHouseHold"
+      @joinHouseHold="joinHousehold"
+  />
 </template>
 
 <script>
@@ -14,8 +17,16 @@ export default {
   },
 
   methods: {
-    createAHouseHold(userId){
+    createHouseHold(userId){
       householdService.createHousehold(userId).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+    joinHousehold(userId, invitationNumber){
+      householdService.createHousehold(userId, invitationNumber).then(response => {
         console.log(response.data)
       }).catch(error => {
         console.log(error)
