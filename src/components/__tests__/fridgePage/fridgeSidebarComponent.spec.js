@@ -1,18 +1,22 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { mount } from '@vue/test-utils';
 import fridgeSidebarComponent from '@/components/fridgePage/fridgeSidebarComponent.vue';
 import categoriesData from '@/mockDatabases/categories.json';
 
 describe('fridgeSidebarComponent', () => {
-    const wrapper = mount(fridgeSidebarComponent, {
-        props: {
-            categories: categoriesData,
-        },
-        global: {
-            components: {
-                fridgeSidebarComponent,
+    let wrapper;
+
+    beforeEach(() => {
+        wrapper = mount(fridgeSidebarComponent, {
+            props: {
+                categories: categoriesData,
             },
-        },
+            global: {
+                components: {
+                    fridgeSidebarComponent,
+                },
+            },
+        });
     });
 
     it('renders the component', () => {
@@ -46,5 +50,11 @@ describe('fridgeSidebarComponent', () => {
         expect(wrapper.vm.isCollapsed).toBe(true);
         expect(wrapper.emitted('toggle-sidebar')).toBeTruthy();
         expect(wrapper.emitted('toggle-sidebar')[0]).toEqual([true]);
+    });
+
+    it('has correct initial state', () => {
+        expect(wrapper.vm.isCollapsed).toBe(false);
+        expect(wrapper.vm.iconRotation).toBe(90);
+        expect(wrapper.vm.searchTerm).toBe('');
     });
 });
