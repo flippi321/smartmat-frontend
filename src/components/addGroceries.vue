@@ -20,7 +20,6 @@ defineProps({
         @changeCategoryById="changeCategory"
         @send-items="sendSelected"
         @cancel="closeAdPage"
-        ref="Sidebar"
     />
     <Groceries
         :items="items"
@@ -28,7 +27,6 @@ defineProps({
         @show-filter-bar="this.sidebarVisible = true"
         @hide-filter-bar="this.sidebarVisible = false"
         @add-grocery="addGroceryToSelected"
-        ref="Groceries"
     />
   </div>
 </template>
