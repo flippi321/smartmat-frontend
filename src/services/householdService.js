@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'https://localhost:8000'
 
 /*
 Mocking responses, must be removed:
@@ -31,4 +31,25 @@ export default {
         return apiClient.delete("/addUserToHousehold", { params: { userId: userId, householdId: householdId } })
     },
 
+    /*
+    * {
+        "name" : "householdfor1user2",
+        "fridge" : {
+	        "name" : "fridgeforhousehold2"
+            },
+        "shoppinglist": {
+	        "name" : "shoppinglistforhousehold2"
+            }
+       }*/
+    createHousehold(userId){
+        const options = {
+            method: 'GET',
+            url: `${url}/api/household/create/${userId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+        };
+        return axios.request(options);
+    }
 }
