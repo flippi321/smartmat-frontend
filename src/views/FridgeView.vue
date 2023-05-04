@@ -65,6 +65,7 @@ export default {
       showAddGroceries: false,
     };
   },
+
   created() {
     fridgeService.getFridgeContents(this.fridgeId).then((response) => {
       this.items = response.data;
@@ -77,7 +78,7 @@ export default {
 
   methods: {
     filterByCategory(category){
-      this.currentCategoryId = category;
+      this.currentCategory = category;
       this.applyFilters();
     },
 
@@ -93,8 +94,8 @@ export default {
 
       let filtered = this.items;
 
-      if (this.currentCategoryId !== 0) {
-        filtered = filtered.filter(item => item.category.category === this.currentCategoryId);
+      if (this.currentCategory !== 0) {
+        filtered = filtered.filter(item => item.category.category === this.currentCategory);
       }
 
       if ((this.currentSearchTerm && this.currentSearchTerm.trim() !== '') && this.currentSearchTerm !== '') {
