@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { createPinia } from 'pinia';
 import { useSessionStorage } from '@vueuse/core'
+import loginService from "@/services/loginService";
 
 
 const pinia = createPinia();
@@ -40,6 +41,19 @@ export const useAuthStore = defineStore({
         },
         setNrOfPortions(nrOfPortions) {
             this.nrOfPortions = nrOfPortions;
+        },
+        async refreshToken() {
+            console.log("Refreshing token...");
+            const refreshToken = sessionStorage.getItem("refresh_token");
+            if (refreshToken) {
+                const response = await loginService.refreshAccessToken(refreshToken);
+                if (response.status === 200) {
+                    sessionStorage.setItem("token", response.data.access_token);
+                    sessionStorage.setItem("refresh_token", response.data.refresh_token);
+                } else {
+                    console.log("Error refreshing token:", response);
+                }
+            }
         }
     },
     getters: {

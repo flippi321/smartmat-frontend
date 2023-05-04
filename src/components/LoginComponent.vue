@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores';
+import pinia, { useAuthStore } from '@/stores';
 import loginService from "@/services/loginService";
 
 export default {
@@ -53,7 +53,7 @@ export default {
     methods: {
 
         async login(){
-            const store = useAuthStore();
+            const store = useAuthStore(pinia);
             console.log(store.getIsLoggedIn)
             document.getElementById("alert_1").innerHTML = "";
             this.email = document.querySelector("input[name=email]").value;
@@ -70,51 +70,31 @@ export default {
                 return;
             }
 
+            console.log("trying to log in")
 
 
-            /**
-            if (this.password.length < 8) {
-                document.getElementById("alert_1").innerHTML = "Password should be at least 8 characters long";
-                return;
-            }
-              */
+            try {
+                const response = await loginService.login(this.email, this.password);
+                console.log(response);
+                console.log(response.status);
 
-
-
-            /**
-            const response = await fetch("http://localhost:8080/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: this.email,
-                    password: this.password,
-                }),
-            });
-            const data = await response.json();
-            if (data.status === "success") {
-                sessionStorage.setItem("token", data.token);
-                this.$router.push("/household");
-            } else {
-                document.getElementById("alert_1").innerHTML = data.message;
-            }
-              */
-
-            const response = await loginService.login(this.email, this.password);
-            console.log(response);
-            console.log(response.status)
-
-            if (response.status === 200) {
-                sessionStorage.setItem("token", response.jwtToken);
-                store.setLoggedIn();
-                store.setEmail(response.email);
-                store.setFirstName(response.firstName);
-                store.setLastName(response.lastName);
-                store.setUserId(response.userId);
-                this.$router.push("/household?id=1")
-            } else {
-                document.getElementById("alert_1").innerHTML = response;
+                if (response.status === 200) {
+                    sessionStorage.setItem("token", response.data.access_token);
+                    sessionStorage.setItem("refresh_token", response.data.refresh_token);
+                    store.setLoggedIn();
+                    store.setEmail(response.data.email);
+                    store.setFirstName(response.data.firstname);
+                    store.setLastName(response.data.lastname);
+                    store.setUserId(response.data.id);
+                    this.$router.push("/household?id=1");
+                }
+            } catch (error) {
+                console.log("error", error.response);
+                if (error.response && error.response.status === 401) {
+                    document.getElementById("alert_1").innerHTML = "Feil brukernavn eller passord";
+                } else {
+                    document.getElementById("alert_1").innerHTML = "En feil oppstod under innlogging";
+                }
             }
         },
 

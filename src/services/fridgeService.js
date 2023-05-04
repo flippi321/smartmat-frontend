@@ -33,6 +33,7 @@ export default {
             url: `${url}/api/groceryItems/fridge/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
@@ -49,6 +50,7 @@ export default {
             url: `${url}/api/categories/all`,
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         };
         return axios.request(options);
