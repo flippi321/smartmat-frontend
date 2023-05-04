@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-//let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 /*
 Mocking responses, must be removed:
@@ -20,7 +20,15 @@ mock.onGet("/addUserToHousehold", { params: { userId: 1, householdId: 1 } }).rep
 
 export default {
     getAllUsersFromHousehold(householdId){
-        return apiClient.get("/getAllUsersFromHousehold", { params: { id:householdId } });
+        const options = {
+            method: 'GET',
+            url: `${url}/api/household/users/${householdId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            }
+        }
+        return axios.request(options);
     },
 
     removeUserFromHousehold(userId, householdId){
@@ -28,7 +36,15 @@ export default {
     },
 
     addUserToHousehold(userId, householdId){
-        return apiClient.delete("/addUserToHousehold", { params: { userId: userId, householdId: householdId } })
+        const options = {
+            method: 'POST',
+            url: `${url}/api/household/addUser`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            }
+        }
+        return axios.request(options);
     },
 
 }

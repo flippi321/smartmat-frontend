@@ -44,8 +44,8 @@ export default {
     },
 
     getAllMembers(){
-      householdService.getAllUsersFromHousehold(this.householdId).then(response => {
-        this.members = response.data.groceryItems;
+      householdService.getAllUsersFromHousehold(1).then(response => {
+        this.members = response.data;
         console.log(response.data);
         this.updateAdminPage();
       })

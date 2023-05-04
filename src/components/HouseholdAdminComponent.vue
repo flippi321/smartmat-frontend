@@ -3,7 +3,7 @@
     <div class="left">
       <div class="members-list">
         <ul>
-          <li v-for="(member, index) in members" :key="index">{{ member }}</li>
+          <li v-for="(member, index) in members" :key="index">{{ member.firstname }} {{ member.lastname }}</li>
         </ul>
       </div>
     </div>
@@ -15,7 +15,7 @@
       <div class="remove-member">
         <select v-model="selectedMember">
           <option value="" disabled>Select a member</option>
-          <option v-for="(member, index) in members" :key="index" :value="member">{{ member }}</option>
+          <option v-for="(member, index) in members" :key="index" :value="member">{{ member.firstname }} {{ member.lastname }}</option>
         </select>
         <button @click="removeMember">Remove Member</button>
       </div>
