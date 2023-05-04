@@ -1,10 +1,14 @@
 <template>
-  <h1>Join today</h1>
+  <joinHouseholdComponent />
 </template>
 
 <script>
+import joinHouseholdComponent from "@/components/joinHouseholdComponent.vue"
 export default {
-  name: "JoinHouseholdView"
+  name: "JoinHouseholdView",
+  components:{
+    joinHouseholdComponent,
+  }
 }
 </script>
 
