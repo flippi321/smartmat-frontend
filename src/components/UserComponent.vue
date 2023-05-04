@@ -10,21 +10,21 @@
       <span><strong>First Name:</strong></span>
       <span>
         <input type="text" v-model="userInfo.firstname" :disabled="!editFirstName" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editFirstName" @click="editFirstName = true" class="edit-img">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editFirstName" @click="setEditableField('editFirstName', 'firstname')" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Last Name:</strong></span>
       <span>
         <input type="text" v-model="userInfo.lastname" :disabled="!editLastName" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editLastName" @click="editLastName = true" class="edit-img">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editLastName" @click="setEditableField('editLastName', 'lastname')" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Email:</strong></span>
       <span>
         <input type="text" v-model="userInfo.email" :disabled="!editEmail" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="editEmail = true" class="edit-img">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="setEditableField('editEmail', 'email')" class="edit-img">
       </span>
     </p>
     <button v-if="editEmail || editFirstName || editLastName" @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
@@ -53,6 +53,7 @@ export default {
       editFirstName: false,
       editLastName: false,
       editEmail: false,
+      previousValue: '',
     }
   },
   emits: ['updateUser'],
@@ -65,6 +66,20 @@ export default {
       const store = useAuthStore(this.$store);
       store.logout();
       router.push("/");
+    },
+
+    setEditableField(field, property) {
+      if (this.previousValue !== '') {
+        this.userInfo[this.currentProperty] = this.previousValue;
+      }
+
+      this.editFirstName = false;
+      this.editLastName = false;
+      this.editEmail = false;
+
+      this.previousValue = this.userInfo[property];
+      this.currentProperty = property;
+      this[field] = true;
     }
   },
 
