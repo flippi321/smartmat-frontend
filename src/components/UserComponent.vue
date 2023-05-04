@@ -4,83 +4,90 @@
     <img src="@/assets/icons/Logo.png" alt="User image">
     <p>
       <span><strong>User ID:</strong></span>
-      <span>
-        <input type="text" :value="id" :disabled="!editId" @input="updateId($event.target.value)" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editId" @click="editId = true" class="edit-img">
-      </span>
+      <span :style="{marginLeft: '10px'}">{{this.id}}</span>
     </p>
     <p>
       <span><strong>First Name:</strong></span>
       <span>
-        <input type="text" :value="firstName" :disabled="!editFirstName" @input="updateFirstName($event.target.value)" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editFirstName" @click="editFirstName = true" class="edit-img">
+        <input type="text" v-model="userInfo.firstname" :disabled="!editFirstName" style="margin-left: 10px;">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editFirstName" @click="setEditableField('editFirstName', 'firstname')" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Last Name:</strong></span>
       <span>
-        <input type="text" :value="lastName" :disabled="!editLastName" @input="updateLastName($event.target.value)" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editLastName" @click="editLastName = true" class="edit-img">
+        <input type="text" v-model="userInfo.lastname" :disabled="!editLastName" style="margin-left: 10px;">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editLastName" @click="setEditableField('editLastName', 'lastname')" class="edit-img">
       </span>
     </p>
     <p>
       <span><strong>Email:</strong></span>
       <span>
-        <input type="text" :value="email" :disabled="!editEmail" @input="updateEmail($event.target.value)" style="margin-left: 10px;">
-        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="editEmail = true" class="edit-img">
+        <input type="text" v-model="userInfo.email" :disabled="!editEmail" style="margin-left: 10px;">
+        <img src="@/assets/icons/Edit.png" alt="Edit" v-if="!editEmail" @click="setEditableField('editEmail', 'email')" class="edit-img">
       </span>
     </p>
-    <button v-if="editId || editEmail || editFirstName || editLastName " @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
+    <button v-if="editEmail || editFirstName || editLastName" @click="saveChanges" style="align-self: flex-end;">Lagre Endringer</button>
   </div>
-    <button id="logoutBtn" @click="logout">Logg ut</button>
+  <button id="logoutBtn" @click="logout">Logg ut</button>
 </template>
 
-<script setup>
-import {ref} from "vue";
+<script>
 import {useAuthStore} from "@/stores";
 import router from "@/router";
-import pinia from "@/stores";
 
-const store = useAuthStore(pinia);
-
-defineProps({
-  id: {
-    type: Number,
-    required: true
+export default {
+  props: {
+    id:{
+      type: Number,
+      required: true
+    },
+    user: {
+      type: Object,
+      required: true
+    }
   },
-  firstName: {
-    type: String,
-    required: true
+  data() {
+    return {
+      userInfo: this.user,
+      editFirstName: false,
+      editLastName: false,
+      editEmail: false,
+      previousValue: '',
+    }
   },
-  lastName: {
-    type: String,
-    required: true
+  emits: ['updateUser'],
+
+  methods: {
+    saveChanges() {
+      this.$emit("updateUser", this.userInfo);
+    },
+    logout() {
+      const store = useAuthStore(this.$store);
+      store.logout();
+      router.push("/");
+    },
+
+    setEditableField(field, property) {
+      if (this.previousValue !== '') {
+        this.userInfo[this.currentProperty] = this.previousValue;
+      }
+
+      this.editFirstName = false;
+      this.editLastName = false;
+      this.editEmail = false;
+
+      this.previousValue = this.userInfo[property];
+      this.currentProperty = property;
+      this[field] = true;
+    }
   },
-  email: {
-    type: String,
-    required: true
-  },
-})
 
-let editId = ref(false);
-let editFirstName = ref(false);
-let editLastName = ref(false);
-let editEmail = ref(false);
-
-function saveChanges() {
-  // Handle saving changes to the server or local storage
-  editId.value = false;
-  editFirstName.value = false;
-  editLastName.value = false;
-  editEmail.value = false;
-}
-
-function logout() {
-    store.logout();
-    router.push("/");
+  created() {
+    console.log(this.user)
+  }
 }
 </script>
-
 <style scoped>
 div {
   display: flex;
