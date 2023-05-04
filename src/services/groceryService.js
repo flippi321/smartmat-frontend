@@ -22,7 +22,6 @@ mock.onGet("/getAllCategories").reply(200, {
 
 export default {
     getAllGroceries(){
-        console.log(sessionStorage.getItem("token"));
 
         const options = {
             method: 'GET',

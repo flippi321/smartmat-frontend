@@ -116,8 +116,14 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else {
-    next();
+    if (to.name === 'login' && store.isLoggedIn) {
+      //TODO set correct household id
+      next({ name: 'household', query: { id: 1 } });
+    } else {
+      next();
+    }
   }
 });
+
 
 export default router

@@ -82,10 +82,10 @@ export default {
         return axios.request(options);
     },
 
-    removeItem(fridgeId, groceryItemId){
+    removeItem(fridgeId, groceryItem){
         const options = {
             method: 'DELETE',
-            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
+            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
