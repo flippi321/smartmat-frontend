@@ -1,7 +1,7 @@
 <template>
   <div class="household-info">
-    <h1>Your Household:</h1>
-    <h3>Your household has the id: {{ id }}</h3>
+    <h1>Din husholdning:</h1>
+    <h3>Din husholdning har id: {{ id }}</h3>
   </div>
 
   <div class="buttons-container">
@@ -63,7 +63,7 @@ export default {
   gap: 20px;
   justify-items: center;
   align-items: center;
-  padding: 20px;
+  padding: 5%;
 }
 
 .button-primary {
@@ -91,5 +91,9 @@ export default {
   width: 40px;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.household-info {
+  padding: 5%;
 }
 </style>
