@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import joinHouseholdComponent from "@/components/JoinHouseholdComponent.vue"
+import JoinHouseholdComponent from "@/components/JoinHouseholdComponent.vue"
 import householdService from "@/services/householdService";
 import {useAuthStore} from "@/stores";
 import router from "@/router";
@@ -21,7 +21,7 @@ export default {
   },
 
   components:{
-    joinHouseholdComponent,
+    JoinHouseholdComponent,
   },
 
   methods: {

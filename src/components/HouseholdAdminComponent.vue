@@ -92,13 +92,6 @@ export default {
             });
         }
     },
-    updateMembers() {
-      console.log("Updating Page...");
-      this.$emit("getMembers");
-    },
-      getHousehold() {
-        this.$emit("getHousehold");
-      },
   },
 };
 </script>

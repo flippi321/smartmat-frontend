@@ -1,37 +1,37 @@
-import { mount } from '@vue/test-utils'
-import Register from '@/components/RegisterComponent.vue'
-import { describe, it, expect } from 'vitest'
+import { mount } from "@vue/test-utils";
+import Register from "@/components/RegisterComponent.vue";
+import { describe, it, expect, beforeEach } from "vitest";
+import sinon from "sinon";
 
-describe('Register', () => {
-    it('renders properly', function () {
-        const wrapper = mount(Register)
-        expect(wrapper.exists()).toBe(true)
+describe("Register.vue", () => {
+    let wrapper;
+    let routerPushMock;
+
+    beforeEach(() => {
+        routerPushMock = sinon.spy();
+        wrapper = mount(Register, {
+            global: {
+                mocks: {
+                    $router: {
+                        push: routerPushMock,
+                    },
+                },
+            },
+        });
     });
 
-    it('has a form with email and password inputs', function () {
-        const wrapper = mount(Register)
-        const emailInput = wrapper.find('input[name="email"]')
-        const passwordInput = wrapper.find('input[name="password"]')
-        expect(emailInput.exists()).toBe(true)
-        expect(passwordInput.exists()).toBe(true)
+
+    it("renders the registration form", () => {
+        expect(wrapper.find("h2").text()).toBe("Opprett en bruker");
+        expect(wrapper.find("input[name='firstName']").attributes("placeholder")).toBe("Fornavn");
+        expect(wrapper.find("input[name='lastName']").attributes("placeholder")).toBe("Etternavn");
+        expect(wrapper.find("input[name='email']").attributes("placeholder")).toBe("example@gmail.com");
+        expect(wrapper.find("input[name='password']").attributes("placeholder")).toBe("passord");
+        expect(wrapper.find("input[name='confirmPassword']").attributes("placeholder")).toBe("bekreft passord");
     });
 
-
-    /**
-    it('displays an error if the passwords do not match', async () => {
-        const wrapper = mount(Register)
-        await wrapper.find('[name="firstName"]').setValue('John')
-        await wrapper.find('[name="lastName"]').setValue('Doe')
-        await wrapper.find('[name="email"]').setValue('johndoe@example.com')
-        await wrapper.find('[name="password"]').setValue('password123')
-        await wrapper.find('[name="confirmPassword"]').setValue('password')
-
-        await wrapper.find('[id="submit"]').trigger('click')
-        const error = wrapper.find('#alert_1')
-        expect(error.text()).toBe('Passordene er ikke like!')
-    })
-    */
-
-
-
-})
+    it("moves to the login page when 'Logg inn' is clicked", async () => {
+        await wrapper.find(".alt span").trigger("click");
+        expect(routerPushMock.calledWith("/login")).toBe(true);
+    });
+});
