@@ -60,6 +60,9 @@ export default {
 
   methods: {
     saveChanges() {
+      this.editEmail = false;
+      this.editFirstName = false;
+      this.editLastName = false;
       this.$emit("updateUser", this.userInfo);
     },
     logout() {

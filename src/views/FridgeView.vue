@@ -137,6 +137,7 @@ export default {
 
     handleAddGrocery(items) {
       fridgeService.addMultipleItems(this.fridgeId, items).then(() => {
+        this.updateFridge();
         this.hideGroceryDetailComponent();
       });
     },

@@ -167,8 +167,8 @@ button:hover {
   }
 
   .grocery-item-image {
-    max-width: 70%;
-    max-height: 70%;
+    max-width: 60vw;
+    max-height: 30vh;
   }
 
   .grocery-item-details {

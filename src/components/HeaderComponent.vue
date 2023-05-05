@@ -5,14 +5,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const store = useAuthStore();
 
-defineProps({
-    id: {
-        type: Number,
-        required: true,
-        validator: (value) => !isNaN(value),
-    }
-})
-
 const mobileMenuOpen = ref(false);
 
 const toggleMobileMenu = () => {
