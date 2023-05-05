@@ -1,20 +1,3 @@
-<script setup>
-defineProps({
-  categories: {
-    type: Array,
-    required: true,
-  },
-  selected: {
-    type: Array,
-    required: true
-  },
-  home: {
-    type: String,
-    required: true
-  }
-});
-</script>
-
 <template>
   <div class="fridge-sidebar" :class="{ collapsed: isCollapsed }">
     <h1 v-show="!isCollapsed || isMobile">Filtrer etter kategorier:</h1>
@@ -46,6 +29,21 @@ export default {
       isMobile: window.innerWidth <= 768,
     };
   },
+  props: {
+    categories: {
+      type: Array,
+      required: true,
+    },
+    selected: {
+      type: Array,
+      required: true
+    },
+    home: {
+      type: String,
+      required: true
+    }
+  },
+
   created() {
     window.addEventListener('resize', this.updateIsMobile);
   },
