@@ -38,7 +38,8 @@ export default {
     },
     data() {
         return {
-            id: 0,
+            id: -1,
+            fridge: -1,
             store: useAuthStore(),
             sortBy: 1,
             items: [],
@@ -56,6 +57,7 @@ export default {
           householdService.getUsersHousehold(this.store.getUserId).then(response => {
             console.log(response.data)
             this.id = response.data.shoppinglist.shoppinglistID;
+            this.fridge = response.data.fridge.fridgeId;
 
             shoppingListService.getShoppingListContents(this.id).then(response => {
               this.items = response.data;
@@ -80,10 +82,9 @@ export default {
       },
 
       sendSelectedItems() {
-        //TODO FETCH HOUSEHOLD FRIDGE ID
         const selectedItems = this.$refs.groceries.$data.currentlySelected.map(item => item);
         console.log(selectedItems);
-        shoppingListService.sendItemsToFridge(selectedItems, this.id, 1).then(() => {
+        shoppingListService.sendItemsToFridge(selectedItems, this.id, this.fridge).then(() => {
           this.updateShoppingList();
         }).catch(error => {
           console.error("Error removing items from the list:", error);
