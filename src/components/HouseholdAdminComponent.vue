@@ -2,9 +2,13 @@
   <div class="container">
     <div class="left">
       <div class="members-list">
+          <h1 v-if="houseHold">{{houseHold.name}}</h1>
+        <h3>Husholdningens medlemmer:</h3>
         <ul>
-          <li v-for="(member, index) in members" :key="index">{{ member.firstname }} {{ member.lastname }}</li>
+            <li v-for="(member, index) in members" :key="index" :value="member">{{ member.firstname }} {{ member.lastname }}</li>
         </ul>
+          <p v-if="houseHold">Invitasjonskode: {{houseHold.invitationNr}}</p>
+
       </div>
     </div>
     <div class="right">
@@ -35,6 +39,10 @@ export default {
       type: Array,
       required: true,
     },
+    houseHold: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
@@ -61,6 +69,9 @@ export default {
       console.log("Updating Page...");
       this.$emit("getMembers");
     },
+      getHousehold() {
+        this.$emit("getHousehold");
+      },
   },
 };
 </script>

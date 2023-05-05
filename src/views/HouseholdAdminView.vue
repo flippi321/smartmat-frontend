@@ -3,15 +3,19 @@
       ref="householdAdminComponent"
       :id="this.householdId"
       :members="this.members"
+      :houseHold="this.household"
       @getMembers.stop="getAllMembers"
       @removeMember.stop="removeMember"
       @addMember.stop="addMember"
+      @getHousehold.stop="getHousehold"
   />
 </template>
 
 <script>
 import HouseholdAdminComponent from "@/components/HouseholdAdminComponent.vue"
 import householdService from "@/services/householdService";
+import pinia, {useAuthStore} from "@/stores";
+const store = useAuthStore(pinia);
 
 export default {
   name: "HouseholdAdminView",
@@ -24,30 +28,27 @@ export default {
     householdId: {
       type: Number,
       required: true,
-    }
+    },
   },
 
   data(){
     return {
       members: [],
+      household: null,
     }
   },
 
   created() {
     this.getAllMembers()
+    this.getHousehold()
   },
 
   methods: {
-    updateAdminPage() {
-      this.$refs.householdAdminComponent.members = this.members;
-      this.$refs.householdAdminComponent.id = this.householdId;
-    },
 
     getAllMembers(){
-      householdService.getAllUsersFromHousehold(1).then(response => {
+      householdService.getAllUsersFromHousehold(store.householdId).then(response => {
         this.members = response.data;
         console.log(response.data);
-        this.updateAdminPage();
       })
     },
 
@@ -63,7 +64,15 @@ export default {
         this.$emit("feedback", response.status);
         this.getAllMembers();
       })
-    }
+    },
+
+    getHousehold(){
+    householdService.getHouseholdById(store.householdId).then(response => {
+      this.household = response.data;
+      this.$emit("feedback", response.status);
+      console.log(response.data);
+    })
+  }
   },
 }
 </script>
