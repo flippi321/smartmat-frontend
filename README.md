@@ -73,6 +73,19 @@ Images for groceryitems and groceries makes it easier for the user to navigate t
 
 ## Tests
 
+The backend-project has tests that can be run in the terminal with this command:
+
+```sh
+mvn clean test
+```
+
+
+The frontend-project has tests that can be run in the terminal with this command:
+```sh
+npm run test:unit
+```
+
+
 ## CI/CD
 
 Both frontend and backend has a ".gitlab-ci.yml" file.. This file controls Continous Integration for the projects. It manages the pipeline which holds the jobs for GitLab to run.
