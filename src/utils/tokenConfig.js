@@ -35,7 +35,6 @@ axios.interceptors.response.use(
                     return axios(originalRequest);
                 } catch (err) {
                     console.log("Error refreshing token:", err);
-                    // Handle error, e.g., log out the user or show an error message
                 } finally {
                     isRefreshing = false;
                 }

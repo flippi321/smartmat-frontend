@@ -3,15 +3,18 @@
       ref="householdAdminComponent"
       :id="this.householdId"
       :members="this.members"
-      @getMembers.stop="getAllMembers"
-      @removeMember.stop="removeMember"
-      @addMember.stop="addMember"
+      :houseHold="this.household"
+      @getMembers="getAllMembers"
+      @getHousehold="getHousehold"
+      @updateInformation="updateInformation"
   />
 </template>
 
 <script>
 import HouseholdAdminComponent from "@/components/HouseholdAdminComponent.vue"
 import householdService from "@/services/householdService";
+import pinia, {useAuthStore} from "@/stores";
+const store = useAuthStore(pinia);
 
 export default {
   name: "HouseholdAdminView",
@@ -24,46 +27,61 @@ export default {
     householdId: {
       type: Number,
       required: true,
-    }
+    },
   },
 
   data(){
     return {
       members: [],
+      household: null,
     }
   },
 
   created() {
     this.getAllMembers()
+    this.getHousehold()
   },
 
   methods: {
-    updateAdminPage() {
-      this.$refs.householdAdminComponent.members = this.members;
-      this.$refs.householdAdminComponent.id = this.householdId;
-    },
+      updateInformation({ householdName, fridgeName, shoppingListName }) {
+          const updatedHouseholdInfo = {
+              name: householdName || this.household.name,
+              fridge: {
+                  name: fridgeName || (this.household.fridge && this.household.fridge.name) || "",
+              },
+              shoppinglist: {
+                  name: shoppingListName || (this.household.shoppinglist && this.household.shoppinglist.name) || "",
+              },
+          };
 
-    getAllMembers(){
-      householdService.getAllUsersFromHousehold(this.householdId).then(response => {
-        this.members = response.data.groceryItems;
+          console.log(updatedHouseholdInfo)
+
+          householdService.updateHouseHold(store.householdId, updatedHouseholdInfo)
+              .then(response => {
+                  this.$emit("feedback", response.status);
+                  this.getHousehold();
+              })
+              .catch(error => {
+                  console.error("Error updating household information:", error);
+                  alert("Error updating household information:" + error)
+              });
+      },
+
+
+      getAllMembers(){
+      householdService.getAllUsersFromHousehold(store.householdId).then(response => {
+        this.members = response.data;
         console.log(response.data);
-        this.updateAdminPage();
       })
     },
 
-    removeMember(userId){
-      householdService.removeUserFromHousehold(userId, this.householdId).then(response => {
-        this.$emit("feedback", response.status);
-        this.getAllMembers();
-      })
-    },
-
-    addMember(userId){
-      householdService.addUserToHousehold(userId, this.householdId).then(response => {
-        this.$emit("feedback", response.status);
-        this.getAllMembers();
-      })
-    }
+    getHousehold(){
+    householdService.getHouseholdById(store.householdId).then(response => {
+      this.household = response.data;
+      this.$emit("feedback", response.status);
+      console.log(response.data);
+    })
+  }
   },
 }
 </script>
