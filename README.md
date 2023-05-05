@@ -17,6 +17,31 @@ Food production consumes energy and releases CO2 into the atmosphere. If people 
 
 
 ## How to run and install the project backend
+### The technologies needed to run the program are:
+- JDK(java development kit) 17 - can be installed [here](https://www.oracle.com/java/technologies/downloads/#java17)
+- Maven(building tool) - can be installed [here](https://maven.apache.org/download.cgi)
+- Docker - can be installed [here](https://www.docker.com/products/docker-desktop/)
+
+### Clone the project by running this command in the terminal
+```sh
+git clone git@gitlab.stud.idi.ntnu.no:idatt2106-v21-09/backend.git
+```
+
+### Build the project
+```sh
+mvn clean install
+```
+
+### Build the Docker Image
+```sh
+docker-compose up
+```
+
+### To stop the Docker Image
+```sh
+docker-compose down
+```
+
 
 
 
