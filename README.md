@@ -25,7 +25,7 @@ Food production consumes energy and releases CO2 into the atmosphere. If people 
 ## How to run and install the project frontend
 ### The technologies needed to run the program are:
 
-- Node.js
+- Node.js - can be installed [here](https://nodejs.org/en/download)
 
 ### To be certain you have Node.js installed, run this command:
 ```sh
@@ -74,6 +74,18 @@ Images for groceryitems and groceries makes it easier for the user to navigate t
 ## Tests
 
 ## CI/CD
+
+Both frontend and backend has a ".gitlab-ci.yml" file.. This file controls Continous Integration for the projects. It manages the pipeline which holds the jobs for GitLab to run.
+
+The backend pipeline has these stages:
+- build
+- test
+
+
+The frontend pipeline has these stages:
+- build
+- test
+
 
 ## Team Members
 - Bjørn-Johnny Bendixen
