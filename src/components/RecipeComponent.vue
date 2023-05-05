@@ -64,6 +64,7 @@ export default {
     return {
       store: useAuthStore(),
       fridgeId: -1,
+      listId: -1,
       portions: store.getNrOfPortions,
       missingIngredients: [],
       requiredItems: [],
@@ -105,7 +106,9 @@ export default {
     findFridge(){
       if(this.store.getHousehold !== -1){
         householdService.getUsersHousehold(this.store.getUserId).then(response => {
+          console.log(response.data)
           this.fridgeId = response.data.fridge.fridgeId;
+          this.listId = response.data.shoppinglist.shoppinglistID;
           this.findMissingIngredients();
         })
       } else {
@@ -119,6 +122,11 @@ export default {
         this.$router.push("/fridge")
         console.log(response)
       })
+    },
+
+    addToShoppingList(){
+      let items = this.missingIngredients;
+      console.log(items)
     }
   },
 
