@@ -9,8 +9,10 @@
 
 <script>
 import smartMatLogo from "@/assets/icons/Logo.png"
-import recycle from "@/assets/icons/recycle.png"
-import fridge from "@/assets/icons/Fridge.png"
+import design from "@/assets/icons/Design.svg"
+import love from "@/assets/icons/Love.svg"
+import shoppingList from "@/assets/icons/ShoppingList.svg"
+import food from "@/assets/icons/Food.svg"
 
 export default {
   name: "HomePageTextComponent",
@@ -25,10 +27,10 @@ export default {
       ],
       icons: [
         smartMatLogo,
-        recycle,
-        fridge,
-        smartMatLogo,
-        smartMatLogo,
+        love,
+        design,
+        shoppingList,
+        food,
       ],
     };
   },
@@ -51,6 +53,6 @@ export default {
 .section-image {
   display: block;
   margin: 0 auto 50px;
-  width: 20%;
+  width: 25%;
 }
 </style>
