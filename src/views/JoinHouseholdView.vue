@@ -44,15 +44,24 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+
+    sendToHouseholdIfExists(){
+      householdService.getUsersHousehold(this.store.userId).then(response => {
+        this.store.setHousehold(response.data.householdId)
+
+        //If we get a response, we send the user to the household
+        if(this.store.getHousehold !== -1){
+          router.push({ path: '/household', query: { id: this.store.getHousehold } });
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+    },
   },
 
   created() {
-    if(this.store.getHousehold === 0){
-      router.push({ path: '/household', query: { id: this.store.getHousehold } });
-    } else {
-      console.log(this.store.getHousehold)
-    }
+    this.sendToHouseholdIfExists();
   }
 }
 </script>
