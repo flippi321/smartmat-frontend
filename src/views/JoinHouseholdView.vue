@@ -35,8 +35,8 @@ export default {
     },
 
     joinHousehold(invitationNumber){
-      householdService.createHousehold(this.store.getUserId, invitationNumber).then(response => {
-        console.log(response.data)
+      householdService.joinHousehold(this.store.getUserId, invitationNumber).then(() => {
+        this.sendToHouseholdIfExists();
       }).catch(error => {
         console.log(error)
       })
