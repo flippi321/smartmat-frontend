@@ -5,7 +5,7 @@
   </div>
 
   <div class="buttons-container">
-    <router-link :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary">
+    <router-link :to="{ path: `/fridge`}" class="button-primary">
       <img src="@/assets/icons/Fridge.png" alt="[Fridge]" class="household-icon">
       <span class="household-button fridge-button">Kjøleskap</span>
     </router-link>
@@ -43,9 +43,9 @@ export default {
       if(this.store.getHousehold !== -1){
         this.id = this.store.getHousehold;
       } else {
-        this.router.push("/joinHousehold")
+        this.$router.push("/joinHousehold")
       }
-    }
+    },
   },
 
   created() {
