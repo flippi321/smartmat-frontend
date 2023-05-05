@@ -62,14 +62,14 @@ export default {
 
     methods: {
         generateWeeklyMenu() {
-            return weekPlannerService.generateWeeklyMenu(1).then((response) => {
+            return weekPlannerService.generateWeeklyMenu(1, this.nrOfPeople).then((response) => {
                 console.log(response.data);
                 this.weeklyMenu = response.data;
             });
         },
 
         getMissingIngredients(fridgeId, recipeId) {
-            weekPlannerService.getMissingIngredients(fridgeId, recipeId).then((response) => {
+            weekPlannerService.getMissingIngredients(fridgeId, recipeId, this.nrOfPeople).then((response) => {
                 const missingIngredientsResponse = response.data;
                 const missingIngredients = missingIngredientsResponse[0].ingredients;
                 const recipe = missingIngredientsResponse[1];
