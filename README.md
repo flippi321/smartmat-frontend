@@ -96,6 +96,15 @@ When the user is “in” his household, he can begin to administer his fridge a
 
 Images for groceryitems and groceries makes it easier for the user to navigate the application. 
 
+## Using Swagger UI for API Documentation
+
+This project uses Swagger UI API documentation to access and use Swagger UI, follow these steps:
+
+1. **Access Swagger UI:** Once the backend is up and running, open your web browser and navigate to the following URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+
+3. **Explore API endpoints:** Swagger UI presents a list of available API endpoints, organized by tags. Click on a tag to expand it and view the related API operations. For each operation, you will see the HTTP method, endpoint URL, a brief description, and the request/response details.
+
+
 ## Test users
 The database already contains some test users 
 
@@ -125,7 +134,7 @@ npm run test:unit
 ```
 
 
-## CI/CD
+## CI
 
 Both frontend and backend has a ".gitlab-ci.yml" file.. This file controls Continous Integration for the projects. It manages the pipeline which holds the jobs for GitLab to run.
 
