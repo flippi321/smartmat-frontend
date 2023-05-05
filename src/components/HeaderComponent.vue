@@ -50,7 +50,7 @@ onBeforeUnmount(() => {
 <template>
     <nav class="navbar">
         <div class="navbar-backdrop"></div>
-        <router-link :to="store.getIsLoggedIn ? { path: '/household', query: { id: 1 } } : '/'" class="navbar-left">
+        <router-link :to="store.getIsLoggedIn ? { path: '/household' } : '/'" class="navbar-left">
             <img src="@/assets/icons/Logo.png" alt="[Logo]" class="navbar-icon navbar-icon--larger">
             <span class="brand-name">SmartMat</span>
         </router-link>
@@ -60,10 +60,10 @@ onBeforeUnmount(() => {
                 <img src="@/assets/icons/plusSign2.png" alt="[Plus Sign]" class="header-icon">
                 <span class="header-button button-primary-text">Om oss</span>
             </router-link>
-            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary">
+            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/fridge` }" class="button-primary">
                 <span>Kjøleskap</span>
             </router-link>
-            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList`, query: { id: this.id, sortBy: 1 } }" class="button-primary">
+            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList` }" class="button-primary">
                 <span>Handleliste</span>
             </router-link>
             <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas`, query: { id: this.id } }" class="button-primary">

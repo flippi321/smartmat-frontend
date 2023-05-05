@@ -49,7 +49,6 @@ const router = createRouter({
     {
       path: '/shoppingList',
       name: 'shoppingList',
-      props: route => ({ id: parseInt(route.query.id), sortBy: parseInt(route.query.sortBy) }),
       component: ShoppingListView,
       meta: {
         requiresAuth: true
@@ -124,8 +123,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.name === 'login' && store.isLoggedIn) {
-      //TODO set correct household id
-      next({ name: 'household', query: { id: 1 } });
+      next({ name: 'household'});
     } else {
       next();
     }
