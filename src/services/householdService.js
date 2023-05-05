@@ -31,16 +31,6 @@ export default {
         return apiClient.delete("/addUserToHousehold", { params: { userId: userId, householdId: householdId } })
     },
 
-    /*
-    * {
-        "name" : "householdfor1user2",
-        "fridge" : {
-	        "name" : "fridgeforhousehold2"
-            },
-        "shoppinglist": {
-	        "name" : "shoppinglistforhousehold2"
-            }
-       }*/
     createHousehold(userId, householdInfo){
         const options = {
             method: 'POST',
@@ -54,15 +44,10 @@ export default {
         return axios.request(options);
     },
 
-    /*
-    {
-        "firstname" : "test1",
-        "lastname" : "test1surname",
-        "email" : "test1@test.com",
-        "password" : "passord"
-      }
-        */
     joinHousehold(userId, invitationNr){
+        console.log(userId)
+        console.log(invitationNr)
+
         const options = {
             method: 'POST',
             url: `${url}/api/household/addNewUser/${userId}/${invitationNr}`,
