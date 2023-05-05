@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-    id: {
-        type: Number,
-        required: true
-    }
-})
-</script>
-
 <template>
     <div class="box-container">
         <h1 class="header">Middagsforslag</h1>
@@ -38,12 +29,15 @@ import {useAuthStore} from "@/stores";
 import pinia from "@/stores";
 import weekPlannerService from "@/services/weekPlannerService";
 import {set} from "@vueuse/core";
+import householdService from "@/services/householdService";
 const store = useAuthStore(pinia);
 
 export default {
     data() {
         return {
+            store: useAuthStore(),
             recipes: [],
+            fridgeId: -1,
             nrOfPeople: store.getNrOfPortions,
             availableIngredients: {},
         };
@@ -56,6 +50,27 @@ export default {
     },
 
     methods: {
+        getFridgeAndDisplayRecipes(){
+          //Fetch fridge from household if it exists
+          if(this.store.getHousehold !== -1){
+            householdService.getUsersHousehold(this.store.getUserId).then(response => {
+              this.fridgeId = response.data.fridge.fridgeId;
+
+              // With this fridgeId we fetch recipes we can make with its contents
+              recipeService.getRecipes(this.fridgeId, this.nrOfPeople).then((response) => {
+                this.recipes = response.data;
+                this.recipes.forEach((recipe) => {
+                  this.getMissingIngredients(1, recipe.recipe_id);
+                })
+              });
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            this.router.push("/joinHousehold")
+          }
+        },
+
         scrollRight() {
             const gridContainer = this.$el.querySelector('.grid-container');
             const scrollWidth = gridContainer.scrollWidth;
@@ -105,12 +120,7 @@ export default {
     },
 
     created() {
-        recipeService.getRecipes(1, this.nrOfPeople).then((response) => {
-            this.recipes = response.data;
-            this.recipes.forEach((recipe) => {
-                this.getMissingIngredients(1, recipe.recipe_id);
-            })
-        });
+        this.getFridgeAndDisplayRecipes();
     },
 };
 </script>
