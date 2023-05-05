@@ -127,6 +127,7 @@ export default {
             shoppingListService.getShoppingListContents(this.id)
                 .then(response => {
                     this.items = response.data;
+                    this.applyFilters();
                 })
                 .catch(error => {
                     console.error("Error updating shopping list:", error);
