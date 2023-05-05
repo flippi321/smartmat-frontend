@@ -29,6 +29,7 @@
                 {{ step }}
             </li>
         </ol>
+      <button class="spis-button" @click="removeItemsFromFridge">Spis</button>
     </div>
     <div class="missing-ingredients-box" v-if="Object.keys(recipe).length > 0">
       <h3>Manglende ingredienser</h3>
@@ -65,6 +66,7 @@ export default {
       fridgeId: -1,
       portions: store.getNrOfPortions,
       missingIngredients: [],
+      requiredItems: [],
     };
   },
   computed: {
@@ -85,12 +87,14 @@ export default {
     findMissingIngredients() {
       recipeService.getMissingIngredients(this.fridgeId, this.recipe.recipe_id, this.portions).then(response => {
         if (response.data && response.data.length > 0) {
+          this.requiredItems = response.data[1].ingredients;
           this.missingIngredients = response.data[0].ingredients.map(ingredient => {
             const roundedAmount = Math.round(ingredient.amount * 4) / 4;
             return { ...ingredient, amount: roundedAmount };
           });
         } else {
           this.missingIngredients = [];
+          this.requiredItems = [];
         }
         console.log(response.data);
       }).catch(error => {
@@ -108,6 +112,14 @@ export default {
         this.$router.push("/joinHousehold")
       }
     },
+
+    removeItemsFromFridge(){
+      console.log(this.requiredItems)
+      recipeService.removeFromFridge(this.fridgeId, this.requiredItems).then(response => {
+        this.$router.push("/fridge")
+        console.log(response)
+      })
+    }
   },
 
   created() {
@@ -157,15 +169,9 @@ export default {
   margin-top: auto;
   padding: 8px 12px;
   font-size: 16px;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.missing-ingredients-box button:hover {
-  background-color: #0056b3;
 }
 
 @media (max-width: 767px) {
@@ -224,5 +230,14 @@ export default {
   object-fit: cover;
   margin-bottom: 20px;
   border-radius: 5px;
+}
+
+.spis-button {
+  margin-top: 20px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
