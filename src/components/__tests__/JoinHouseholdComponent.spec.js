@@ -2,9 +2,9 @@ import { createApp } from 'vue';
 import { describe, it, beforeEach, expect } from 'vitest';
 import { createStore } from 'vuex';
 import { mount } from '@vue/test-utils';
-import joinHouseholdComponent from '@/components/joinHouseholdComponent.vue';
+import JoinHouseholdComponent from '@/components/JoinHouseholdComponent.vue';
 
-describe('joinHouseholdComponent.vue', () => {
+describe('JoinHouseholdComponent.vue', () => {
     let wrapper;
 
     beforeEach(() => {
@@ -15,7 +15,7 @@ describe('joinHouseholdComponent.vue', () => {
         const app = createApp({});
         app.use(store);
 
-        wrapper = mount(joinHouseholdComponent, {
+        wrapper = mount(JoinHouseholdComponent, {
             global: {
                 plugins: [store]
             }
