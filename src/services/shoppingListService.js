@@ -1,33 +1,5 @@
 import axios from "axios";
-const apiClient = axios.create();
 let url = 'http://localhost:8080'
-
-/*
-Mocking responses, must be removed:
-*/
-import MockAdapter from "axios-mock-adapter";
-var mock = new MockAdapter(apiClient);
-import groceryItemsById from "@/mockDatabases/shopping-list-id.json";
-import groceryItemsByAlphabet from "@/mockDatabases/shopping-list-alphabetically.json";
-import sortingChoices from "@/mockDatabases/sorting-choices.json"
-
-// Mock any GET request to /fridgeFromId
-mock.onGet("/getItemsFromShoppingList", { params: { id: 1, sortBy: 1 } }).reply(200, {
-    groceryItemsById,
-});
-
-// Mock any GET request to /fridgeFromId
-mock.onGet("/getItemsFromShoppingList", { params: { id: 1, sortBy: 2 } }).reply(200, {
-    groceryItemsByAlphabet,
-});
-
-mock.onGet("/getSortingChoices").reply(200, {
-    sortingChoices,
-})
-
-mock.onGet("/updateShoppingListItem", { params: {data :[ 1, 5, 4 ]}}).reply(200, {
-    sortingChoices,
-})
 
 export default {
     /**
@@ -46,10 +18,6 @@ export default {
         };
         return axios.request(options);
 
-    },
-
-    getSortingChoices(){
-        return(apiClient.get("/getSortingChoices"));
     },
 
     /**
