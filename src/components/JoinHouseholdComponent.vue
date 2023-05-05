@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Join or Create a Household</h1>
+    <h1>Velkommen!</h1>
     <div class="choices">
       <form @submit.prevent="joinHousehold" class="choice">
         <h2>Bli med i en Husholdning</h2>
@@ -14,10 +14,11 @@
               v-model="householdCode"
           />
         </div>
-        <button type="submit" class="btn">Bli medlem!</button>
+        <button type="submit" class="btn" :disabled="householdCode.length !== 6">Bli medlem!</button>
+
       </form>
       <div class="choice create">
-        <h2>Eller lag in egen</h2>
+        <h2>Eller lag din egen</h2>
         <p>Lag en ny Husholdning:</p>
         <div class="input">
           <label for="household-name">Husholdningsnavn:</label>
@@ -49,7 +50,8 @@
               v-model="shoppingListName"
           />
         </div>
-        <button @click="createHousehold" class="btn">Nå!</button>
+        <button @click="createHousehold" class="btn" :disabled="!householdName || !fridgeName || !shoppingListName">Nå!</button>
+
       </div>
     </div>
   </div>
