@@ -60,4 +60,25 @@ export default {
         };
         return axios.request(options);
     },
+
+    /**
+     * Remove all specified ingredients from a fridge
+     * If the ingredient is not in the fridge it will be ignored
+     *
+     * @param fridgeId the id of the fridge
+     * @param items the items we want to remove from the fridge
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    removeFromFridge(fridgeId, items){
+        const options = {
+            method: 'DELETE',
+            url: `${url}/api/groceryItems/fridge/removeAmountFromMultipleItems/${fridgeId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+            data: items,
+        };
+        return axios.request(options);
+    }
 };
