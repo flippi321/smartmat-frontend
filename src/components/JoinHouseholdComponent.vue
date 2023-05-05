@@ -19,6 +19,36 @@
       <div class="choice create">
         <h2>Eller lag in egen</h2>
         <p>Lag en ny Husholdning:</p>
+        <div class="input">
+          <label for="household-name">Husholdningsnavn:</label>
+          <input
+              class="form-control"
+              type="text"
+              name="household-name"
+              placeholder="Husholdningsnavn"
+              v-model="householdName"
+          />
+        </div>
+        <div class="input">
+          <label for="fridge-name">Kjøleskapnavn:</label>
+          <input
+              class="form-control"
+              type="text"
+              name="fridge-name"
+              placeholder="Kjøleskapnavn"
+              v-model="fridgeName"
+          />
+        </div>
+        <div class="input">
+          <label for="shoppinglist-name">Handlelistnavn:</label>
+          <input
+              class="form-control"
+              type="text"
+              name="shoppinglist-name"
+              placeholder="Handlelistnavn"
+              v-model="shoppingListName"
+          />
+        </div>
         <button @click="createHousehold" class="btn">Nå!</button>
       </div>
     </div>
@@ -31,6 +61,9 @@ export default {
   data() {
     return {
       householdCode: "",
+      householdName: "",
+      fridgeName: "",
+      shoppingListName: "",
     };
   },
   methods: {
@@ -42,7 +75,15 @@ export default {
       this.$emit("joinHousehold", this.householdCode)
     },
     createHousehold() {
-      this.$emit("createHousehold")
+      this.$emit("createHousehold", {
+        name: this.householdName,
+        fridge: {
+          name: this.fridgeName
+        },
+        shoppinglist: {
+          name: this.shoppingListName
+        }
+      })
     },
   },
 };
