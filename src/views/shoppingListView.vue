@@ -2,8 +2,6 @@
     <div class="shopping-list-page">
         <div class="sidebar" v-if="showAddGroceries === false">
             <FilterBar
-                    :sort-choices="[]" 
-                    :list-id="this.id"
                     @moveToFridge="sendSelectedItems"
                     @removeItems="removeSelectedItems"
                     @add-items="this.showAddGroceries = true"
