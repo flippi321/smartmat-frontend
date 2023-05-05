@@ -40,5 +40,24 @@ export default {
             },
         };
         return axios.request(options);
-    }
+    },
+
+    /**
+     * Get all the missing ingredients from a fridge when making a recipie with a specified portions
+     * @param fridgeId the id of the fridge
+     * @param recipeId the id of the recipie
+     * @param portions the amount of portions made
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    getMissingIngredients(fridgeId, recipeId, portions) {
+        const options = {
+            method: 'GET',
+            url: `${url}/api/recipes/missingIngredients/${fridgeId}/${recipeId}/${portions}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+        };
+        return axios.request(options);
+    },
 };
