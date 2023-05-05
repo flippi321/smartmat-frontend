@@ -38,8 +38,18 @@ export default {
     }
   },
 
+  methods: {
+    checkHouseholdInStore(){
+      if(this.store.getHousehold !== -1){
+        this.id = this.store.getHousehold;
+      } else {
+        this.router.push("/joinHousehold")
+      }
+    }
+  },
+
   created() {
-    this.id = this.store.getHousehold;
+    this.checkHouseholdInStore();
   }
 }
 </script>
