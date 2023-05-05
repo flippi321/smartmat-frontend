@@ -51,6 +51,7 @@ import { useAuthStore } from '@/stores';
 import pinia from '@/stores';
 import recipeService from "@/services/recipeService";
 import householdService from "@/services/householdService";
+import shoppingListService from "@/services/shoppingListService";
 
 export default {
   props: {
@@ -124,9 +125,19 @@ export default {
       })
     },
 
-    addToShoppingList(){
-      let items = this.missingIngredients;
-      console.log(items)
+    addToShoppingList() {
+      let items = this.missingIngredients.map(ingredient => {
+        let updatedIngredient = { ...ingredient };
+        updatedIngredient.groceryItemId = updatedIngredient.id;
+        delete updatedIngredient.id;
+        return updatedIngredient;
+      });
+
+      shoppingListService.addMultipleItems(this.listId, items).then(() => {
+        this.$router.push("/shoppingList");
+      }).catch(error => {
+        console.log(error);
+      })
     }
   },
 
