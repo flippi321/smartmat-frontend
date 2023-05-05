@@ -1,27 +1,33 @@
-import { shallowMount } from "@vue/test-utils";
-import {describe, it, expect} from "vitest"
+import { mount } from "@vue/test-utils";
 import Login from "@/components/LoginComponent.vue";
+import { describe, it, expect, beforeEach } from "vitest";
+import sinon from "sinon";
 
-describe("Login", () => {
-    it("renders successfully", () => {
-        const wrapper = shallowMount(Login);
-        expect(wrapper.exists()).toBe(true);
+describe("Login.vue", () => {
+    let wrapper;
+    let routerPushMock;
+
+    beforeEach(() => {
+        routerPushMock = sinon.spy();
+        wrapper = mount(Login, {
+            global: {
+                mocks: {
+                    $router: {
+                        push: routerPushMock,
+                    },
+                },
+            },
+        });
     });
 
-    it("has a form with email and password inputs", () => {
-        const wrapper = shallowMount(Login);
-        const emailInput = wrapper.find('input[name="email"]');
-        const passwordInput = wrapper.find('input[name="password"]');
-        expect(emailInput.exists()).toBe(true);
-        expect(passwordInput.exists()).toBe(true);
+    it("renders the login form", () => {
+        expect(wrapper.find("h2").text()).toBe("Logg inn");
+        expect(wrapper.find("input[name='email']").attributes("placeholder")).toBe("eksempel@email.com");
+        expect(wrapper.find("input[name='password']").attributes("placeholder")).toBe("passord");
     });
 
-    it("has a submit button", () => {
-        const wrapper = shallowMount(Login);
-        const submitButton = wrapper.find('button[type="submit"]');
-        expect(submitButton.exists()).toBe(true);
+    it("moves to the register page when 'Registrer' is clicked", async () => {
+        await wrapper.find(".alt span").trigger("click");
+        expect(routerPushMock.calledWith("/register")).toBe(true);
     });
 });
-
-
-
