@@ -4,10 +4,11 @@
       :id="this.householdId"
       :members="this.members"
       :houseHold="this.household"
-      @getMembers.stop="getAllMembers"
-      @removeMember.stop="removeMember"
-      @addMember.stop="addMember"
-      @getHousehold.stop="getHousehold"
+      @getMembers="getAllMembers"
+      @removeMember="removeMember"
+      @addMember="addMember"
+      @getHousehold="getHousehold"
+      @updateInformation="updateInformation"
   />
 </template>
 
@@ -44,25 +45,35 @@ export default {
   },
 
   methods: {
+      updateInformation({ householdName, fridgeName, shoppingListName }) {
+          const updatedHouseholdInfo = {
+              name: householdName || this.household.name,
+              fridge: {
+                  name: fridgeName || (this.household.fridge && this.household.fridge.name) || "",
+              },
+              shoppinglist: {
+                  name: shoppingListName || (this.household.shoppinglist && this.household.shoppinglist.name) || "",
+              },
+          };
 
-    getAllMembers(){
+          console.log(updatedHouseholdInfo)
+
+          householdService.updateHouseHold(store.householdId, updatedHouseholdInfo)
+              .then(response => {
+                  this.$emit("feedback", response.status);
+                  this.getHousehold();
+              })
+              .catch(error => {
+                  console.error("Error updating household information:", error);
+                  alert("Error updating household information:" + error)
+              });
+      },
+
+
+      getAllMembers(){
       householdService.getAllUsersFromHousehold(store.householdId).then(response => {
         this.members = response.data;
         console.log(response.data);
-      })
-    },
-
-    removeMember(userId){
-      householdService.removeUserFromHousehold(userId, this.householdId).then(response => {
-        this.$emit("feedback", response.status);
-        this.getAllMembers();
-      })
-    },
-
-    addMember(userId){
-      householdService.addUserToHousehold(userId, this.householdId).then(response => {
-        this.$emit("feedback", response.status);
-        this.getAllMembers();
       })
     },
 

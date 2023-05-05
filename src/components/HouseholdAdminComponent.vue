@@ -7,22 +7,34 @@
         <ul>
             <li v-for="(member, index) in members" :key="index" :value="member">{{ member.firstname }} {{ member.lastname }}</li>
         </ul>
+        <h3>Kjøleskap:</h3>
+        <ul>
+            <li v-if="houseHold && houseHold.fridge">{{ houseHold.fridge.name }}</li>
+        </ul>
+        <h3>Handleliste:</h3>
+        <ul>
+            <li v-if="houseHold && houseHold.shoppinglist">{{ houseHold.shoppinglist.name }}</li>
+        </ul>
           <p v-if="houseHold">Invitasjonskode: {{houseHold.invitationNr}}</p>
-
       </div>
     </div>
     <div class="right">
-      <div class="add-member">
-        <input type="email" v-model="newMemberEmail" placeholder="Enter email" />
-        <button @click="addMember">Add Member</button>
-      </div>
-      <div class="remove-member">
-        <select v-model="selectedMember">
-          <option value="" disabled>Select a member</option>
-          <option v-for="(member, index) in members" :key="index" :value="member">{{ member.firstname }} {{ member.lastname }}</option>
-        </select>
-        <button @click="removeMember">Remove Member</button>
-      </div>
+        <div class="update-info">
+            <h3>Update Information:</h3>
+            <div>
+                <label for="household-name">Household Name:</label>
+                <input type="text" id="household-name" v-model="updateHouseholdName" />
+            </div>
+            <div>
+                <label for="fridge-name">Fridge Name:</label>
+                <input type="text" id="fridge-name" v-model="updateFridgeName" />
+            </div>
+            <div>
+                <label for="shoppinglist-name">Shopping List Name:</label>
+                <input type="text" id="shoppinglist-name" v-model="updateShoppingListName" />
+            </div>
+            <button @click="updateInformation">Update</button>
+        </div>
     </div>
   </div>
 </template>
@@ -47,12 +59,23 @@ export default {
 
   data() {
     return {
-      newMemberEmail: "",
-      selectedMember: null,
+        updateHouseholdName: "",
+        updateFridgeName: "",
+        updateShoppingListName: "",
     };
   },
 
   methods: {
+    updateInformation() {
+        if (this.updateHouseholdName.trim() || this.updateFridgeName.trim() || this.updateShoppingListName.trim()) {
+            this.$emit("updateInformation", {
+              householdName: this.updateHouseholdName.trim(),
+              fridgeName: this.updateFridgeName.trim(),
+              shoppingListName: this.updateShoppingListName.trim(),
+            });
+        }
+    },
+
     addMember() {
       if (this.newMemberEmail.trim()) {
         this.$emit("addMember", this.newMemberEmail.trim());
