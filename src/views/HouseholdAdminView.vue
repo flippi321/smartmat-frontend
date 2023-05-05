@@ -5,8 +5,6 @@
       :members="this.members"
       :houseHold="this.household"
       @getMembers="getAllMembers"
-      @removeMember="removeMember"
-      @addMember="addMember"
       @getHousehold="getHousehold"
       @updateInformation="updateInformation"
   />

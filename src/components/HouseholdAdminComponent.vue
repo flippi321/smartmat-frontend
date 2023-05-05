@@ -65,6 +65,23 @@ export default {
     };
   },
 
+    watch: {
+        houseHold: {
+            immediate: true,
+            handler(newHouseHold) {
+                if (newHouseHold) {
+                    this.updateHouseholdName = newHouseHold.name;
+                    if (newHouseHold.fridge) {
+                        this.updateFridgeName = newHouseHold.fridge.name;
+                    }
+                    if (newHouseHold.shoppinglist) {
+                        this.updateShoppingListName = newHouseHold.shoppinglist.name;
+                    }
+                }
+            },
+        },
+    },
+
   methods: {
     updateInformation() {
         if (this.updateHouseholdName.trim() || this.updateFridgeName.trim() || this.updateShoppingListName.trim()) {
@@ -74,19 +91,6 @@ export default {
               shoppingListName: this.updateShoppingListName.trim(),
             });
         }
-    },
-
-    addMember() {
-      if (this.newMemberEmail.trim()) {
-        this.$emit("addMember", this.newMemberEmail.trim());
-        this.updateMembers();
-      }
-    },
-    removeMember() {
-      if (this.selectedMember !== null) {
-        this.$emit("removeMember", this.selectedMember.id);
-        this.updateMembers();
-      }
     },
     updateMembers() {
       console.log("Updating Page...");
