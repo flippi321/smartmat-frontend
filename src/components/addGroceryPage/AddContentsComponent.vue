@@ -86,8 +86,9 @@ export default {
 .fridge-item-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: all 0.3s;
+  object-position: center;
 }
 
 .fridge-item-info {
