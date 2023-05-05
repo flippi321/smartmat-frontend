@@ -3,17 +3,15 @@
     <img class="collapse-icon" src="@/assets/icons/Details.png" alt="Details" @click="toggleSidebar" :style="{ transform: `rotate(${iconRotation}deg)` }"/>
     <div v-show="!isCollapsed">
       <div @click="$emit('add-items')" class="new-item-button">
-        <h1 v-if="!isCollapsed">Søk:</h1>
-        <input type="text" v-if="!isCollapsed" placeholder="Search categories" v-model="searchTerm" @input="emitSearch" class="search-bar" />
         <img src="@/assets/icons/plusSign.png" alt="[Add New]" class="plus-icon">
         <span class="household-button fridge-button">Legg til Mer</span>
       </div>
+      <h1 v-if="!isCollapsed">Søk:</h1>
+      <input type="text" v-if="!isCollapsed" placeholder="Search categories" v-model="searchTerm" @input="emitSearch" class="search-bar" />
       <div class="filter-bar-container">
-        <div class="filter-bar-content">
-          <div class="buttons-container">
-            <button class="move-to-fridge-button button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
-            <button class="remove-selected-button button" @click="removeItemsFromList">Fjern Valgte</button>
-          </div>
+        <div class="buttons-container">
+          <button class="move-to-fridge-button button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
+          <button class="remove-selected-button button" @click="removeItemsFromList">Fjern Valgte</button>
         </div>
       </div>
     </div>
@@ -67,6 +65,10 @@ export default {
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
   transition: flex 0.3s;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
 }
 
 .shopping-list-sidebar.collapsed {
@@ -113,6 +115,7 @@ export default {
   position: relative;
   top: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -135,11 +138,6 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   position: relative;
-}
-
-.filter-bar-content {
-  height: calc(100vh - 180px);
-  overflow-y: auto;
 }
 
 ul {
