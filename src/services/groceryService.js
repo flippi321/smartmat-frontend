@@ -1,26 +1,12 @@
 import axios from "axios";
-const apiClient = axios.create();
 let url = 'http://localhost:8080'
 
-/*
-Mocking responses, must be removed:
-*/
-import MockAdapter from "axios-mock-adapter";
-const mock = new MockAdapter(apiClient);
-import groceryItems from "@/mockDatabases/all-groceries.json";
-import categories from "@/mockDatabases/categories.json";
-
-// Mock any GET request to /getAllGroceries
-mock.onGet("/getAllGroceries").reply(200, {
-    groceryItems,
-});
-
-// Mock any GET request to /fridgeFromId
-mock.onGet("/getAllCategories").reply(200, {
-    categories,
-});
-
 export default {
+
+    /**
+     * Method for getting all grocery items
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     getAllGroceries(){
 
         const options = {
@@ -34,6 +20,10 @@ export default {
         return axios.request(options);
     },
 
+    /**
+     * Method for getting all categories
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     getAllCategories(){
         const options = {
             method: 'GET',
