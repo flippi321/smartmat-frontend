@@ -1,56 +1,111 @@
-import { describe, test, beforeEach, expect } from "vitest";
-import { mount } from '@vue/test-utils'
-import RecipeComponent from '@/components/RecipeComponent.vue'
+import { describe, it, expect } from "vitest";
+import { mount } from '@vue/test-utils';
+import RecipeComponent from '@/components/RecipeComponent.vue';
+import { createStore } from 'vuex';
+import { config } from '@vue/test-utils';
+import recipeService from '@/services/recipeService';
+import householdService from '@/services/householdService';
 
-const mockRecipe = {
-    name: 'Test Recipe',
-    description: 'Test recipe description',
-    ingredients: [
-        { name: 'Ingredient 1', amount: 2, unit: 'g' },
-        { name: 'Ingredient 2', amount: 1, unit: 'kg' },
-    ],
-}
+config.global.mocks['$router'] = {
+    push: () => {},
+};
+
+const createVuexStore = () => {
+    return createStore({
+        state: {
+            household: -1,
+        },
+        getters: {
+            getHousehold: (state) => state.household,
+            getUserId: () => 1,
+            getNrOfPortions: () => 1,
+        },
+    });
+};
+
+const mountComponent = (stubs) => {
+    const store = createVuexStore();
+
+    return mount(RecipeComponent, {
+        props: {
+            recipe: {
+                name: 'Test Recipe',
+                ingredients: [],
+                steps: [],
+                imageLink: '',
+                description: '',
+                recipe_id: 1,
+            },
+        },
+        global: {
+            plugins: [store],
+            mocks: {
+                recipeService,
+                householdService,
+            },
+            stubs,
+        },
+    });
+};
 
 describe('RecipeComponent', () => {
-    let wrapper
+    it('renders the recipe name', () => {
+        const wrapper = mountComponent();
+        expect(wrapper.text()).toContain('Test Recipe');
+    });
 
-    beforeEach(async () => {
-        wrapper = mount(RecipeComponent, {
-            props: {
-                recipe: mockRecipe,
+    it('renders the recipe description', async () => {
+        const wrapper = mountComponent();
+        await wrapper.setProps({
+            recipe: {
+                ...wrapper.props().recipe,
+                description: 'A delicious test recipe',
             },
-        })
+        });
+        expect(wrapper.text()).toContain('A delicious test recipe');
+    });
 
-        const portionsInput = wrapper.find('#portions')
-        await portionsInput.setValue(1)
-    })
+    it('renders the recipe image', async () => {
+        const wrapper = mountComponent();
+        await wrapper.setProps({
+            recipe: {
+                ...wrapper.props().recipe,
+                imageLink: 'https://example.com/test-recipe.jpg',
+            },
+        });
+        const img = wrapper.find('.recipeImg');
+        expect(img.attributes('src')).toBe('https://example.com/test-recipe.jpg');
+    });
 
-    test('renders recipe name and description', () => {
-        expect(wrapper.find('h2').text()).toBe(mockRecipe.name)
-        expect(wrapper.find('p').text()).toBe(mockRecipe.description)
-    })
+    it('renders the adjusted ingredients list based on portions', async () => {
+        const wrapper = mountComponent();
+        await wrapper.setProps({
+            recipe: {
+                ...wrapper.props().recipe,
+                ingredients: [
+                    { amount: 1, unit: 'cup', name: 'flour' },
+                    { amount: 2, unit: 'tsp', name: 'sugar' },
+                ],
+            },
+        });
+        await wrapper.setData({ portions: 2 });
 
-    test('renders ingredients list', () => {
-        const ingredients = wrapper.findAll('li')
-        expect(ingredients.length).toBe(mockRecipe.ingredients.length)
+        const ingredientsListItems = wrapper.findAll('ul li');
+        expect(ingredientsListItems[0].text()).toContain('2 cup flour');
+        expect(ingredientsListItems[1].text()).toContain('4 tsp sugar');
+    });
 
-        ingredients.forEach((ingredient, index) => {
-            const ingredientText = `${mockRecipe.ingredients[index].amount} ${mockRecipe.ingredients[index].unit} ${mockRecipe.ingredients[index].name}`
-            expect(ingredient.text()).toBe(ingredientText)
-        })
-    })
+    it('renders the recipe steps', async () => {
+        const wrapper = mountComponent();
+        await wrapper.setProps({
+            recipe: {
+                ...wrapper.props().recipe,
+                steps: ['Step 1: Preheat the oven', 'Step 2: Mix the ingredients'],
+            },
+        });
 
-    test('updates ingredients amount when changing portions', async () => {
-        const newPortions = 2
-        const input = wrapper.find('input[type="number"]')
-        await input.setValue(newPortions)
-
-        const ingredients = wrapper.findAll('li')
-        ingredients.forEach((ingredient, index) => {
-            const adjustedAmount = mockRecipe.ingredients[index].amount * newPortions
-            const roundedAmount = Math.round(adjustedAmount * 4) / 4
-            const ingredientText = `${roundedAmount} ${mockRecipe.ingredients[index].unit} ${mockRecipe.ingredients[index].name}`
-            expect(ingredient.text()).toBe(ingredientText)
-        })
-    })
-})
+        const stepsListItems = wrapper.findAll('ol li');
+        expect(stepsListItems[0].text()).toBe('Step 1: Preheat the oven');
+        expect(stepsListItems[1].text()).toBe('Step 2: Mix the ingredients');
+    });
+});
