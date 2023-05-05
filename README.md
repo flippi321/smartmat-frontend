@@ -1,57 +1,84 @@
-# smartmat-frontend
+# SmartMat
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
 
-## Recommended IDE Setup
+The purpose of the project is to make an application that makes it easier for people to throw less food away. A core functionality in the application, is generating recipes based on the groceryitems a user has in his fridge, and their expiration dates. This will allow the user to eat the food he already has, and the food that will soon expire.
+Food production consumes energy and releases CO2 into the atmosphere. If people use less food, there will be less pollution. Also, the app-user will save money from the food they don’t need to buy. 
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## Technologies
+- The Vue.js Framework 
+- MySQL - PHPMyAdmin
+- SpringBoot 
+- H2 Database Engine - In-memory database for testing
+- JWT - Authentication for REST APIs
+- Swagger - API documentation
+- Docker
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## How to run and install the project backend
+
+
+
+
+
+## How to run and install the project frontend
+### The technologies needed to run the program are:
+
+- Node.js
+
+### To be certain you have Node.js installed, run this command:
+```sh
+- node -v
+```
+
+
+### Do the same for NPM:
+```sh
+- npm -v
+```
+
+### Use this command to install Vue:
+
+```sh
+- npm install vue
+```
+
+### After installing Vue, the frontend project can be cloned. Run this command in the terminal:
+
+```sh
+git clone git@gitlab.stud.idi.ntnu.no:idatt2106-v21-09/frontend.git
+```
+
+### To download the necessary dependencies, run this command while inside the project:
+
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### To start the application, type this command:
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Navigating the application
+The first thing the user sees when he starts the application, is the welcome page. He can then choose to either log in, if the user already exists in the database, or register. When he registers, he can either join an existing household (if he has the invitation code), or create a new one. Either way, new users can join his household later if he chooses to invite them.
 
-```sh
-npm run build
-```
+When the user is “in” his household, he can begin to administer his fridge and shoppinglist. He can also choose to have recipes generated for him based on the grocery items in his fridge. He can update his personal information, and general information regarding the household. 
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Images for groceryitems and groceries makes it easier for the user to navigate the application. 
 
-```sh
-npm run test:unit
-```
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+## Tests
 
-```sh
-npm run test:e2e:dev
-```
+## CI/CD
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## Team Members
+- Bjørn-Johnny Bendixen
+- Håkon Hansen Bergrem
+- Teodor Birkeland
+- Christoffer Brevik
+- Arnold Sverre Hansen
+- Hadar Hayat
