@@ -2,36 +2,27 @@ import axios from "axios";
 let url = 'http://localhost:8080'
 
 export default {
-
-    /**
-     * Method for getting all grocery items
-     * @returns {Promise<axios.AxiosResponse<any>>}
-     */
-    getAllGroceries(){
-
+    updateUserInformation(user, oldEmail){
         const options = {
-            method: 'GET',
-            url: `${url}/api/groceryItems/all`,
+            method: 'PUT',
+            url: `${url}/api/users/update/${oldEmail}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
+            data: user
         };
         return axios.request(options);
     },
 
-    /**
-     * Method for getting all categories
-     * @returns {Promise<axios.AxiosResponse<any>>}
-     */
-    getAllCategories(){
+    getUserInformation(userId){
         const options = {
             method: 'GET',
-            url: `${url}/api/categories/all`,
+            url: `${url}/api/users/${userId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-            },
+            }
         };
         return axios.request(options);
     },

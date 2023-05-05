@@ -2,7 +2,7 @@
   <div class="box-container">
     <transition name="fade" mode="out-in" :duration="2000">
       <div class="success-box" v-if="showSaveSuccess">
-        <span>Saved successfully!</span>
+        <span>Lagring vellykket!</span>
       </div>
     </transition>
     <div class="box" v-for="item in items" :key="item.groceryItemId">
@@ -21,6 +21,7 @@
             acceptMessage="Lagre"
             declineMessage="Avbryt"
             @update="saveChanges"
+            @decline="describeItem = null"
         />
       </div>
     </div>
@@ -53,7 +54,7 @@ export default {
       setTimeout(() => {
         this.showSaveSuccess = false;
       }, 3000);
-      this.$emit('saved-changes', [item.groceryItemId, item.amount, item.actual_shelf_life]);
+      this.$emit('saved-changes', item);
     },
 
     updateSelectedItems(item) {
@@ -74,7 +75,7 @@ export default {
 <style>
 .success-box {
   position: fixed;
-  top: 0;
+  top: 75px;
   left: 50%;
   transform: translateX(-50%);
   width: 200px;
@@ -84,6 +85,7 @@ export default {
   text-align: center;
   font-weight: bold;
   border-radius: 15px;
+  z-index: 100;
 }
 
 .box-container {

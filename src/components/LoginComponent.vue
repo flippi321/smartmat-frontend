@@ -39,6 +39,7 @@
 <script>
 import pinia, { useAuthStore } from '@/stores';
 import loginService from "@/services/loginService";
+import householdService from "@/services/householdService";
 
 export default {
     store: true,
@@ -86,8 +87,13 @@ export default {
                     store.setFirstName(response.data.firstname);
                     store.setLastName(response.data.lastname);
                     store.setUserId(response.data.id);
-                    this.$router.push("/household?id=1");
-                }
+
+                    householdService.getUsersHousehold(response.data.id).then(() => {
+                      this.$router.push("/household");
+                    }).catch(() => {
+                      this.$router.push("/joinHousehold");
+                    })
+                  }
             } catch (error) {
                 console.log("error", error.response);
                 if (error.response && error.response.status === 401) {

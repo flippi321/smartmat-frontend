@@ -1,13 +1,3 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true,
-    validator: (value) => !isNaN(value),
-  }
-})
-</script>
-
 <template>
   <div class="household-info">
     <h1>Your Household:</h1>
@@ -15,7 +5,7 @@ defineProps({
   </div>
 
   <div class="buttons-container">
-    <router-link :to="{ path: `/fridge`, query: { id: this.id } }" class="button-primary">
+    <router-link :to="{ path: `/fridge`}" class="button-primary">
       <img src="@/assets/icons/Fridge.png" alt="[Fridge]" class="household-icon">
       <span class="household-button fridge-button">Kjøleskap</span>
     </router-link>
@@ -37,6 +27,33 @@ defineProps({
     </router-link>
   </div>
 </template>
+
+<script>
+import {useAuthStore} from "@/stores";
+export default {
+  data(){
+    return {
+      id: 0,
+      store: useAuthStore(),
+    }
+  },
+
+  methods: {
+    checkHouseholdInStore(){
+      if(this.store.getHousehold !== -1){
+        this.id = this.store.getHousehold;
+      } else {
+        this.$router.push("/joinHousehold")
+      }
+    },
+  },
+
+  created() {
+    this.checkHouseholdInStore();
+  }
+}
+</script>
+
 
 <style>
 .buttons-container {

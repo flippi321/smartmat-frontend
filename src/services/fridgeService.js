@@ -1,32 +1,13 @@
 import axios from "axios";
-const apiClient = axios.create();
 let url = 'http://localhost:8080'
 
-/*
-Mocking responses, must be removed:
-*/
-import MockAdapter from "axios-mock-adapter";
-const mock = new MockAdapter(apiClient);
-import groceryItems from "@/mockDatabases/grocery-items.json";
-import categories from "@/mockDatabases/categories.json"
-
-// Mock any GET request to /fridgeFromId
-mock.onGet("/getItemsFromFridge", { params: { id: 1 } }).reply(200, {
-    groceryItems,
-});
-
-
-mock.onGet("/getFridgeCategories").reply(200, {
-    categories,
-});
-
-
 export default {
+
     /**
-    getFridgeContents(fridgeId){
-        return apiClient.get("/getItemsFromFridge", { params: { id: fridgeId } });
-    },
-    */
+     * Get contents of a given fridge
+     * @param fridgeId id of fridge
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     getFridgeContents(fridgeId){
         const options = {
             method: 'GET',
@@ -40,10 +21,9 @@ export default {
     },
 
     /**
-    getCategoriesFromFridgeId(){
-        return apiClient.get("/getFridgeCategories");
-    },
-    */
+     * Get all categories
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     getCategoriesFromFridgeId(){
         const options = {
             method: 'GET',
@@ -56,6 +36,12 @@ export default {
         return axios.request(options);
     },
 
+    /**
+     * Method to add multiple items to a fridge
+     * @param fridgeId id of fridge
+     * @param itemList list of items to add
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     addMultipleItems(fridgeId, itemList){
         const options = {
             method: 'POST',
@@ -69,18 +55,31 @@ export default {
         return axios.request(options);
     },
 
-    updateItem(fridgeId, groceryItemId){
+    /**
+     * Method for updating the details of a grocery item in a fridge
+     * @param fridgeId id of fridge
+     * @param groceryItem item to update
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
+    updateItemDetails(fridgeId, groceryItem){
         const options = {
-            method: 'UPDATE',
-            url: `${url}/api/groceryItems/fridge/deleteItem/${fridgeId}/${groceryItemId}`,
+            method: 'PUT',
+            url: `${url}/api/groceryItems/fridge/updateItem/${fridgeId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-            }
+            },
+            data: groceryItem
         };
         return axios.request(options);
     },
 
+    /**
+     * Method for removing an item from a fridge
+     * @param fridgeId id of fridge
+     * @param groceryItem item to remove
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     removeItem(fridgeId, groceryItem){
         const options = {
             method: 'DELETE',

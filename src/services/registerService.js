@@ -2,6 +2,12 @@ import axios from "axios";
 let url = 'http://localhost:8080'
 
 export default {
+
+    /**
+     * Method for registering a user
+     * @param user the user to register
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     registerUser(user) {
         const options = {
             method: 'POST',

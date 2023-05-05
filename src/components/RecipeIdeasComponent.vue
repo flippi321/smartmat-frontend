@@ -82,7 +82,7 @@ export default {
         },
 
         getMissingIngredients(fridgeId, recipeId) {
-            weekPlannerService.getMissingIngredients(fridgeId, recipeId).then((response) => {
+            weekPlannerService.getMissingIngredients(fridgeId, recipeId, this.nrOfPeople).then((response) => {
                 const missingIngredientsResponse = response.data;
                 const missingIngredients = missingIngredientsResponse[0].ingredients;
                 const recipe = missingIngredientsResponse[1];
@@ -105,7 +105,7 @@ export default {
     },
 
     created() {
-        recipeService.getRecipes(1).then((response) => {
+        recipeService.getRecipes(1, this.nrOfPeople).then((response) => {
             this.recipes = response.data;
             this.recipes.forEach((recipe) => {
                 this.getMissingIngredients(1, recipe.recipe_id);

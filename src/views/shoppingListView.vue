@@ -63,8 +63,13 @@ export default {
     },
 
     methods: {
-        updateItem(itemData) {
-            console.log(shoppingListService.updateShoppingListItem(itemData))
+        updateItem(item) {
+            console.log("Updating item:" + item);
+            shoppingListService.updateShoppingListItem(this.id, item).then(() => {
+                this.updateShoppingList();
+            }).catch(error => {
+                console.error("Error updating item:", error);
+            });
         },
 
         sendSelectedItems() {
