@@ -16,18 +16,6 @@ export default {
         return axios.request(options);
     },
 
-    addUserToHousehold(userId, householdId){
-        const options = {
-            method: 'POST',
-            url: `${url}/api/household/addUser`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-            }
-        }
-        return axios.request(options);
-    },
-
     createHousehold(userId, householdInfo){
         const options = {
             method: 'POST',

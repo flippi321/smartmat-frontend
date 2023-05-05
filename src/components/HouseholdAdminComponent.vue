@@ -20,20 +20,20 @@
     </div>
     <div class="right">
         <div class="update-info">
-            <h3>Update Information:</h3>
+            <h3>Oppdater informasjon:</h3>
             <div>
-                <label for="household-name">Household Name:</label>
+                <label for="household-name">Husholdning navn:</label>
                 <input type="text" id="household-name" v-model="updateHouseholdName" />
             </div>
             <div>
-                <label for="fridge-name">Fridge Name:</label>
+                <label for="fridge-name">Kjøleskap navn:</label>
                 <input type="text" id="fridge-name" v-model="updateFridgeName" />
             </div>
             <div>
-                <label for="shoppinglist-name">Shopping List Name:</label>
+                <label for="shoppinglist-name">Handleliste navn:</label>
                 <input type="text" id="shoppinglist-name" v-model="updateShoppingListName" />
             </div>
-            <button @click="updateInformation">Update</button>
+            <button @click="updateInformation">Oppdater</button>
         </div>
     </div>
   </div>
@@ -99,82 +99,77 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  width: 80%;
-  height: 80%;
-  margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+    gap: 2rem;
 }
 
 .left,
 .right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 50%;
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.members-list {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  height: 100%;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.members-list,
+.update-info {
+    width: 100%;
 }
 
-.add-member,
-.remove-member {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.members-list ul,
+.update-info ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.members-list ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.members-list li,
+.update-info li {
+    margin-bottom: 0.5rem;
 }
 
-.members-list li {
-  margin-bottom: 0.5rem;
+.update-info div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.update-info label {
+    font-weight: bold;
 }
 
 input,
 select,
 button {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .left,
-  .right {
-    flex: 1;
-    height: auto;
-    margin-bottom: 1rem;
-    max-width: 100%;
-  }
+    .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 </style>
