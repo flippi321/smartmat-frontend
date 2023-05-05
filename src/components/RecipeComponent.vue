@@ -1,28 +1,3 @@
-<script setup>
-import { defineProps, ref, computed } from 'vue'
-import {useAuthStore} from "@/stores";
-import pinia from "@/stores";
-
-const store = useAuthStore(pinia);
-
-const props = defineProps({
-  recipe: {
-    type: Object,
-    required: true,
-  },
-})
-
-const portions = ref(store.getNrOfPortions)
-
-const adjustedIngredients = computed(() => {
-  return props.recipe.ingredients.map(ingredient => {
-    const adjustedAmount = ingredient.amount * portions.value
-    const roundedAmount = Math.round(adjustedAmount * 4) / 4
-    return { ...ingredient, amount: roundedAmount }
-  })
-})
-</script>
-
 <template>
   <div class="recipe-box" v-if="Object.keys(recipe).length > 0">
     <h2>{{ recipe.name }}</h2>
@@ -55,6 +30,36 @@ const adjustedIngredients = computed(() => {
       </ol>
   </div>
 </template>
+
+<script>
+import { useAuthStore } from '@/stores';
+import pinia from '@/stores';
+
+export default {
+  props: {
+    recipe: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    const store = useAuthStore(pinia);
+    return {
+      portions: store.getNrOfPortions,
+    };
+  },
+  computed: {
+    adjustedIngredients() {
+      return this.recipe.ingredients.map((ingredient) => {
+        const adjustedAmount = ingredient.amount * this.portions;
+        const roundedAmount = Math.round(adjustedAmount * 4) / 4;
+        return { ...ingredient, amount: roundedAmount };
+      });
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 .recipe-box {
