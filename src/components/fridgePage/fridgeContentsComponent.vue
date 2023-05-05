@@ -11,7 +11,7 @@ defineProps({
 
 // Define Emits
 const emit = defineEmits(["showFilterBar", "hideFilterBar", "close",
-"give-feedback1", "add-new-items", "deleteItem"]);
+"give-feedback1", "add-new-items", "deleteItem", "updateItem"]);
 
 const expandedItem = ref(null);
 
@@ -30,10 +30,12 @@ function toggleRetractHelper(){
 }
 
 function updateItem(item){
+  setTimeout(toggleRetractHelper, 100)
   emit("updateItem", item)
 }
 
 function deleteItem(item){
+  setTimeout(toggleRetractHelper, 100)
   emit("deleteItem", item)
 }
 </script>

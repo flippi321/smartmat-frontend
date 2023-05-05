@@ -94,10 +94,6 @@ export default {
     },
 
     applyFilters() {
-      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-        this.items = response.data;
-      });
-
       let filtered = this.items;
 
       if (this.currentCategory !== 0) {
@@ -111,13 +107,19 @@ export default {
       this.filteredItems = filtered;
     },
 
-    updateFridge(){
-      fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-        this.items = response.data;
-      });
-      fridgeService.getCategoriesFromFridgeId().then((response) => {
-        this.categories = response.data;
-      });
+    async updateFridge() {
+      try {
+        const fridgeContentsResponse = await fridgeService.getFridgeContents(this.fridgeId);
+        this.items = fridgeContentsResponse.data;
+
+        const categoriesResponse = await fridgeService.getCategoriesFromFridgeId(this.fridgeId);
+        this.categories = categoriesResponse.data;
+
+        // Call applyFilters to update the filteredItems array
+        this.applyFilters();
+      } catch (error) {
+        console.log("Error while updating fridge:", error);
+      }
     },
 
     toggleSideBar(isCollapsed) {
@@ -141,16 +143,19 @@ export default {
 
     updateItem(item){
       fridgeService.updateItemDetails(this.fridgeId, item).then(() => {
-        this.hideGroceryDetailComponent();
+        setTimeout(this.updateFridge, 100)
       }).catch(error => {
         console.log(error)
       })
     },
 
     deleteItemFromFridge(item){
-      fridgeService.removeItem(this.fridgeId, item).then(response => {
-        console.log(response)
-        this.hideGroceryDetailComponent()
+      console.log("Deleting")
+      fridgeService.removeItem(this.fridgeId, item).then(() => {
+        console.log("Updating Fridge")
+        this.updateFridge()
+      }).catch(error => {
+        console.log(error)
       })
     }
   }
