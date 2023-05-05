@@ -86,7 +86,6 @@ export default {
 .homepage {
   margin-top: -100px;
   width: 100%;
-  font-family: Arial, sans-serif;
   color: #333;
 }
 
@@ -99,6 +98,7 @@ export default {
   overflow: hidden;
   opacity: 0;
   transition: opacity 1s;
+  height: 100vh;
 }
 
 .showImage {
@@ -161,5 +161,16 @@ export default {
 .scroll-down-content {
   padding-top: 100px;
   padding-bottom: 2rem;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 2em;
+  }
+
+  .cta-button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
 }
 </style>
