@@ -50,7 +50,8 @@
               v-model="shoppingListName"
           />
         </div>
-        <button @click="createHousehold" class="btn">Nå!</button>
+        <button @click="createHousehold" class="btn" :disabled="!householdName || !fridgeName || !shoppingListName">Nå!</button>
+
       </div>
     </div>
   </div>
