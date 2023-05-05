@@ -3,22 +3,13 @@
     <img class="collapse-icon" src="@/assets/icons/Details.png" alt="Details" @click="toggleSidebar" :style="{ transform: `rotate(${iconRotation}deg)` }"/>
     <div v-show="!isCollapsed">
       <div @click="$emit('add-items')" class="new-item-button">
+        <h1 v-if="!isCollapsed">Søk:</h1>
+        <input type="text" v-if="!isCollapsed" placeholder="Search categories" v-model="searchTerm" @input="emitSearch" class="search-bar" />
         <img src="@/assets/icons/plusSign.png" alt="[Add New]" class="plus-icon">
         <span class="household-button fridge-button">Legg til Mer</span>
       </div>
       <div class="filter-bar-container">
         <div class="filter-bar-content">
-          <div class="sorting-bar" :class="{ expanded: isExpanded }">
-            <div class="header" @click="toggleExpansion">
-              <h2>Sorter etter: {{ selectedChoice }}</h2>
-              <i class="arrow-icon" :class="{ 'arrow-down': !isExpanded, 'arrow-up': isExpanded }"></i>
-            </div>
-            <ul>
-              <li v-for="choice in sortChoices" :key="choice.id" @click="changeSorting(choice)">
-                {{ choice.name }}
-              </li>
-            </ul>
-          </div>
           <div class="buttons-container">
             <button class="move-to-fridge-button button" @click="moveItemsToFridge">Flytt valgte til Kjøleskap</button>
             <button class="remove-selected-button button" @click="removeItemsFromList">Fjern Valgte</button>
@@ -34,6 +25,7 @@ export default {
   data() {
     return {
       selectedChoice: '',
+      searchTerm: '',
       isCollapsed: false,
       iconRotation: 90,
       isExpanded: false,
@@ -68,7 +60,10 @@ export default {
       this.isCollapsed = !this.isCollapsed;
       this.iconRotation += 180;
       this.$emit('toggle-sidebar', this.isCollapsed);
-    }
+    },
+    emitSearch() {
+      this.$emit("search", this.searchTerm);
+    },
   },
 };
 </script>
@@ -155,28 +150,6 @@ export default {
 .filter-bar-content {
   height: calc(100vh - 180px);
   overflow-y: auto;
-}
-
-.sorting-bar {
-  margin: 10px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-
-.arrow-icon {
-  width: 12px;
-  height: 12px;
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: transform 0.2s ease-in-out;
 }
 
 ul {
