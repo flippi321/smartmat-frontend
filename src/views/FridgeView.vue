@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-  fridgeId: {
-    type: Number,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="fridge-page">
     <Sidebar
@@ -41,6 +32,8 @@ import fridgeService from "@/services/fridgeService";
 import Groceries from "@/components/fridgePage/fridgeContentsComponent.vue"
 import Sidebar from "@/components/fridgePage/fridgeSidebarComponent.vue";
 import addGroceries from "@/components/AddGroceries.vue";
+import householdService from "@/services/householdService";
+import {useAuthStore} from "@/stores";
 
 export default {
   components: {
@@ -50,7 +43,8 @@ export default {
   },
   data() {
     return {
-      fridgeId: this.fridgeId,
+      store: useAuthStore(),
+      fridgeId: 0,
       items: [],
       filteredItems: [],
       categories: [],
@@ -67,16 +61,28 @@ export default {
   },
 
   created() {
-    fridgeService.getFridgeContents(this.fridgeId).then((response) => {
-      this.items = response.data;
-      this.filteredItems = this.items;
-    });
-    fridgeService.getCategoriesFromFridgeId(this.fridgeId).then((response) => {
-      this.categories = response.data;
-    });
+    this.getFridgeAndContents();
   },
 
   methods: {
+    getFridgeAndContents(){
+      if(this.store.getHousehold !== -1){
+        householdService.getUsersHousehold(this.store.getUserId).then(response => {
+          this.fridgeId = response.data.fridge.fridgeId;
+
+          fridgeService.getFridgeContents(this.fridgeId).then((response) => {
+            this.items = response.data;
+            this.filteredItems = this.items;
+          });
+          fridgeService.getCategoriesFromFridgeId(this.fridgeId).then((response) => {
+            this.categories = response.data;
+          });
+        })
+      } else {
+        this.router.push("/joinHousehold")
+      }
+    },
+
     filterByCategory(category){
       this.currentCategory = category;
       this.applyFilters();

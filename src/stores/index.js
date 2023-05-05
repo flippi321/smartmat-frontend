@@ -10,6 +10,7 @@ export const useAuthStore = defineStore({
     id: 'store',
     state: () => ({
         isLoggedIn: useSessionStorage('isLoggedIn', false),
+        householdId: useSessionStorage('householdId', -1),
         firstName: useSessionStorage('firstName', ''),
         lastName: useSessionStorage('lastName', ''),
         email: useSessionStorage('email', ''),
@@ -20,8 +21,12 @@ export const useAuthStore = defineStore({
         setLoggedIn() {
             this.isLoggedIn = true;
         },
+        setHousehold(id) {
+            this.householdId = id;
+        },
         logout() {
             this.isLoggedIn = false;
+            this.householdId = -1;
             this.firstName = '';
             this.lastName = '';
             this.email = '';
@@ -59,6 +64,10 @@ export const useAuthStore = defineStore({
     getters: {
         getIsLoggedIn() {
             return this.isLoggedIn;
+        },
+
+        getHousehold() {
+            return this.householdId;
         },
 
         getFirstName() {
