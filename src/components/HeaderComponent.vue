@@ -66,16 +66,16 @@ onBeforeUnmount(() => {
             <router-link v-if="store.getIsLoggedIn" :to="{ path: `/shoppingList` }" class="button-primary">
                 <span>Handleliste</span>
             </router-link>
-            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas`, query: { id: this.id } }" class="button-primary">
+            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/dinnerIdeas` }" class="button-primary">
                 <span>Middagsideer</span>
             </router-link>
-            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner`, query: { id: this.id } }" class="button-primary">
+            <router-link v-if="store.getIsLoggedIn" :to="{ path: `/weekPlanner` }" class="button-primary">
                 <span>Planlegg Uke</span>
             </router-link>
             <router-link v-if="store.getIsLoggedIn" to="/household/admin" class="button-primary">
                 <span>Administrer Medlemmer</span>
             </router-link>
-            <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary">
+            <router-link :to="store.getIsLoggedIn ? { path: '/user'  } : '/login'" class="button-primary">
                 <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
                 <span class="header-button button-primary-text">{{ store.getIsLoggedIn ? (store.getFirstName || store.getEmail) : 'Logg In' }}</span>
             </router-link>
@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
                     <router-link v-if="store.getIsLoggedIn" to="/createAd" class="button-primary" @click="closeMobileMenu">
                         <span>Administrer Medlemmer</span>
                     </router-link>
-                    <router-link :to="store.getIsLoggedIn ? { path: '/user', query: { id: store.getUserId } } : '/login'" class="button-primary" @click="closeMobileMenu">
+                    <router-link :to="store.getIsLoggedIn ? { path: '/user' } : '/login'" class="button-primary" @click="closeMobileMenu">
                         <img src="@/assets/icons/padLock.png" alt="[Padlock]" class="header-icon">
                         <span class="header-button button-primary-text">{{ store.getIsLoggedIn ? (store.getFirstName || store.getEmail) : 'Logg In' }}</span>
                     </router-link>
