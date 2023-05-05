@@ -2,15 +2,19 @@
     <div class="shopping-list-page">
         <div class="sidebar" v-if="showAddGroceries === false">
             <FilterBar
-                    :sortChoices="sortingChoices" :list-id="this.id"
+                    :sort-choices="[]" 
+                    :list-id="this.id"
                     @moveToFridge="sendSelectedItems"
                     @removeItems="removeSelectedItems"
                     @add-items="this.showAddGroceries = true"
-                    @changeSortBy="(n) => changeSorting(n)"
+                    @search="filterByName"
             />
         </div>
         <div class="groceries-container" v-if="showAddGroceries === false">
-            <Groceries :items="items" ref="groceries" @saved-changes="updateItem"/>
+            <Groceries
+                :items="filteredItems"
+                ref="groceries"
+                @saved-changes="updateItem"/>
         </div>
         <addGroceries
                 v-if="showAddGroceries === true"
@@ -41,9 +45,9 @@ export default {
             id: -1,
             fridge: -1,
             store: useAuthStore(),
-            sortBy: 1,
+            currentSearchTerm: '',
             items: [],
-            sortingChoices: [],
+            filteredItems: [],
             showAddGroceries: false,
         };
     },
@@ -61,10 +65,7 @@ export default {
 
             shoppingListService.getShoppingListContents(this.id).then(response => {
               this.items = response.data;
-            });
-
-            shoppingListService.getSortingChoices().then(response => {
-              this.sortingChoices = response.data;
+              this.filteredItems = this.items;
             });
           })
         } else {
@@ -104,11 +105,25 @@ export default {
             });
       },
 
+      filterByName(name){
+        console.log(name)
+        this.currentSearchTerm = name;
+        this.applyFilters();
+      },
 
-      changeSorting(sortingId) {
-            this.sortBy = sortingId;
-            this.updateShoppingList();
-        },
+      applyFilters() {
+        shoppingListService.getShoppingListContents(this.id).then((response) => {
+          this.items = response.data;
+
+          let filtered = this.items;
+
+          if ((this.currentSearchTerm && this.currentSearchTerm.trim() !== '') && this.currentSearchTerm !== '') {
+            filtered = filtered.filter(item => item.name.toLowerCase().includes(this.currentSearchTerm.toLowerCase()));
+          }
+
+          this.filteredItems = filtered;
+        });
+      },
 
         updateShoppingList() {
             shoppingListService.getShoppingListContents(this.id)
