@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-    id: {
-        type: Number,
-        required: true
-    }
-})
-</script>
-
 <template>
     <div class="shopping-list-page">
         <div class="sidebar" v-if="showAddGroceries === false">
@@ -36,6 +27,8 @@ import shoppingListService from "@/services/shoppingListService";
 import Groceries from "@/components/shoppingListPage/shoppingListContents.vue"
 import FilterBar from "@/components/shoppingListPage/shoppingListSortbar.vue";
 import addGroceries from "@/components/AddGroceries.vue";
+import householdService from "@/services/householdService";
+import {useAuthStore} from "@/stores";
 
 export default {
     components: {
@@ -45,7 +38,8 @@ export default {
     },
     data() {
         return {
-            id: this.id,
+            id: 0,
+            store: useAuthStore(),
             sortBy: 1,
             items: [],
             sortingChoices: [],
@@ -53,35 +47,48 @@ export default {
         };
     },
     created() {
-        shoppingListService.getShoppingListContents(this.id).then(response => {
-            this.items = response.data;
-        });
-
-        shoppingListService.getSortingChoices().then(response => {
-            this.sortingChoices = response.data;
-        });
+      this.getListAndContents()
     },
 
     methods: {
-        updateItem(item) {
-            console.log("Updating item:" + item);
-            shoppingListService.updateShoppingListItem(this.id, item).then(() => {
-                this.updateShoppingList();
-            }).catch(error => {
-                console.error("Error updating item:", error);
-            });
-        },
+      getListAndContents(){
+        if(this.store.getHousehold !== -1){
+          householdService.getUsersHousehold(this.store.getUserId).then(response => {
+            console.log(response.data)
+            this.id = response.data.shoppinglist.shoppinglistID;
 
-        sendSelectedItems() {
-          //TODO FETCH HOUSEHOLD FRIDGE ID
-          const selectedItems = this.$refs.groceries.$data.currentlySelected.map(item => item);
-          console.log(selectedItems);
-          shoppingListService.sendItemsToFridge(selectedItems, this.id, 1).then(() => {
-            this.updateShoppingList();
-          }).catch(error => {
-            console.error("Error removing items from the list:", error);
-          });
-        },
+            shoppingListService.getShoppingListContents(this.id).then(response => {
+              this.items = response.data;
+            });
+
+            shoppingListService.getSortingChoices().then(response => {
+              this.sortingChoices = response.data;
+            });
+          })
+        } else {
+          this.router.push("/joinHousehold")
+        }
+      },
+
+      updateItem(item) {
+        console.log("Updating item:" + item);
+        shoppingListService.updateShoppingListItem(this.id, item).then(() => {
+          this.updateShoppingList();
+        }).catch(error => {
+          console.error("Error updating item:", error);
+        });
+      },
+
+      sendSelectedItems() {
+        //TODO FETCH HOUSEHOLD FRIDGE ID
+        const selectedItems = this.$refs.groceries.$data.currentlySelected.map(item => item);
+        console.log(selectedItems);
+        shoppingListService.sendItemsToFridge(selectedItems, this.id, 1).then(() => {
+          this.updateShoppingList();
+        }).catch(error => {
+          console.error("Error removing items from the list:", error);
+        });
+      },
 
       removeSelectedItems() {
         const selectedItems = this.$refs.groceries.$data.currentlySelected.map(item => item);
