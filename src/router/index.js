@@ -36,7 +36,10 @@ const router = createRouter({
       path: '/user',
       name: 'user',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: UserView
+      component: UserView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/fridge',
@@ -106,7 +109,10 @@ const router = createRouter({
       path: '/recipe',
       name: 'recipe',
       props: route => ({ id: parseInt(route.query.id) }),
-      component: RecipeView
+      component: RecipeView,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
