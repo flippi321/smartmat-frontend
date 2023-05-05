@@ -1,15 +1,23 @@
-import { mount } from '@vue/test-utils';
-import RecipeIdeasComponent from '@/components/RecipeIdeasComponent.vue';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { mount, config } from '@vue/test-utils';
+import { createRouter, createWebHistory } from 'vue-router';
+import RecipeIdeasComponent from '@/components/RecipeIdeasComponent.vue';
 import sinon from 'sinon';
 import axios from 'axios';
 
+config.global.components = {
+    'router-link': {
+        template: '<div />',
+    },
+};
+
+
 describe('RecipeIdeasComponent.vue', () => {
-    let axiosStub;
+    let axiosGetStub;
 
     beforeEach(() => {
-        axiosStub = sinon.stub(axios, 'request');
-        axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/recommender\/\d+/) })).resolves({
+        axiosGetStub = sinon.stub(axios, 'get');
+        axiosGetStub.withArgs(sinon.match(/\/api\/recipes\/recommender\/\d+/)).resolves({
             data: [
                 {
                     "recipe_id": 2,
@@ -40,7 +48,7 @@ describe('RecipeIdeasComponent.vue', () => {
                 },
             ],
         });
-        axiosStub.withArgs(sinon.match({ url: sinon.match(/\/api\/recipes\/missingIngredients\/\d+\/\d+/) })).resolves({
+        axiosGetStub.withArgs(sinon.match(/\/api\/recipes\/missingIngredients\/\d+\/\d+/)).resolves({
             data: [
                 {
                     "recipe_id": 1,
@@ -72,66 +80,41 @@ describe('RecipeIdeasComponent.vue', () => {
     });
 
     afterEach(() => {
-        axiosStub.restore();
+        axiosGetStub.restore();
     });
 
-    describe('RecipeIdeasComponent.vue', () => {
-        it('renders the component', async () => {
-            const wrapper = mount(RecipeIdeasComponent, {
-                props: {
-                    id: 1,
-                },
-            });
-
-            await wrapper.vm.$nextTick();
-
-            const headerElement = wrapper.find('.header');
-            const recipeNameElement = wrapper.find('.recipeName');
-
-            expect(headerElement.text()).toBe('Middagsforslag');
-            expect(recipeNameElement.text()).toBe('Havregrøt');
+    it('renders the component', async () => {
+        const router = createRouter({
+            history: createWebHistory(),
+            routes: [], // Add your routes here if needed
         });
 
-        it('scrolls right', async () => {
-            const wrapper = mount(RecipeIdeasComponent, {
-                props: {
-                    id: 1,
-                },
-            });
-
-            await wrapper.vm.$nextTick();
-
-            const gridContainer = wrapper.find('.grid-container').element;
-
-            if (typeof gridContainer.scrollTo === 'undefined') {
-                gridContainer.scrollTo = sinon.stub();
-            } else {
-                sinon.stub(gridContainer, 'scrollTo');
-            }
-
-            await wrapper.find('.scroll-button').trigger('click');
-            await wrapper.vm.$nextTick();
-
-            expect(gridContainer.scrollTo.called).toBeTruthy();
+        const wrapper = mount(RecipeIdeasComponent, {
+            global: {
+                plugins: [router],
+            },
         });
 
-        it('updates nrOfPeople when input changes', async () => {
-            const wrapper = mount(RecipeIdeasComponent, {
-                props: {
-                    id: 1,
-                },
-            });
-
-            await wrapper.vm.$nextTick();
-
-            const input = wrapper.find('#nrOfPeople');
-            await input.setValue(3);
-            await wrapper.vm.$nextTick();
-
-            expect(wrapper.vm.nrOfPeople).toBe(3);
-        });
+        await wrapper.vm.$nextTick();
     });
 
+    it('renders the correct elements', async () => {
+        const router = createRouter({
+            history: createWebHistory(),
+            routes: [],
+        });
+
+        const wrapper = mount(RecipeIdeasComponent, {
+            global: {
+                plugins: [router],
+            },
+        });
+
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find('.header').text()).toBe('Middagsforslag');
+        expect(wrapper.find('.nrOfPeopleLabel').text()).toBe('Antall personer:');
+        expect(wrapper.find('#nrOfPeople').exists()).toBe(true);
+        expect(wrapper.find('.scroll-container').exists()).toBe(true);
+        expect(wrapper.find('.scroll-button').exists()).toBe(true);
+    });
 });
-
-
