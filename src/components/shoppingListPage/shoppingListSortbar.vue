@@ -61,6 +61,7 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  min-width: 50px;
   flex: 0 0 500px;
   background-image: linear-gradient(white, rgba(255, 255, 255, 0));
   transition: flex 0.3s;
