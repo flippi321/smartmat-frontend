@@ -105,7 +105,7 @@ export default {
           this.findMissingIngredients();
         })
       } else {
-        this.router.push("/joinHousehold")
+        this.$router.push("/joinHousehold")
       }
     },
   },
