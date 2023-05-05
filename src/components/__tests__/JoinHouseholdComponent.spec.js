@@ -111,4 +111,47 @@ describe('joinHouseholdComponent.vue', () => {
 
         expect(joinHouseholdButton.element.disabled).toBe(true);
     });
+
+    it('enables the joinHousehold button when the householdCode input is 6 digits', async () => {
+        const householdCodeInput = wrapper.find('input[name="household-code"]');
+        const joinHouseholdButton = wrapper.find('button[type="submit"]');
+
+        await householdCodeInput.setValue(123456);
+
+        expect(joinHouseholdButton.element.disabled).toBe(false);
+    });
+
+    it('disables the createHousehold button when any of the other input fields are empty', async () => {
+        const householdNameInput = wrapper.find('input[name="household-name"]');
+        const fridgeNameInput = wrapper.find('input[name="fridge-name"]');
+        const shoppingListNameInput = wrapper.find('input[name="shoppinglist-name"]');
+        const createHouseholdButton = wrapper.find('.create button');
+
+        await householdNameInput.setValue('');
+        await fridgeNameInput.setValue('My Fridge');
+        await shoppingListNameInput.setValue('My Shopping List');
+        expect(createHouseholdButton.element.disabled).toBe(true);
+
+        await householdNameInput.setValue('My Household');
+        await fridgeNameInput.setValue('');
+        await shoppingListNameInput.setValue('My Shopping List');
+        expect(createHouseholdButton.element.disabled).toBe(true);
+
+        await householdNameInput.setValue('My Household');
+        await fridgeNameInput.setValue('My Fridge');
+        await shoppingListNameInput.setValue('');
+        expect(createHouseholdButton.element.disabled).toBe(true);
+    });
+
+    it('enables the createHousehold button when all imput fields are filled with valid data', async () => {
+        const householdNameInput = wrapper.find('input[name="household-name"]');
+        const fridgeNameInput = wrapper.find('input[name="fridge-name"]');
+        const shoppingListNameInput = wrapper.find('input[name="shoppinglist-name"]');
+        const createHouseholdButton = wrapper.find('.create button');
+
+        await householdNameInput.setValue('My Household');
+        await fridgeNameInput.setValue('My Fridge');
+        await shoppingListNameInput.setValue('My Shopping List');
+        expect(createHouseholdButton.element.disabled).toBe(false);
+    });
 });
