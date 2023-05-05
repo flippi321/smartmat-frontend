@@ -14,10 +14,11 @@
               v-model="householdCode"
           />
         </div>
-        <button type="submit" class="btn">Bli medlem!</button>
+        <button type="submit" class="btn" :disabled="householdCode.length !== 6">Bli medlem!</button>
+
       </form>
       <div class="choice create">
-        <h2>Eller lag in egen</h2>
+        <h2>Eller lag din egen</h2>
         <p>Lag en ny Husholdning:</p>
         <div class="input">
           <label for="household-name">Husholdningsnavn:</label>
