@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiClient = axios.create();
-let url = 'https://localhost:8000'
+let url = 'http://localhost:8080'
 
 /*
 Mocking responses, must be removed:
