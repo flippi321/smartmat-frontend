@@ -1,13 +1,3 @@
-<script setup>
-defineProps({
-  id: {
-    type: Number,
-    required: true,
-    validator: (value) => !isNaN(value),
-  }
-})
-</script>
-
 <template>
   <div class="household-info">
     <h1>Your Household:</h1>
@@ -37,6 +27,23 @@ defineProps({
     </router-link>
   </div>
 </template>
+
+<script>
+import {useAuthStore} from "@/stores";
+export default {
+  data(){
+    return {
+      id: 0,
+      store: useAuthStore(),
+    }
+  },
+
+  created() {
+    this.id = this.store.getHousehold;
+  }
+}
+</script>
+
 
 <style>
 .buttons-container {
