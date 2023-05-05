@@ -2,6 +2,13 @@ import axios from "axios";
 let url = 'http://localhost:8080'
 
 export default {
+
+    /**
+     * Method for updating user information
+     * @param user the user to update
+     * @param oldEmail the old email of the user
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     updateUserInformation(user, oldEmail){
         const options = {
             method: 'PUT',
@@ -15,6 +22,11 @@ export default {
         return axios.request(options);
     },
 
+    /**
+     * Method for getting user information
+     * @param userId the id of the user
+     * @returns {Promise<axios.AxiosResponse<any>>}
+     */
     getUserInformation(userId){
         const options = {
             method: 'GET',
