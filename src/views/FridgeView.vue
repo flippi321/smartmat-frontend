@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-  fridgeId: {
-    type: Number,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="fridge-page">
     <Sidebar
