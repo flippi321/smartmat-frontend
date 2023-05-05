@@ -10,7 +10,7 @@
           {{item.category.unit}}</p>
         <p class="grocery-item-expected-shelf-life">Beregnet holdbarhet: {{ item.expectedShelfLife }} dager</p>
         <p class="grocery-item-actual-shelf-life">
-          Faktisk holdbarhet: <input type="number" v-model.number="actualShelfLife" min="0" /> dager
+          Faktisk holdbarhet: <input type="number" v-model.number="actualShelfLife" /> dager
         </p>
         <div class="grocery-item-buttons">
           <button @click.stop="update(item)">{{ acceptMessage }}</button>
