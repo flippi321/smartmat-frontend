@@ -31,16 +31,6 @@ export default {
       isExpanded: false,
     };
   },
-  props: {
-    listId: {
-      type: Number,
-      required: true,
-    },
-    sortChoices: {
-      type: Array,
-      required: true,
-    }
-  },
   methods: {
     changeSorting(choice) {
       this.selectedChoice = choice.name;
