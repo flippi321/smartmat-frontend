@@ -128,7 +128,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else {
-    if (to.name === 'login' && store.isLoggedIn) {
+    if ((to.name === 'login' || 'register') && store.isLoggedIn) {
       next({ name: 'household'});
     } else {
       next();
