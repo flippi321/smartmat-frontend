@@ -25,9 +25,14 @@ export default {
   },
 
   methods: {
-    createHouseHold(){
-      householdService.createHousehold(this.store.getUserId).then(response => {
-        console.log(response.data)
+    createHouseHold(householdInfo){
+      console.log(this.store.getUserId)
+      console.log(householdInfo)
+
+      householdService.createHousehold(this.store.getUserId, householdInfo).then(response => {
+        console.log(response.data.householdId)
+        this.store.setHousehold(response.data.householdId);
+        router.push({path: "/household", query: {id: response.data.householdId}});
       }).catch(error => {
         console.log(error)
       })
