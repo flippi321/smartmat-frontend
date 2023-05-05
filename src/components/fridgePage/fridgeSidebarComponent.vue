@@ -1,12 +1,3 @@
-<script setup>
-defineProps({
-  categories: {
-    type: Array,
-    required: true,
-  }
-});
-</script>
-
 <template>
   <div class="fridge-sidebar" :class="{ collapsed: isCollapsed }">
     <h1 v-if="!isCollapsed">Søk:</h1>
@@ -30,6 +21,12 @@ export default {
       iconRotation: 90,
       searchTerm: ''
     };
+  },
+  props: {
+    categories: {
+      type: Array,
+      required: true,
+    }
   },
   computed: {
     sortedCategories() {
