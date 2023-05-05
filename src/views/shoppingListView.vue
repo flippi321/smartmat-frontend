@@ -143,12 +143,10 @@ export default {
         },
 
         handleAddGrocery(items){
-            console.log("Adding selected to shopping List:")
-            console.log(items)
-
           shoppingListService.addMultipleItems(this.id, items)
-              .then(response => {
-                this.items = response.data;
+              .then(() => {
+                this.updateShoppingList()
+                this.applyFilters();
               })
               .catch(error => {
                 console.error("Error updating shopping list:", error);
