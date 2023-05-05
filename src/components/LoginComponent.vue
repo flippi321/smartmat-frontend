@@ -76,8 +76,6 @@ export default {
 
             try {
                 const response = await loginService.login(this.email, this.password);
-                console.log(response);
-                console.log(response.status);
 
                 if (response.status === 200) {
                     sessionStorage.setItem("token", response.data.access_token);
@@ -88,12 +86,16 @@ export default {
                     store.setLastName(response.data.lastname);
                     store.setUserId(response.data.id);
 
-                    householdService.getUsersHousehold(response.data.id).then(() => {
-                      this.$router.push("/household");
-                    }).catch(() => {
-                      this.$router.push("/joinHousehold");
-                    })
+                    const household = await householdService.getUsersHousehold(response.data.id)
+                    console.log(household.data.householdId)
+                    store.setHousehold(household.data.householdId);
+                    if (household.data.householdId === -1) {
+                        this.$router.push("/joinHousehold");
+                    } else {
+                        this.$router.push("/household");
+                    }
                   }
+
             } catch (error) {
                 console.log("error", error.response);
                 if (error.response && error.response.status === 401) {
