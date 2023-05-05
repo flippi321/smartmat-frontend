@@ -41,7 +41,7 @@ export default {
 	        "name" : "shoppinglistforhousehold2"
             }
        }*/
-    createHousehold(userId){
+    createHousehold(userId, householdInfo){
         const options = {
             method: 'POST',
             url: `${url}/api/household/create/${userId}`,
@@ -49,6 +49,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
+            data: householdInfo,
         };
         return axios.request(options);
     },
