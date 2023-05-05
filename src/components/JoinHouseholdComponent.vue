@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Join or Create a Household</h1>
+    <h1>Velkommen!</h1>
     <div class="choices">
       <form @submit.prevent="joinHousehold" class="choice">
         <h2>Bli med i en Husholdning</h2>
