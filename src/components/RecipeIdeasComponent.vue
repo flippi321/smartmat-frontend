@@ -67,7 +67,7 @@ export default {
               console.log(error)
             })
           } else {
-            this.router.push("/joinHousehold")
+            this.$router.push("/joinHousehold")
           }
         },
 
